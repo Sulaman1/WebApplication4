@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewData["Title"] = "PieOfPie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<h1>PieOfPie</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pie of Pie Chart - amCharts 5</title>
+</head>
+<body>
+
+    <div class="row row-cols-2">
+        <div class="border border-primary col">
+            <style>
+                #myStakeChart {
+                    max-width: 600px;
+                    margin: 20px auto;
+                }
+            </style>
+
+            <canvas id="myStakeChart"></canvas>
+
+            <script>
+                var data = {
+                    labels: ["January", "February", "March", "April", "May"],
+                    datasets: [
+                        {
+                            label: "Dataset 1",
+                            data: [30, 40, 10, 50, 20],
+                            backgroundColor: "rgba(75, 192, 192, 0.5)"
+                        },
+                        {
+                            label: "Dataset 2",
+                            data: [20, 10, 30, 40, 50],
+                            backgroundColor: "rgba(255, 99, 132, 0.5)"
+                        },
+                        {
+                            label: "Dataset 3",
+                            data: [50, 20, 40, 30, 10],
+                            backgroundColor: "rgba(54, 162, 235, 0.5)"
+                        }
+                    ]
+                };
+
+                // Chart options
+                var options = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                };
+
+                // Create the chart
+                var ctx = document.getElementById("myStakeChart").getContext("2d");
+            
+                // Data for the chart
+                var myChart = new Chart(ctx, {
+                    type: "bar",
+                    data: data,
+                    options: options
+                });
+
+            </script>
+        </div>
+    </div>
+</body>
+</html>

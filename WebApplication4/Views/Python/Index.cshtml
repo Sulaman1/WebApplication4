@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+<h1>Index</h1>
+
+<py-env>
+- from matplotlib.patches import ConnectionPatch
+- numpy as np
+- matplotlib.patches import ConnectionPatch
+- matplotlib.pyplot as plt
+</py-env>
+
+<div class="row">
+    <div class="col-lg-12">
+        <py-script>
+            print("This is python")
+        </py-script>
+
+    </div>
+</div>
