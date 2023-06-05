@@ -31,6 +31,20 @@ namespace WebApplication4.Controllers
             return View();
         }
 
+        public IActionResult PDOI()
+        {
+            return View();  
+        }
+
+        public IActionResult Bar()
+        {
+            return View();
+        }
+
+        public IActionResult Render() { 
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

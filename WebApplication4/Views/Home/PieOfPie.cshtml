@@ -1,86 +1,973 @@
-﻿
-@{
-    ViewData["Title"] = "PieOfPie";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+﻿<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-<h1>PieOfPie</h1>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Pie of Pie Chart - amCharts 5</title>
-</head>
-<body>
-
+<div class="border border-primary container">
     <div class="row row-cols-2">
-        <div class="border border-primary col">
-            <style>
-                #myStakeChart {
-                    max-width: 600px;
-                    margin: 20px auto;
+<div class="border border-primary col">
+
+    <h5>PieOfPie</h5>
+
+    <!-- Styles -->
+    <style>
+        #chartdiv {
+            width: 200%;
+            height: 100%;
+        }
+
+    </style>
+
+    <!-- Resources -->
+
+    <input type="text" id="searchInput" placeholder="Search..." />
+
+    <button onclick="PDOI()">PDOI</button>
+    <button onclick="REFUGEE()">REFUGEE</button>
+
+
+
+    <!-- Chart code -->
+    <script>
+
+        var newData = []
+        var root;
+        var initializeData = (function () {
+            var executed = false;
+            console.log("one time")
+            return function () {
+                if (!executed) {
+                    executed = true;
+                    newData = [
+                        {
+                            category: "Killa Abdullah",
+                            value: 1255,
+                            subData: [
+                                { category: "Male Beneficiary", value: 220 },
+                                { category: "Female Beneficiary", value: 735 },
+                                { category: "Male Refugee Beneficiary", value: 52 },
+                                { category: "Female Refugee Beneficiary", value: 248 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Killa Saifullah",
+                            value: 1948,
+                            subData: [
+                                { category: "Male Beneficiary", value: 400 },
+                                { category: "Female Beneficiary", value: 948 },
+                                { category: "Male Refugee Beneficiary", value: 444 },
+                                { category: "Female Refugee Beneficiary", value: 156 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Sherani",
+                            value: 232,
+                            subData: [
+                                { category: "Male Beneficiary", value: 49 },
+                                { category: "Female Beneficiary", value: 183 },
+                                { category: "Male Refugee Beneficiary", value: 0 },
+                                { category: "Female Refugee Beneficiary", value: 0 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Chagai",
+                            value: 2000,
+                            subData: [
+                                { category: "Male Beneficiary", value: 213 },
+                                { category: "Female Beneficiary", value: 787 },
+                                { category: "Male Refugee Beneficiary", value: 787 },
+                                { category: "Female Refugee Beneficiary", value: 213 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Nushki",
+                            value: 648,
+                            subData: [
+                                { category: "Male Beneficiary", value: 159 },
+                                { category: "Female Beneficiary", value: 237 },
+                                { category: "Male Refugee Beneficiary", value: 151 },
+                                { category: "Female Refugee Beneficiary", value: 101 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Pishin",
+                            value: 3584,
+                            subData: [
+                                { category: "Male Beneficiary", value: 624 },
+                                { category: "Female Beneficiary", value: 1539 },
+                                { category: "Male Refugee Beneficiary", value: 1054 },
+                                { category: "Female Refugee Beneficiary", value: 367 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Zhob",
+                            value: 371,
+                            subData: [
+                                { category: "Male Beneficiary", value: 153 },
+                                { category: "Female Beneficiary", value: 218 },
+                                { category: "Male Refugee Beneficiary", value: 0 },
+                                { category: "Female Refugee Beneficiary", value: 0 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Mastung",
+                            value: 600,
+                            subData: [
+                                { category: "Male Beneficiary", value: 131 },
+                                { category: "Female Beneficiary", value: 169 },
+                                { category: "Male Refugee Beneficiary", value: 169 },
+                                { category: "Female Refugee Beneficiary", value: 131 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        },
+                        {
+                            category: "Quetta",
+                            value: 0,
+                            subData: [
+                                { category: "Male Beneficiary", value: 0 },
+                                { category: "Female Beneficiary", value: 0 },
+                                { category: "Male Refugee Beneficiary", value: 0 },
+                                { category: "Female Refugee Beneficiary", value: 0 }
+                            ],
+                            breakdown: [{
+                                category: "Sales inquiries",
+                                value: 29
+                            }, {
+                                category: "Support requests",
+                                value: 40
+                            }, {
+                                category: "Bug reports",
+                                value: 11
+                            }, {
+                                category: "Other",
+                                value: 9
+                            }]
+                        }
+                    ];
+
+                    am5.ready(function () {
+
+                        console.log("In Show...", newData);
+
+                        // Create root element
+                        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+                        root = am5.Root.new("chartdiv");
+
+                        // Set themes
+                        // https://www.amcharts.com/docs/v5/concepts/themes/
+                        root.setThemes([am5themes_Animated.new(root)]);
+
+                        var container = root.container.children.push(
+                            am5.Container.new(root, {
+                                width: am5.p50,
+                                height: am5.p50,
+                                layout: root.horizontalLayout
+                            })
+                        );
+
+
+                        // ==============================================
+                        // Column chart
+                        // ==============================================
+
+                        // Create chart
+                        // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                        var columnChart = container.children.push(am5xy.XYChart.new(root, {
+                            width: am5.p50,
+                            panX: false,
+                            panY: false,
+                            wheelX: "none",
+                            wheelY: "none",
+                            layout: root.verticalLayout
+                        }));
+
+                        // Create axes
+                        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+                        var yRenderer = am5xy.AxisRendererY.new(root, {});
+                        var yAxis = columnChart.yAxes.push(am5xy.CategoryAxis.new(root, {
+                            categoryField: "category",
+                            renderer: yRenderer
+                        }));
+
+                        yRenderer.grid.template.setAll({
+                            location: 1
+                        })
+
+                        var xAxis = columnChart.xAxes.push(am5xy.ValueAxis.new(root, {
+                            renderer: am5xy.AxisRendererX.new(root, {
+                                strokeOpacity: 0.1
+                            })
+                        }));
+
+
+                        // Add series
+                        // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                        var columnSeries = columnChart.series.push(am5xy.ColumnSeries.new(root, {
+                            name: name,
+                            xAxis: xAxis,
+                            yAxis: yAxis,
+                            valueXField: "value",
+                            categoryYField: "category"
+                        }));
+
+                        columnSeries.columns.template.setAll({
+                            tooltipText: "{categoryY}: {valueX}"
+                        });
+
+                        //series.data.setAll(data);
+
+                        // Make stuff animate on load
+                        // https://www.amcharts.com/docs/v5/concepts/animations/
+                        columnChart.appear(1000, 100);
+
+
+                        // ==============================================
+                        // Column chart
+                        // ==============================================
+
+
+
+                        // Create main chart
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                        var chart = container.children.push(
+                            am5percent.PieChart.new(root, {
+                                tooltip: am5.Tooltip.new(root, {}),
+                                radius: am5.percent(95),
+                                innerRadius: am5.percent(10)
+                            })
+                        );
+
+                        var series2 = chart.series.push(
+                            am5percent.PieSeries.new(root, {
+                                name: "Series",
+                                valueField: "sales",
+                                categoryField: "country"
+                            })
+                        );
+
+                        series2.data.setAll([{
+                            country: "France",
+                            sales: 60000
+                        }, {
+                            country: "Spain",
+                            sales: 60000
+                        }, {
+                            country: "United Kingdom",
+                            sales: 120000
+                        }]);
+
+                        // Configuring slices
+                        series2.slices.template.setAll({
+                            stroke: am5.color(0xffffff),
+                            strokeWidth: 2
+                        })
+
+                        // Disabling labels and ticks
+                        series2.labels.template.set("visible", false);
+                        series2.ticks.template.set("visible", false);
+
+
+
+
+
+
+                        // Create series
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                        var series = chart.series.push(
+                            am5percent.PieSeries.new(root, {
+                                valueField: "value",
+                                categoryField: "category",
+                                alignLabels: false
+                            })
+                        );
+
+                        //series.labels.template.setAll({
+                        //    textType: "circular",
+                        //    radius: 4
+                        //});
+
+                        series.labels.template.setAll({
+                            text: "{category}",
+                            fontSize: 10,
+                            textType: "radial",
+                            inside: true,
+                            centerX: am5.percent(90),
+                            radius: 10,
+                            fill: am5.color(0xffffff)
+                        })
+
+                        series.ticks.template.set("visible", false);
+                        series.slices.template.set("toggleKey", "none");
+
+                        // add events
+                        series.slices.template.events.on("click", function (e) {
+                            selectSlice(e.target);
+                        });
+
+
+                        // Create sub chart
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                        var subChart = container.children.push(
+                            am5percent.PieChart.new(root, {
+                                radius: am5.percent(50),
+                                tooltip: am5.Tooltip.new(root, {})
+                            })
+                        );
+
+                        // Create sub series
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                        var subSeries = subChart.series.push(
+                            am5percent.PieSeries.new(root, {
+                                valueField: "value",
+                                categoryField: "category",
+                                alignLabels: false
+                            })
+                        );
+
+
+                        subSeries.labels.template.setAll({
+                            text: "{category}",
+                            fontSize: 10,
+                            textType: "radial",
+                            inside: true,
+                            centerX: am5.percent(30),
+                            radius: 10,
+                            fill: am5.color(0x000000)
+                        })
+
+                        subSeries.data.setAll([
+                            { category: "A", value: 0 },
+                            { category: "B", value: 0 },
+                            { category: "C", value: 0 },
+                            { category: "D", value: 0 },
+                            { category: "E", value: 0 },
+                            { category: "F", value: 0 },
+                            { category: "G", value: 0 }
+                        ]);
+                        subSeries.slices.template.set("toggleKey", "none");
+
+                        var selectedSlice;
+
+                        series.on("startAngle", function () {
+                            updateLines();
+                        });
+
+                        container.events.on("boundschanged", function () {
+                            root.events.on("frameended", function () {
+                                updateLines();
+                            })
+                        })
+
+                        function updateLines() {
+                            if (selectedSlice) {
+                                var startAngle = selectedSlice.get("startAngle");
+                                var arc = selectedSlice.get("arc");
+                                var radius = selectedSlice.get("radius");
+
+                                var x00 = radius * am5.math.cos(startAngle);
+                                var y00 = radius * am5.math.sin(startAngle);
+
+                                var x10 = radius * am5.math.cos(startAngle + arc);
+                                var y10 = radius * am5.math.sin(startAngle + arc);
+
+                                var subRadius = subSeries.slices.getIndex(0).get("radius");
+                                var x01 = 0;
+                                var y01 = -subRadius;
+
+                                var x11 = 0;
+                                var y11 = subRadius;
+
+                                var point00 = series.toGlobal({ x: x00, y: y00 });
+                                var point10 = series.toGlobal({ x: x10, y: y10 });
+
+                                var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                                var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+                                line0.set("points", [point00, point01]);
+                                line1.set("points", [point10, point11]);
+                            }
+                        }
+
+                        // lines
+                        var line0 = container.children.push(
+                            am5.Line.new(root, {
+                                position: "absolute",
+                                stroke: root.interfaceColors.get("text"),
+                                strokeDasharray: [2, 2]
+                            })
+                        );
+                        var line1 = container.children.push(
+                            am5.Line.new(root, {
+                                position: "absolute",
+                                stroke: root.interfaceColors.get("text"),
+                                strokeDasharray: [2, 2]
+                            })
+                        );
+
+                        // Set data
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
+                        series.data.setAll(
+                            newData
+                        );
+
+                        function selectSlice(slice) {
+                            selectedSlice = slice;
+                            var dataItem = slice.dataItem;
+                            var dataContext = dataItem.dataContext;
+
+                            if (dataContext) {
+                                var i = 0;
+                                subSeries.data.each(function (dataObject) {
+                                    var dataObj = dataContext.subData[i];
+                                    if (dataObj) {
+                                        subSeries.data.setIndex(i, dataObj);
+                                        if (!subSeries.dataItems[i].get("visible")) {
+                                            subSeries.dataItems[i].show();
+                                        }
+                                    }
+                                    else {
+                                        subSeries.dataItems[i].hide();
+                                    }
+
+                                    i++;
+                                });
+                            }
+
+                            var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
+                            var firstAngle = series.dataItems[0].get("slice").get("startAngle");
+
+                            series.animate({
+                                key: "startAngle",
+                                to: firstAngle - middleAngle,
+                                duration: 1000,
+                                easing: am5.ease.out(am5.ease.cubic)
+                            });
+                            series.animate({
+                                key: "endAngle",
+                                to: firstAngle - middleAngle + 360,
+                                duration: 1000,
+                                easing: am5.ease.out(am5.ease.cubic)
+                            });
+                        }
+
+                        container.appear(1000, 10);
+
+                        series.events.on("datavalidated", function () {
+                            selectSlice(series.slices.getIndex(0));
+                        });
+
+                    }); // end am5.ready()
+
                 }
-            </style>
+            };
+        })();
 
-            <canvas id="myStakeChart"></canvas>
+        //It Will Initialize the data on Page Load and would never be called again...
+        initializeData();
 
-            <script>
-                var data = {
-                    labels: ["January", "February", "March", "April", "May"],
-                    datasets: [
-                        {
-                            label: "Dataset 1",
-                            data: [30, 40, 10, 50, 20],
-                            backgroundColor: "rgba(75, 192, 192, 0.5)"
-                        },
-                        {
-                            label: "Dataset 2",
-                            data: [20, 10, 30, 40, 50],
-                            backgroundColor: "rgba(255, 99, 132, 0.5)"
-                        },
-                        {
-                            label: "Dataset 3",
-                            data: [50, 20, 40, 30, 10],
-                            backgroundColor: "rgba(54, 162, 235, 0.5)"
-                        }
+        function PDOI() {
+            console.log("PDOI")
+            var pdoi = [
+                {
+                    category: "Afghan Refugee",
+                    value: 49,
+                    subData: [
+                        { category: "LIP", value: 10 },
+                        { category: "BSF", value: 10 },
+                        { category: "TECH", value: 10 },
+                        { category: "COMMUNITY TRAININGS", value: 10 }
                     ]
-                };
+                },
+                {
+                    category: "Female",
+                    value: 30,
+                    subData: [
+                        { category: "LIP", value: 10 },
+                        { category: "BSF", value: 10 },
+                        { category: "TECH", value: 10 },
+                        { category: "COMMUNITY TRAININGS", value: 10 }
+                    ]
+                }, {
+                    category: "Male",
+                    value: 21,
+                    subData: [
+                        { category: "LIP", value: 11 },
+                        { category: "BSF", value: 10 },
+                        { category: "TECH", value: 0 }
+                    ]
+                }
+            ]
 
-                // Chart options
-                var options = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            stacked: true,
-                        },
-                        y: {
-                            stacked: true,
-                            beginAtZero: true
-                        }
-                    }
-                };
+            newData = pdoi
 
-                // Create the chart
-                var ctx = document.getElementById("myStakeChart").getContext("2d");
-            
-                // Data for the chart
-                var myChart = new Chart(ctx, {
-                    type: "bar",
-                    data: data,
-                    options: options
+            root.dispose();
+            rerender()
+        }
+
+        function REFUGEE() {
+            console.log("PDOI")
+            var pdoi = [
+                {
+                    category: "Afghan Refugee",
+                    value: 49,
+                    subData: [
+                        { category: "Male", value: 10 },
+                        { category: "Female", value: 10 }
+                    ]
+                }
+            ]
+            newData = pdoi
+
+            root.dispose();
+            rerender()
+        }
+
+
+        // Applying Filter/Search on the PieOfPie Chart
+
+        console.log("Search Bar");
+        const searchInput = document.getElementById('searchInput');
+
+        // Add event listener to execute function on change
+        searchInput.addEventListener('keyup', function (event) {
+            const searchTerm = event.target.value;
+
+            var list = [
+                {
+                    category: "Killa Abdullah",
+                    value: 1255,
+                    subData: [
+                        { category: "Male Beneficiary", value: 220 },
+                        { category: "Female Beneficiary", value: 735 },
+                        { category: "Male Refugee Beneficiary", value: 52 },
+                        { category: "Female Refugee Beneficiary", value: 248 }
+                    ]
+                },
+                {
+                    category: "Killa Saifullah",
+                    value: 1948,
+                    subData: [
+                        { category: "Male Beneficiary", value: 400 },
+                        { category: "Female Beneficiary", value: 948 },
+                        { category: "Male Refugee Beneficiary", value: 444 },
+                        { category: "Female Refugee Beneficiary", value: 156 }
+                    ]
+                },
+                {
+                    category: "Sherani",
+                    value: 232,
+                    subData: [
+                        { category: "Male Beneficiary", value: 49 },
+                        { category: "Female Beneficiary", value: 183 },
+                        { category: "Male Refugee Beneficiary", value: 0 },
+                        { category: "Female Refugee Beneficiary", value: 0 }
+                    ]
+                },
+                {
+                    category: "Chagai",
+                    value: 2000,
+                    subData: [
+                        { category: "Male Beneficiary", value: 213 },
+                        { category: "Female Beneficiary", value: 787 },
+                        { category: "Male Refugee Beneficiary", value: 787 },
+                        { category: "Female Refugee Beneficiary", value: 213 }
+                    ]
+                },
+                {
+                    category: "Nushki",
+                    value: 648,
+                    subData: [
+                        { category: "Male Beneficiary", value: 159 },
+                        { category: "Female Beneficiary", value: 237 },
+                        { category: "Male Refugee Beneficiary", value: 151 },
+                        { category: "Female Refugee Beneficiary", value: 101 }
+                    ]
+                },
+                {
+                    category: "Pishin",
+                    value: 3584,
+                    subData: [
+                        { category: "Male Beneficiary", value: 624 },
+                        { category: "Female Beneficiary", value: 1539 },
+                        { category: "Male Refugee Beneficiary", value: 1054 },
+                        { category: "Female Refugee Beneficiary", value: 367 }
+                    ]
+                },
+                {
+                    category: "Zhob",
+                    value: 371,
+                    subData: [
+                        { category: "Male Beneficiary", value: 153 },
+                        { category: "Female Beneficiary", value: 218 },
+                        { category: "Male Refugee Beneficiary", value: 0 },
+                        { category: "Female Refugee Beneficiary", value: 0 }
+                    ]
+                },
+                {
+                    category: "Mastung",
+                    value: 600,
+                    subData: [
+                        { category: "Male Beneficiary", value: 131 },
+                        { category: "Female Beneficiary", value: 169 },
+                        { category: "Male Refugee Beneficiary", value: 169 },
+                        { category: "Female Refugee Beneficiary", value: 131 }
+                    ]
+                },
+                {
+                    category: "Quetta",
+                    value: 0,
+                    subData: [
+                        { category: "Male Beneficiary", value: 0 },
+                        { category: "Female Beneficiary", value: 0 },
+                        { category: "Male Refugee Beneficiary", value: 0 },
+                        { category: "Female Refugee Beneficiary", value: 0 }
+                    ]
+                }
+            ];
+
+            const filteredList = list.filter(item => {
+
+                const itemName = item.category.toLowerCase();
+                const lowercasedSearchTerm = searchTerm.toLowerCase();
+                return itemName.includes(lowercasedSearchTerm);
+            });
+            // Execute your search function or any desired action here
+            console.log('Searching for:', filteredList);
+            newData = filteredList
+            root.dispose();
+            rerender()
+        });
+
+
+        function rerender() {
+            am5.ready(function () {
+
+                console.log("In Show...", newData);
+
+                // Create root element
+                // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+                root = am5.Root.new("chartdiv");
+
+                // Set themes
+                // https://www.amcharts.com/docs/v5/concepts/themes/
+                root.setThemes([am5themes_Animated.new(root)]);
+
+                var container = root.container.children.push(
+                    am5.Container.new(root, {
+                        width: am5.p50,
+                        height: am5.p50,
+                        layout: root.horizontalLayout
+                    })
+                );
+
+                // Create main chart
+                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                var chart = container.children.push(
+                    am5percent.PieChart.new(root, {
+                        tooltip: am5.Tooltip.new(root, {})
+                    })
+                );
+
+                // Create series
+                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                var series = chart.series.push(
+                    am5percent.PieSeries.new(root, {
+                        valueField: "value",
+                        categoryField: "category",
+                        alignLabels: false
+                    })
+                );
+
+                //series.labels.template.setAll({
+                //    textType: "circular",
+                //    radius: 4
+                //});
+
+                series.labels.template.setAll({
+                    text: "{category}",
+                    fontSize: 10,
+                    textType: "radial",
+                    inside: true,
+                    centerX: am5.percent(90),
+                    radius: 10,
+                    fill: am5.color(0xffffff)
+                })
+
+                series.ticks.template.set("visible", false);
+                series.slices.template.set("toggleKey", "none");
+
+                // add events
+                series.slices.template.events.on("click", function (e) {
+                    selectSlice(e.target);
                 });
 
-            </script>
-        </div>
+                // Create sub chart
+                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                var subChart = container.children.push(
+                    am5percent.PieChart.new(root, {
+                        radius: am5.percent(50),
+                        tooltip: am5.Tooltip.new(root, {})
+                    })
+                );
+
+                // Create sub series
+                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                var subSeries = subChart.series.push(
+                    am5percent.PieSeries.new(root, {
+                        valueField: "value",
+                        categoryField: "category",
+                        alignLabels: false
+                    })
+                );
+
+                subSeries.labels.template.setAll({
+                    text: "{category}",
+                    fontSize: 10,
+                    textType: "radial",
+                    inside: true,
+                    centerX: am5.percent(30),
+                    radius: 10,
+                    fill: am5.color(0x000000)
+                })
+
+                subSeries.data.setAll([
+                    { category: "A", value: 0 },
+                    { category: "B", value: 0 },
+                    { category: "C", value: 0 },
+                    { category: "D", value: 0 },
+                    { category: "E", value: 0 },
+                    { category: "F", value: 0 },
+                    { category: "G", value: 0 }
+                ]);
+                subSeries.slices.template.set("toggleKey", "none");
+
+                var selectedSlice;
+
+                series.on("startAngle", function () {
+                    updateLines();
+                });
+
+                container.events.on("boundschanged", function () {
+                    root.events.on("frameended", function () {
+                        updateLines();
+                    })
+                })
+
+                function updateLines() {
+                    if (selectedSlice) {
+                        var startAngle = selectedSlice.get("startAngle");
+                        var arc = selectedSlice.get("arc");
+                        var radius = selectedSlice.get("radius");
+
+                        var x00 = radius * am5.math.cos(startAngle);
+                        var y00 = radius * am5.math.sin(startAngle);
+
+                        var x10 = radius * am5.math.cos(startAngle + arc);
+                        var y10 = radius * am5.math.sin(startAngle + arc);
+
+                        var subRadius = subSeries.slices.getIndex(0).get("radius");
+                        var x01 = 0;
+                        var y01 = -subRadius;
+
+                        var x11 = 0;
+                        var y11 = subRadius;
+
+                        var point00 = series.toGlobal({ x: x00, y: y00 });
+                        var point10 = series.toGlobal({ x: x10, y: y10 });
+
+                        var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                        var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+                        line0.set("points", [point00, point01]);
+                        line1.set("points", [point10, point11]);
+                    }
+                }
+
+                // lines
+                var line0 = container.children.push(
+                    am5.Line.new(root, {
+                        position: "absolute",
+                        stroke: root.interfaceColors.get("text"),
+                        strokeDasharray: [2, 2]
+                    })
+                );
+                var line1 = container.children.push(
+                    am5.Line.new(root, {
+                        position: "absolute",
+                        stroke: root.interfaceColors.get("text"),
+                        strokeDasharray: [2, 2]
+                    })
+                );
+
+                // Set data
+                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
+                series.data.setAll(
+                    newData
+                );
+
+                function selectSlice(slice) {
+
+                    selectedSlice = slice;
+                    var dataItem = slice.dataItem;
+                    var dataContext = dataItem.dataContext;
+
+                    if (dataContext) {
+                        var i = 0;
+                        subSeries.data.each(function (dataObject) {
+                            var dataObj = dataContext.subData[i];
+                            if (dataObj) {
+                                subSeries.data.setIndex(i, dataObj);
+                                if (!subSeries.dataItems[i].get("visible")) {
+                                    subSeries.dataItems[i].show();
+                                }
+                            }
+                            else {
+                                subSeries.dataItems[i].hide();
+                            }
+
+                            i++;
+                        });
+                    }
+
+                    var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
+                    var firstAngle = series.dataItems[0].get("slice").get("startAngle");
+
+                    series.animate({
+                        key: "startAngle",
+                        to: firstAngle - middleAngle,
+                        duration: 1000,
+                        easing: am5.ease.out(am5.ease.cubic)
+                    });
+                    series.animate({
+                        key: "endAngle",
+                        to: firstAngle - middleAngle + 360,
+                        duration: 1000,
+                        easing: am5.ease.out(am5.ease.cubic)
+                    });
+
+                }
+
+                container.appear(1000, 10);
+
+                series.events.on("datavalidated", function () {
+                    selectSlice(series.slices.getIndex(0));
+                });
+
+            }); // end am5.ready()
+        }
+
+    </script>
+
+    <!-- HTML -->
+    <div id="chartdiv"></div>
+
+</div>
+
+
     </div>
-</body>
-</html>
+</div>
