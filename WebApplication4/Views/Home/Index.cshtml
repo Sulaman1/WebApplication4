@@ -15,168 +15,431 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
+@*
+    SUB PIE CHART
+    Community Trainning
+    Vocational Trainning
+    LIP
+    Bds
+    Enterprise Clusters
+*@
+
+
 <div class="border border-primary container">
-    <div class="row row-cols-2">
-        <div class="border border-primary col">
+    <div class="row" style="height:600px; border:solid 2px blue ">
+
+
+        <div class="border border-primary col-3">
+
+            <!-- Styles -->
+            <style>
+                #myChart {
+                    width: 100%;
+                    height: 10%;
+                }
+
+            </style>
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <script>
+                const ctx = document.getElementById('myChart');
+
+
+                const defaultLegendClickHandler = Chart.defaults.plugins.legend.onClick;                
+                const pieDoughnutLegendClickHandler = Chart.controllers.doughnut.overrides.plugins.legend.onClick;
+                const newLegendClickHandler = function (e, legendItem, legend) {
+                    const index = legendItem.datasetIndex;
+                    const type = legend.chart.config.type;
+                    console.log("IN")
+
+                    if (index > 1) {
+                        // Do the original logic
+                        if (type === 'pie' || type === 'doughnut') {
+                            pieDoughnutLegendClickHandler(e, legendItem, legend)
+                        } else {
+                            defaultLegendClickHandler(e, legendItem, legend);
+                        }
+
+                    } else {
+                        let ci = legend.chart;
+                        [
+                            ci.getDatasetMeta(0),
+                            ci.getDatasetMeta(1)
+                        ].forEach(function (meta) {
+                            meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                        });
+                        ci.update();
+                    }
+                };
+
+                const data = {
+                    //labels: [
+                    //    'TB',
+                    //    'CBT',
+                    //    'LIP',
+                    //    'EBP'
+                    //],
+
+                    /**
+                         * 'Killa Abdullah',
+                                'Killa Saifullah',
+                                'Sherani',
+                                'Chagai',
+                                'Nushki',
+                                'Pishin',
+                                'Zhob',
+                                'Mastung',
+                                'Quetta'
+                     */
+                    //data: [1255, 1948, 232, 2000, 648,3584, 371, 600, 0],
+                    //'rgb(54, 162, 235)',
+                    /**
+                      * 'rgb(54, 162, 235)',
+                          'rgb(255, 232, 0)',
+                          'rgb(112, 60, 78)',
+                          'rgb(122, 245, 46)',
+                          'rgb(29, 92, 161)'
+                     */
+                    datasets: [{
+                        label: 'Polar Graph',
+                        data: [12.85, 4.49, 7.69, 2.71],
+                        borderWidth: 0,
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 205, 86)',
+                            'rgb(201, 203, 207)'
+
+                        ],
+                        hoverBackgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 205, 86)',
+                            'rgb(201, 203, 207)'
+                        ]
+                    }]
+                };
+
+                var polarChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: data,
+                    options: {
+                        scale: {
+                            ticks: {
+                                display:true,
+                                stepSize: 2
+                            }
+                        },
+                        legend: {
+                            position: "top",
+                            plugins: {
+                                legend: {
+                                    onClick: newLegendClickHandler
+                                }
+                            },
+                            labels: {
+                                boxWidth: 11,
+                                fontColor: "#757681",
+                                fontSize: 3
+                            }
+                        }
+                    }
+                });
+
+            </script>
+
+        </div>
+
+       
+        <div class="border border-primary col-9">
 
             <h5>PieOfPie</h5>
+            <!-- Resources -->
+            @*<div style="float:right; border: solid 2px yellow; height:100px">*@
+                <input type="text" id="searchInput" placeholder="Search..." />
+
+                <button onclick="PDOI()">PDOI</button>
+                <button onclick="REFUGEE()">REFUGEE</button>
+
+            @*</div>*@
+
+           @* <div style="border: solid 2px yellow; height:100px; width:100px">
+            </div>*@
 
             <!-- Styles -->
             <style>
                 #chartdiv {
-                    width: 200%;
-                    height: 100%;
+                    border: dashed 2px green;
+                    width: 100%;
+                    height: 500px;
                 }
 
             </style>
 
-            <!-- Resources -->
-
-            <input type="text" id="searchInput" placeholder="Search..." />
-
-            <button onclick="PDOI()">PDOI</button>
-            <button onclick="REFUGEE()">REFUGEE</button>
-
-           
-
+          
             <!-- Chart code -->
             <script>
 
                 var newData = []
                 var root;
+                var i = 0;
                 var initializeData = (function () {
                     var executed = false;
                     console.log("one time")
                     return function () {
                         if (!executed) {
                             executed = true;
+
+                            /**
+                              *  SUB PIE CHART
+                                    Community Trainning
+                                    Vocational Trainning
+                                    LIP
+                                    Bds
+                                    Enterprise Clusters
+                             */
+
                             newData = [
                                 {
-                                    category: "Afghan Refugee",
+                                    "category": "Afghan Refugee",
                                     value: 49,
                                     subData: [
-                                        { category: "LIP", value: 10 },
-                                        { category: "BSF", value: 10 },
-                                        { category: "TECH", value: 10 },
-                                        { category: "COMMUNITY TRAININGS", value: 10 }
+                                        { "category": "EDPs", value: 25500 },
+                                        { "category": "LIPs", value: 4500 },
+                                        { "category": "CBT", value: 9360 },
+                                        { "category": "TVS", value: 12750 },
+                                        { "category": "BDS", value: 4500 }
                                     ],
                                     breakdown: [{
-                                        category: "Killa Abdullah",
-                                        value: 29
+                                        "category": "Killa Abdullah",
+                                        "edp": 2.52,
+                                        "lip": 2.45,
+                                        "cbt": 2.51,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Killa Saifullah",
-                                        value: 40
+                                        "category": "Killa Saifullah",
+                                        "edp": 2.25,
+                                        "lip": 2.45,
+                                        "cbt": 2.31,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Sherani",
-                                        value: 11
+                                        "category": "Sherani",
+                                        "edp": 2.52,
+                                        "lip": 2.45,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Chagai",
-                                        value: 9
+                                        "category": "Chagai",
+                                        "edp": 2.65,
+                                        "lip": 2.35,
+                                        "cbt": 24.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Nushki",
-                                        value: 9
+                                        "category": "Nushki",
+                                        "edp": 2.25,
+                                        "lip": 2.65,
+                                        "cbt": 2.71,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Pishin",
-                                        value: 9
+                                        "category": "Pishin",
+                                        "edp": 2.56,
+                                        "lip": 2.54,
+                                        "cbt": 2.31,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Zhob",
-                                        value: 9
+                                        "category": "Zhob",
+                                        "edp": 2.53,
+                                        "lip": 2.52,
+                                        "cbt": 2.81,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Mastung",
-                                        value: 9
+                                        "category": "Mastung",
+                                        "edp": 2.51,
+                                        "lip": 2.65,
+                                        "cbt": 2.51,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Quetta",
-                                        value: 9
+                                        "category": "Quetta",
+                                        "edp": 2.25,
+                                        "lip": 2.65,
+                                        "cbt": 2.71,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }]
                                 },
                                 {
-                                    category: "Female",
+                                    "category": "Female",
                                     value: 30,
                                     subData: [
-                                        { category: "LIP", value: 10 },
-                                        { category: "BSF", value: 10 },
-                                        { category: "TECH", value: 10 },
-                                        { category: "COMMUNITY TRAININGS", value: 10 }
+                                        { "category": "EDPs", value: 10 },
+                                        { "category": "LIPs", value: 20 },
+                                        { "category": "CBT", value: 5 },
+                                        { "category": "TVS", value: 17 },
+                                        { "category": "BDS", value: 6 }
                                     ],
                                     breakdown: [{
-                                        category: "Killa Abdullah",
-                                        value: 29
+                                        "category": "Killa Abdullah",
+                                        "edp": 2.75,
+                                        "lip": 2.15,
+                                        "cbt": 2.41,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Killa Saifullah",
-                                        value: 10
+                                        "category": "Killa Saifullah",
+                                        "edp": 2.45,
+                                        "lip": 2.65,
+                                        "cbt": 2.31,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Sherani",
-                                        value: 11
+                                        "category": "Sherani",
+                                        "edp": 2.25,
+                                        "lip": 2.15,
+                                        "cbt": 2.51,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Chagai",
-                                        value: 9
+                                        "category": "Chagai",
+                                        "edp": 2.56,
+                                        "lip": 2.57,
+                                        "cbt": 2.51,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Nushki",
-                                        value: 9
+                                        "category": "Nushki",
+                                        "edp": 2.25,
+                                        "lip": 2.15,
+                                        "cbt": 26.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Pishin",
-                                        value: 9
+                                        "category": "Pishin",
+                                        "edp": 2.85,
+                                        "lip": 2.75,
+                                        "cbt": 2.81,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Zhob",
-                                        value: 9
+                                        "category": "Zhob",
+                                        "edp": 2.65,
+                                        "lip": 2.85,
+                                        "cbt": 2.71,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Mastung",
-                                        value: 9
+                                        "category": "Mastung",
+                                        "edp": 2.5,
+                                        "lip": 2.5,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Quetta",
-                                        value: 9
+                                        "category": "Quetta",
+                                        "edp": 2.5,
+                                        "lip": 2.5,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }]
 
                                 }, {
-                                    category: "Male",
+                                    "category": "Male",
                                     value: 21,
                                     subData: [
-                                        { category: "LIP", value: 11 },
-                                        { category: "BSF", value: 10 },
-                                        { category: "TECH", value: 0 }
+                                        { "category": "EDPs", value: 10 },
+                                        { "category": "LIPs", value: 20 },
+                                        { "category": "CBT", value: 5 },
+                                        { "category": "TVS", value: 17 },
+                                        { "category": "BDS", value: 6 }
                                     ],
                                     breakdown: [{
-                                        category: "Killa Abdullah",
-                                        value: 29
+                                        "category": "Killa Abdullah",
+                                        "edp": 2.1,
+                                        "lip": 2.2,
+                                        "cbt": 2.3,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Killa Saifullah",
-                                        value: 40
+                                        "category": "Killa Saifullah",
+                                        "edp": 2.1,
+                                        "lip": 2.2,
+                                        "cbt": 2.3,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Sherani",
-                                        value: 11
+                                        "category": "Sherani",
+                                        "edp": 2.1,
+                                        "lip": 2.2,
+                                        "cbt": 2.3,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }, {
-                                        category: "Chagai",
-                                        value: 9
+                                        "category": "Chagai",
+                                        "edp": 2.1,
+                                        "lip": 2.2,
+                                        "cbt": 2.3,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Nushki",
-                                        value: 9
+                                        "category": "Nushki",
+                                        "edp": 2.2,
+                                        "lip": 2.3,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Pishin",
-                                        value: 9
+                                        "category": "Pishin",
+                                        "edp": 2.5,
+                                        "lip": 2.2,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Zhob",
-                                        value: 9
+                                        "category": "Zhob",
+                                        "edp": 2.25,
+                                        "lip": 2.53,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Mastung",
-                                        value: 9
+                                        "category": "Mastung",
+                                        "edp": 2.52,
+                                        "lip": 2.25,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     },
                                     {
-                                        category: "Quetta",
-                                        value: 9
+                                        "category": "Quetta",
+                                        "edp": 2.45,
+                                        "lip": 2.55,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2
                                     }]
                                 }
                             ]
@@ -207,94 +470,164 @@
                                 // ==============================================
                                 // Column chart
                                 // ==============================================
+                                var xxAxis;
+                                var sseries;
+                                function columnStart(data) {
+
+                                    console.log("Dataaaa: ", data)
+
+                                    // Create chart
+                                    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                                    var achart = container.children.push(
+                                        am5xy.XYChart.new(root, {
+                                            // panY: false,
+                                            wheelY: "zoomX",
+                                            wheelX: "zoomY",
+                                            //layout: root.verticalLayout
+                                            width: am5.percent(150),
+                                            height: am5.percent(57),
+                                            panX: false,
+                                            panY: false,
+                                            //centerX: am5.percent(10),
+                                            y: am5.percent(45),
+                                            x: am5.percent(35),
+                                            layout: am5.GridLayout.new(root, {
+                                                maxColumns: 2,
+                                                fixedWidthGrid: true
+                                            })
+                                            //layout: root.verticalLayout
+                                        })
+                                    );
 
 
-                                // Create chart
-                                // https://www.amcharts.com/docs/v5/charts/xy-chart/
-                                var achart = container.children.push(
-                                    am5xy.XYChart.new(root, {
-                                        // panY: false,
-                                        wheelY: "zoomX",
-                                        wheelX: "zoomY",
-                                        //layout: root.verticalLayout
-                                        width: am5.percent(100),
-                                        height: am5.percent(40),
-                                        panX: false,
-                                        panY: false,
-                                        //centerX: am5.percent(10),
+                                    // Create axes
+                                    // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+                                    //var xRenderer = am5xy.AxisRendererX.new(root, {});
+                                    //xxAxis = achart.xAxes.push(am5xy.CategoryAxis.new(root, {
+                                    //    categoryField: "category",
+                                    //    renderer: xRenderer,
+                                    //    tooltip: am5.Tooltip.new(root, {})
+                                    //}));
+
+                                    //xRenderer.grid.template.setAll({
+                                    //    location: 1
+                                    //})
+
+                                    // Create X-Axis
+                                    xxAxis = achart.xAxes.push(
+                                        am5xy.CategoryAxis.new(root, {
+                                            maxDeviation: 0.2,
+                                            renderer: am5xy.AxisRendererX.new(root, {
+                                                minGridDistance: 10
+                                            }),
+                                            categoryField: "category"
+                                        })
+                                    );
+                                    var xRenderer = xxAxis.get("renderer");
+                                    xRenderer.labels.template.setAll({
+                                        rotation: -30,
+                                        fontSize: 10,
+                                        centerY: am5.percent(50)
+                                    });
+
+                                    xxAxis.data.setAll(data);
+
+                                    // Craete Y-axis
+                                    let yAxis = achart.yAxes.push(
+                                        am5xy.ValueAxis.new(root, {
+                                            renderer: am5xy.AxisRendererY.new(root, {
+                                            })
+                                        })
+                                    );
+
+                                    //var yAxis = achart.yAxes.push(am5xy.ValueAxis.new(root, {
+                                    //    min: 0,
+                                    //    renderer: am5xy.AxisRendererY.new(root, {
+                                    //        strokeOpacity: 0.1
+                                    //    })
+                                    //}));
+
+                                    //// Add legend
+                                    //// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+                                    //var legend = achart.children.push(am5.Legend.new(root, {
+                                    //    centerX: am5.p50,
+                                    //    x: am5.p50
+                                    //}));
+
+
+                                    // Add legend
+                                    var legend = achart.children.push(am5.Legend.new(root, {
+                                        centerY: am5.percent(50),
                                         y: am5.percent(50),
-                                        x: am5.percent(0),
-                                        layout: am5.GridLayout.new(root, {
-                                            maxColumns: 2,
-                                            fixedWidthGrid: true
+                                        layout: root.verticalLayout,
+                                        height: am5.percent(100),
+                                        verticalScrollbar: am5.Scrollbar.new(root, {
+                                            orientation: "vertical"
                                         })
-                                        //layout: root.verticalLayout
-                                    })
-                                );
+                                    }));
 
-                                // Craete Y-axis
-                                let yAxis = achart.yAxes.push(
-                                    am5xy.ValueAxis.new(root, {
-                                        renderer: am5xy.AxisRendererY.new(root, {
-                                        })
-                                    })
-                                );
+                                  
 
-                                // Create X-Axis
-                                var xAxis = achart.xAxes.push(
-                                    am5xy.CategoryAxis.new(root, {
-                                        maxDeviation: 0.2,
-                                        renderer: am5xy.AxisRendererX.new(root, {
-                                            minGridDistance: 10
-                                        }),
-                                        categoryField: "category"
-                                    })
-                                );
+                                    // Add series
+                                    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                                    function makeSeries(name, fieldName) {
 
-                                //xAxis.data.setAll(adata);
+                                        sseries = achart.series.push(am5xy.ColumnSeries.new(root, {
+                                            name: name,
+                                            stacked: true,
+                                            xAxis: xxAxis,
+                                            yAxis: yAxis,
+                                            valueYField: fieldName,
+                                            categoryXField: "category"
+                                        }));
 
-                                // Create series
-                                var aseries1 = achart.series.push(
-                                    am5xy.ColumnSeries.new(root, {
-                                        name: "Beneficiaries", //"Series"
-                                        xAxis: xAxis,
-                                        yAxis: yAxis,
-                                        valueYField: "value",
-                                        categoryXField: "category",
-                                        tooltip: am5.Tooltip.new(root, {})
-                                    })
-                                );
-                                aseries1.columns.template.setAll({
-                                    tooltipText: "{categoryX}: {valueY}"
-                                });
+                                        sseries.columns.template.setAll({
+                                            tooltipText: "{name}, {categoryX}: {valueY}",
+                                            tooltipY: am5.percent(10)
+                                        });
+                                        sseries.data.setAll(data);
 
-                                var xRenderer = xAxis.get("renderer");
-                                xRenderer.labels.template.setAll({
-                                    rotation: -15,
-                                    fontSize: 10,
-                                    centerY: am5.percent(50)
-                                });
+                                        // Make stuff animate on load
+                                        // https://www.amcharts.com/docs/v5/concepts/animations/
+                                        //series.appear();
 
-                                //aseries1.data.setAll(adata);
 
-                                //var aseries2 = achart.series.push(
-                                //    am5xy.ColumnSeries.new(root, {
-                                //        name: "Series",
-                                //        xAxis: xAxis,
-                                //        yAxis: yAxis,
-                                //        valueYField: "value",
-                                //        categoryXField: "category"
-                                //    })
-                                //);
-                                //aseries2.data.setAll(adata);
+                                        sseries.bullets.push(function () {
+                                            return am5.Bullet.new(root, {
+                                                sprite: am5.Label.new(root, {
+                                                    //text: "{valueY}",
+                                                    fill: root.interfaceColors.get("alternativeText"),
+                                                    centerY: am5.p50,
+                                                    centerX: am5.p50,
+                                                    fontSize: 10,
+                                                    populateText: true
+                                                })
+                                            });
+                                        });
 
-                                // Add legend
-                                var alegend = achart.children.push(am5.Legend.new(root, {}));
-                                alegend.data.setAll(achart.series.values);
+                                        legend.data.push(sseries);
+                                        //legend.data.setAll(achart.series.values);
+                                    }
+                                    console.log("i: ", i)
+                                    if (i == 0) {
+
+                                        makeSeries("EDPs", "edp");
+                                        makeSeries("LIPs", "lip");
+                                        makeSeries("CBT", "cbt");
+                                        makeSeries("TVS", "tvs");
+                                        makeSeries("BDS", "bds");
+
+
+                                    }
+                                    i = 1;
+
+                                    //function end
+
+                                }
 
 
                                 // ==============================================
-                                // Column chart
+                                // END Column chart
                                 // ==============================================
 
                                 // Create main chart
@@ -302,19 +635,19 @@
                                 var chart = container.children.push(
                                     am5percent.PieChart.new(root, {
                                         tooltip: am5.Tooltip.new(root, {}),
-                                        radius: am5.percent(95),
+                                        radius: am5.percent(150),
                                         // innerRadius: am5.percent(10)
                                         // panY: false,
                                         //wheelY: "zoomX",
                                         //wheelX: "zoomY",
                                         //layout: root.verticalLayout
                                         width: am5.percent(70),
-                                        //height: am5.percent(30),
+                                        height: am5.percent(30),
                                         //panX: false,
                                         //panY: false,
-                                        
-                                        y: am5.percent(-23),
-                                        x: am5.percent(0),
+
+                                        y: am5.percent(10),
+                                        x: am5.percent(10),
                                         layout: am5.GridLayout.new(root, {
                                             maxColumns: 2,
                                             fixedWidthGrid: true
@@ -331,14 +664,23 @@
                                     })
                                 );
 
-                                var totalData = [
-                                    {
-                                        total: "Total",
-                                        beneficiaries: 60000
-                                    }
-                                ]
+                                series2.data.setAll([{
+                                    total: "Total",
+                                    beneficiaries: 60000
+                                }]);
 
-                                series2.data.setAll(totalData);
+                                series2.bullets.push(function () {
+                                    return am5.Bullet.new(root, {
+                                        sprite: am5.Label.new(root, {
+                                            text: "Total: {beneficiaries}",
+                                            centerX: am5.percent(50),
+                                            centerY: am5.percent(130),
+                                            populateText: true,
+                                            fill: am5.color(0xffffff)
+                                        })
+                                    });
+                                });
+
 
                                 // Configuring slices
                                 series2.slices.template.setAll({
@@ -346,22 +688,44 @@
                                     strokeWidth: 2
                                 })
 
-                                // Disabling labels and ticks
+                                series2.labels.template.setAll({
+                                    // text: "{beneficiaries}",
+                                    //fontSize: 10,
+                                    textType: "circular",
+                                    //inside: true,
+                                    //centerX: am5.percent(90),
+                                    radius: 10,
+                                    fill: am5.color(0xffffff)
+                                })
+
+                                // add events
+                                //series2.slices.template.events.on("click", function (e) {
+                                //    console.log("Series2 Slice", e.target.get("fill"))
+                                //    selectSlice(e.target);
+                                //    aseries1.columns.template.setAll({
+                                //        fill: e.target.get("fill"), //slice
+                                //        stroke: e.target.get("fill") //slice
+                                //    });
+
+                                //    console.log("DATA: ", e.target.dataItem.dataContext.breakdown)
+
+                                //    aseries1.data.setAll(e.target.dataItem.dataContext.breakdown);
+                                //    // yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
+                                //    xAxis.data.setAll(e.target.dataItem.dataContext.breakdown)
+
+                                //    //makeSeries("LIP", "lip");
+                                //    //makeSeries("BSF", "bsf");
+                                //    //makeSeries("Tech", "tech");
+                                //    //makeSeries("Community Training", "ct");
+                                //    //currentSlice = e.target;
+                                //});
+
+                                //series2.ticks.template.set("visible", false);
+                                //series2.slices.template.set("toggleKey", "none");
+
+                                //// Disabling labels and ticks
                                 //series2.labels.template.set("visible", false);
                                 //series2.ticks.template.set("visible", false);
-                                                               
-                                series2.labels.template.setAll({
-                                    text: "{category}",
-                                    fontSize: 10,
-                                    textType: "radial",
-                                    inside: true,
-                                    centerX: am5.percent(90),
-                                    radius: 10,
-                                    fill: am5.color(0x000000)
-                                })
-                                series2.ticks.template.set("visible", false);
-                                series2.slices.template.set("toggleKey", "none");
-
 
                                 // Create series
                                 // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
@@ -379,14 +743,16 @@
                                 //});
 
                                 series.labels.template.setAll({
-                                    text: "{category}",
-                                    fontSize: 10,
-                                    textType: "radial",
+                                    text: "{category}[/]: [bold]{value}[/]",
+                                    fontSize: 15,
+                                    textType: "circular",
+                                    textAlign: "center",
+                                    oversizedBehavior: "wrap",
                                     inside: true,
                                     centerX: am5.percent(90),
                                     radius: 10,
                                     fill: am5.color(0xffffff)
-                                })
+                                    })
 
                                 series.ticks.template.set("visible", false);
                                 series.slices.template.set("toggleKey", "none");
@@ -395,17 +761,24 @@
                                 series.slices.template.events.on("click", function (e) {
                                     console.log("Slice", e.target.get("fill"))
                                     selectSlice(e.target);
-                                    aseries1.columns.template.setAll({
-                                        fill: e.target.get("fill"), //slice
-                                        stroke: e.target.get("fill") //slice
-                                    });
+                                    if (sseries) {
+                                        sseries.columns.template.setAll({
+                                            fill: e.target.get("fill"), //slice
+                                            stroke: e.target.get("fill") //slice
+                                        });
 
-                                    console.log(e.target.dataItem.dataContext.breakdown)
+                                    }
 
-                                    aseries1.data.setAll(e.target.dataItem.dataContext.breakdown);
-                                    // yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
-                                    xAxis.data.setAll(e.target.dataItem.dataContext.breakdown)
-                                    //currentSlice = e.target;
+                                    if (i == 0) {
+                                        console.log("Show column")
+                                        columnStart(e.target.dataItem.dataContext.breakdown)
+                                    }
+
+
+                                    //sseries.data.setAll(dummy);
+                                    //// yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
+                                    //xxAxis.data.setAll(dummy)
+                                    ////currentSlice = e.target;
                                 });
 
 
@@ -424,8 +797,8 @@
                                         //panX: false,
                                         //panY: false,
                                         //centerX: am5.percent(10),
-                                        y: am5.percent(-23),
-                                        x: am5.percent(20),
+                                        y: am5.percent(-25),
+                                        x: am5.percent(40),
                                         //layout: am5.GridLayout.new(root, {
                                         //    maxColumns: 2,
                                         //    fixedWidthGrid: true
@@ -444,16 +817,19 @@
                                     })
                                 );
 
-
                                 subSeries.labels.template.setAll({
-                                    text: "{category}",
+                                    text: "{category}[/]: [bold]{value}[/]",
                                     fontSize: 10,
-                                    textType: "radial",
-                                    inside: true,
-                                    centerX: am5.percent(30),
+                                    oversizedBehavior: "wrap",
+                                    textAlign: "center",
+                                    maxWidth: 90,
+                                    textType: "circular",
+                                    //inside: true,
+                                    //centerX: am5.percent(-40),
                                     radius: 10,
                                     fill: am5.color(0x000000)
                                 })
+
 
                                 subSeries.data.setAll([
                                     { category: "A", value: 0 },
@@ -585,139 +961,254 @@
                 //It Will Initialize the data on Page Load and would never be called again...
                 initializeData();
 
-                function PDOI(){
+
+                function PDOI() {
                     console.log("PDOI")
+                    i=0;
                     refugee = 0;
                     var pdoi = [
                         {
-                            category: "Afghan Refugee",
-                            value: 20,
+                            "category": "Afghan Refugee",
+                            value: 49,
                             subData: [
-                                { category: "LIP", value: 10 },
-                                { category: "BSF", value: 10 },
-                                { category: "TECH", value: 10 },
-                                { category: "COMMUNITY TRAININGS", value: 10 }
+                                { "category": "EDPs", value: 25500 },
+                                { "category": "LIPs", value: 4500 },
+                                { "category": "CBT", value: 9360 },
+                                { "category": "TVS", value: 12750 },
+                                { "category": "BDS", value: 4500 }
                             ],
                             breakdown: [{
-                                category: "Killa Abdullah",
-                                value: 29
+                                "category": "Killa Abdullah",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Killa Saifullah",
-                                value: 40
+                                "category": "Killa Saifullah",
+                                "edp": 2.25,
+                                "lip": 2.45,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Sherani",
-                                value: 11
+                                "category": "Sherani",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Chagai",
-                                value: 9
+                                "category": "Chagai",
+                                "edp": 2.65,
+                                "lip": 2.35,
+                                "cbt": 24.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Nushki",
-                                value: 9
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Pishin",
-                                value: 9
+                                "category": "Pishin",
+                                "edp": 2.56,
+                                "lip": 2.54,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Zhob",
-                                value: 9
+                                "category": "Zhob",
+                                "edp": 2.53,
+                                "lip": 2.52,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Mastung",
-                                value: 9
+                                "category": "Mastung",
+                                "edp": 2.51,
+                                "lip": 2.65,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Quetta",
-                                value: 9
+                                "category": "Quetta",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             }]
                         },
                         {
-                            category: "Female",
+                            "category": "Female",
                             value: 30,
                             subData: [
-                                { category: "LIP", value: 10 },
-                                { category: "BSF", value: 10 },
-                                { category: "TECH", value: 10 },
-                                { category: "COMMUNITY TRAININGS", value: 10 }
+                                { "category": "EDPs", value: 10 },
+                                { "category": "LIPs", value: 20 },
+                                { "category": "CBT", value: 5 },
+                                { "category": "TVS", value: 17 },
+                                { "category": "BDS", value: 6 }
                             ],
                             breakdown: [{
-                                category: "Killa Abdullah",
-                                value: 29
+                                "category": "Killa Abdullah",
+                                "edp": 2.75,
+                                "lip": 2.15,
+                                "cbt": 2.41,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Killa Saifullah",
-                                value: 10
+                                "category": "Killa Saifullah",
+                                "edp": 2.45,
+                                "lip": 2.65,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Sherani",
-                                value: 11
+                                "category": "Sherani",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Chagai",
-                                value: 9
+                                "category": "Chagai",
+                                "edp": 2.56,
+                                "lip": 2.57,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Nushki",
-                                value: 9
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 26.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Pishin",
-                                value: 9
+                                "category": "Pishin",
+                                "edp": 2.85,
+                                "lip": 2.75,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Zhob",
-                                value: 9
+                                "category": "Zhob",
+                                "edp": 2.65,
+                                "lip": 2.85,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Mastung",
-                                value: 9
+                                "category": "Mastung",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Quetta",
-                                value: 9
+                                "category": "Quetta",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             }]
 
                         }, {
-                            category: "Male",
+                            "category": "Male",
                             value: 21,
                             subData: [
-                                { category: "LIP", value: 11 },
-                                { category: "BSF", value: 10 },
-                                { category: "TECH", value: 0 }
+                                { "category": "EDPs", value: 10 },
+                                { "category": "LIPs", value: 20 },
+                                { "category": "CBT", value: 5 },
+                                { "category": "TVS", value: 17 },
+                                { "category": "BDS", value: 6 }
                             ],
                             breakdown: [{
-                                category: "Killa Abdullah",
-                                value: 29
+                                "category": "Killa Abdullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Killa Saifullah",
-                                value: 40
+                                "category": "Killa Saifullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Sherani",
-                                value: 11
+                                "category": "Sherani",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Chagai",
-                                value: 9
+                                "category": "Chagai",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Nushki",
-                                value: 9
+                                "category": "Nushki",
+                                "edp": 2.2,
+                                "lip": 2.3,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Pishin",
-                                value: 9
+                                "category": "Pishin",
+                                "edp": 2.5,
+                                "lip": 2.2,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Zhob",
-                                value: 9
+                                "category": "Zhob",
+                                "edp": 2.25,
+                                "lip": 2.53,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Mastung",
-                                value: 9
+                                "category": "Mastung",
+                                "edp": 2.52,
+                                "lip": 2.25,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Quetta",
-                                value: 9
+                                "category": "Quetta",
+                                "edp": 2.45,
+                                "lip": 2.55,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             }]
                         }
                     ]
+
 
                     newData = pdoi
 
@@ -727,133 +1218,250 @@
 
                 var refugee = 0;
 
-                function REFUGEE(){
-                    console.log("Refugee")
+                function REFUGEE() {
+                    console.log("Refugee");
+                    i=0;
                     refugee = 1;
                     var pdoi = [
                         {
-                            category: "Afghan Refugee",
+                            "category": "Afghan Refugee",
                             value: 49,
                             subData: [
-                                { category: "Male", value: 10 },
-                                { category: "Female", value: 10 }
+                                { "category": "EDPs", value: 25500 },
+                                { "category": "LIPs", value: 4500 },
+                                { "category": "CBT", value: 9360 },
+                                { "category": "TVS", value: 12750 },
+                                { "category": "BDS", value: 4500 }
                             ],
                             breakdown: [{
-                                category: "Killa Abdullah",
-                                value: 29
+                                "category": "Killa Abdullah",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Killa Saifullah",
-                                value: 40
+                                "category": "Killa Saifullah",
+                                "edp": 2.25,
+                                "lip": 2.45,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Sherani",
-                                value: 11
+                                "category": "Sherani",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Chagai",
-                                value: 9
+                                "category": "Chagai",
+                                "edp": 2.65,
+                                "lip": 2.35,
+                                "cbt": 24.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Nushki",
-                                value: 9
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Pishin",
-                                value: 9
+                                "category": "Pishin",
+                                "edp": 2.56,
+                                "lip": 2.54,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Zhob",
-                                value: 9
+                                "category": "Zhob",
+                                "edp": 2.53,
+                                "lip": 2.52,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Mastung",
-                                value: 9
+                                "category": "Mastung",
+                                "edp": 2.51,
+                                "lip": 2.65,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Quetta",
-                                value: 9
+                                "category": "Quetta",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             }]
                         },
                         {
-                            category: "Female",
+                            "category": "Female",
                             value: 30,
                             subData: [
-                                { category: "Male", value: 10 },
-                                { category: "Female", value: 10 }
+                                { "category": "EDPs", value: 10 },
+                                { "category": "LIPs", value: 20 },
+                                { "category": "CBT", value: 5 },
+                                { "category": "TVS", value: 17 },
+                                { "category": "BDS", value: 6 }
                             ],
-                            //breakdown: [{
-                            //    category: "Killa Abdullah",
-                            //    value: 29
-                            //}, {
-                            //    category: "Killa Saifullah",
-                            //    value: 10
-                            //}, {
-                            //    category: "Sherani",
-                            //    value: 11
-                            //}, {
-                            //    category: "Chagai",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Nushki",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Pishin",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Zhob",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Mastung",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Quetta",
-                            //    value: 9
-                            //}]
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "edp": 2.75,
+                                "lip": 2.15,
+                                "cbt": 2.41,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Killa Saifullah",
+                                "edp": 2.45,
+                                "lip": 2.65,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Sherani",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Chagai",
+                                "edp": 2.56,
+                                "lip": 2.57,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 26.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Pishin",
+                                "edp": 2.85,
+                                "lip": 2.75,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Zhob",
+                                "edp": 2.65,
+                                "lip": 2.85,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Mastung",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Quetta",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }]
 
                         }, {
-                            category: "Male",
+                            "category": "Male",
                             value: 21,
                             subData: [
-                                { category: "Male", value: 10 },
-                                { category: "Female", value: 10 }
+                                { "category": "EDPs", value: 10 },
+                                { "category": "LIPs", value: 20 },
+                                { "category": "CBT", value: 5 },
+                                { "category": "TVS", value: 17 },
+                                { "category": "BDS", value: 6 }
                             ],
-                            //breakdown: [{
-                            //    category: "Killa Abdullah",
-                            //    value: 29
-                            //}, {
-                            //    category: "Killa Saifullah",
-                            //    value: 40
-                            //}, {
-                            //    category: "Sherani",
-                            //    value: 11
-                            //}, {
-                            //    category: "Chagai",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Nushki",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Pishin",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Zhob",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Mastung",
-                            //    value: 9
-                            //},
-                            //{
-                            //    category: "Quetta",
-                            //    value: 9
-                            //}]
-                        
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Killa Saifullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Sherani",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Chagai",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Nushki",
+                                "edp": 2.2,
+                                "lip": 2.3,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Pishin",
+                                "edp": 2.5,
+                                "lip": 2.2,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Zhob",
+                                "edp": 2.25,
+                                "lip": 2.53,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Mastung",
+                                "edp": 2.52,
+                                "lip": 2.25,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Quetta",
+                                "edp": 2.45,
+                                "lip": 2.55,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }]
                         }
                     ]
 
@@ -870,236 +1478,256 @@
                 const searchInput = document.getElementById('searchInput');
 
                 // Add event listener to execute function on change
-                searchInput.addEventListener('keyup', function (event) {                   
+                searchInput.addEventListener('keyup', function (event) {
                     const searchTerm = event.target.value;
-
-                    //var list = [
-                    //    {
-                    //        category: "Killa Abdullah",
-                    //        value: 1255,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 220 },
-                    //            { category: "Female Beneficiary", value: 735 },
-                    //            { category: "Male Refugee Beneficiary", value: 52 },
-                    //            { category: "Female Refugee Beneficiary", value: 248 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Killa Saifullah",
-                    //        value: 1948,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 400 },
-                    //            { category: "Female Beneficiary", value: 948 },
-                    //            { category: "Male Refugee Beneficiary", value: 444 },
-                    //            { category: "Female Refugee Beneficiary", value: 156 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Sherani",
-                    //        value: 232,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 49 },
-                    //            { category: "Female Beneficiary", value: 183 },
-                    //            { category: "Male Refugee Beneficiary", value: 0 },
-                    //            { category: "Female Refugee Beneficiary", value: 0 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Chagai",
-                    //        value: 2000,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 213 },
-                    //            { category: "Female Beneficiary", value: 787 },
-                    //            { category: "Male Refugee Beneficiary", value: 787 },
-                    //            { category: "Female Refugee Beneficiary", value: 213 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Nushki",
-                    //        value: 648,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 159 },
-                    //            { category: "Female Beneficiary", value: 237 },
-                    //            { category: "Male Refugee Beneficiary", value: 151 },
-                    //            { category: "Female Refugee Beneficiary", value: 101 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Pishin",
-                    //        value: 3584,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 624 },
-                    //            { category: "Female Beneficiary", value: 1539 },
-                    //            { category: "Male Refugee Beneficiary", value: 1054 },
-                    //            { category: "Female Refugee Beneficiary", value: 367 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Zhob",
-                    //        value: 371,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 153 },
-                    //            { category: "Female Beneficiary", value: 218 },
-                    //            { category: "Male Refugee Beneficiary", value: 0 },
-                    //            { category: "Female Refugee Beneficiary", value: 0 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Mastung",
-                    //        value: 600,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 131 },
-                    //            { category: "Female Beneficiary", value: 169 },
-                    //            { category: "Male Refugee Beneficiary", value: 169 },
-                    //            { category: "Female Refugee Beneficiary", value: 131 }
-                    //        ]
-                    //    },
-                    //    {
-                    //        category: "Quetta",
-                    //        value: 0,
-                    //        subData: [
-                    //            { category: "Male Beneficiary", value: 0 },
-                    //            { category: "Female Beneficiary", value: 0 },
-                    //            { category: "Male Refugee Beneficiary", value: 0 },
-                    //            { category: "Female Refugee Beneficiary", value: 0 }
-                    //        ]
-                    //    }
-                    //];
 
                     var list = [
                         {
-                            category: "Afghan Refugee",
+                            "category": "Afghan Refugee",
                             value: 49,
                             subData: [
-                                { category: "LIP", value: 10 },
-                                { category: "BSF", value: 10 },
-                                { category: "TECH", value: 10 },
-                                { category: "COMMUNITY TRAININGS", value: 10 }
+                                { "category": "EDPs", value: 25500 },
+                                { "category": "LIPs", value: 4500 },
+                                { "category": "CBT", value: 9360 },
+                                { "category": "TVS", value: 12750 },
+                                { "category": "BDS", value: 4500 }
                             ],
                             breakdown: [{
-                                category: "Killa Abdullah",
-                                value: 29
+                                "category": "Killa Abdullah",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Killa Saifullah",
-                                value: 40
+                                "category": "Killa Saifullah",
+                                "edp": 2.25,
+                                "lip": 2.45,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Sherani",
-                                value: 11
+                                "category": "Sherani",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Chagai",
-                                value: 9
+                                "category": "Chagai",
+                                "edp": 2.65,
+                                "lip": 2.35,
+                                "cbt": 24.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Nushki",
-                                value: 9
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Pishin",
-                                value: 9
+                                "category": "Pishin",
+                                "edp": 2.56,
+                                "lip": 2.54,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Zhob",
-                                value: 9
+                                "category": "Zhob",
+                                "edp": 2.53,
+                                "lip": 2.52,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Mastung",
-                                value: 9
+                                "category": "Mastung",
+                                "edp": 2.51,
+                                "lip": 2.65,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Quetta",
-                                value: 9
+                                "category": "Quetta",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             }]
                         },
                         {
-                            category: "Female",
+                            "category": "Female",
                             value: 30,
                             subData: [
-                                { category: "LIP", value: 10 },
-                                { category: "BSF", value: 10 },
-                                { category: "TECH", value: 10 },
-                                { category: "COMMUNITY TRAININGS", value: 10 }
+                                { "category": "EDPs", value: 10 },
+                                { "category": "LIPs", value: 20 },
+                                { "category": "CBT", value: 5 },
+                                { "category": "TVS", value: 17 },
+                                { "category": "BDS", value: 6 }
                             ],
                             breakdown: [{
-                                category: "Killa Abdullah",
-                                value: 29
+                                "category": "Killa Abdullah",
+                                "edp": 2.75,
+                                "lip": 2.15,
+                                "cbt": 2.41,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Killa Saifullah",
-                                value: 10
+                                "category": "Killa Saifullah",
+                                "edp": 2.45,
+                                "lip": 2.65,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Sherani",
-                                value: 11
+                                "category": "Sherani",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Chagai",
-                                value: 9
+                                "category": "Chagai",
+                                "edp": 2.56,
+                                "lip": 2.57,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Nushki",
-                                value: 9
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 26.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Pishin",
-                                value: 9
+                                "category": "Pishin",
+                                "edp": 2.85,
+                                "lip": 2.75,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Zhob",
-                                value: 9
+                                "category": "Zhob",
+                                "edp": 2.65,
+                                "lip": 2.85,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Mastung",
-                                value: 9
+                                "category": "Mastung",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Quetta",
-                                value: 9
+                                "category": "Quetta",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             }]
 
                         }, {
-                            category: "Male",
+                            "category": "Male",
                             value: 21,
                             subData: [
-                                { category: "LIP", value: 11 },
-                                { category: "BSF", value: 10 },
-                                { category: "TECH", value: 0 }
+                                { "category": "EDPs", value: 10 },
+                                { "category": "LIPs", value: 20 },
+                                { "category": "CBT", value: 5 },
+                                { "category": "TVS", value: 17 },
+                                { "category": "BDS", value: 6 }
                             ],
                             breakdown: [{
-                                category: "Killa Abdullah",
-                                value: 29
+                                "category": "Killa Abdullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Killa Saifullah",
-                                value: 40
+                                "category": "Killa Saifullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Sherani",
-                                value: 11
+                                "category": "Sherani",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             }, {
-                                category: "Chagai",
-                                value: 9
+                                "category": "Chagai",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Nushki",
-                                value: 9
+                                "category": "Nushki",
+                                "edp": 2.2,
+                                "lip": 2.3,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Pishin",
-                                value: 9
+                                "category": "Pishin",
+                                "edp": 2.5,
+                                "lip": 2.2,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Zhob",
-                                value: 9
+                                "category": "Zhob",
+                                "edp": 2.25,
+                                "lip": 2.53,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Mastung",
-                                value: 9
+                                "category": "Mastung",
+                                "edp": 2.52,
+                                "lip": 2.25,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             },
                             {
-                                category: "Quetta",
-                                value: 9
+                                "category": "Quetta",
+                                "edp": 2.45,
+                                "lip": 2.55,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
                             }]
                         }
                     ]
 
 
+
                     const filteredList = list.filter(item => {
-                        
+
                         const itemName = item.category.toLowerCase();
                         const lowercasedSearchTerm = searchTerm.toLowerCase();
                         return itemName.includes(lowercasedSearchTerm);
@@ -1107,14 +1735,14 @@
                     // Execute your search function or any desired action here
                     console.log('Searching for:', filteredList);
                     newData = filteredList
+                    i=0;
                     root.dispose();
                     rerender()
                 });
-          
-                
-                function rerender(){
-                    am5.ready(function () {
 
+
+                function rerender() {
+                    am5.ready(function () {
                         console.log("In Show...", newData);
 
                         // Create root element
@@ -1139,93 +1767,166 @@
                         // ==============================================
                         // Column chart
                         // ==============================================
+                        var xxAxis;
+                        var sseries;
+                        function columnStart(data) {
 
-                        // Create chart
-                        // https://www.amcharts.com/docs/v5/charts/xy-chart/
-                        var achart = container.children.push(
-                            am5xy.XYChart.new(root, {
-                                // panY: false,
-                                wheelY: "zoomX",
-                                wheelX: "zoomY",
-                                //layout: root.verticalLayout
-                                width: am5.percent(100),
-                                height: am5.percent(40),
-                                panX: false,
-                                panY: false,
-                                //centerX: am5.percent(10),
+                            console.log("Dataaaa: ", data)
+
+                            // Create chart
+                            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                            var achart = container.children.push(
+                                am5xy.XYChart.new(root, {
+                                    // panY: false,
+                                    wheelY: "zoomX",
+                                    wheelX: "zoomY",
+                                    //layout: root.verticalLayout
+                                    width: am5.percent(150),
+                                    height: am5.percent(57),
+                                    panX: false,
+                                    panY: false,
+                                    //centerX: am5.percent(10),
+                                    y: am5.percent(45),
+                                    x: am5.percent(35),
+                                    layout: am5.GridLayout.new(root, {
+                                        maxColumns: 2,
+                                        fixedWidthGrid: true
+                                    })
+                                    //layout: root.verticalLayout
+                                })
+                            );
+
+
+                            // Create axes
+                            // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+                            //var xRenderer = am5xy.AxisRendererX.new(root, {});
+                            //xxAxis = achart.xAxes.push(am5xy.CategoryAxis.new(root, {
+                            //    categoryField: "category",
+                            //    renderer: xRenderer,
+                            //    tooltip: am5.Tooltip.new(root, {})
+                            //}));
+
+                            //xRenderer.grid.template.setAll({
+                            //    location: 1
+                            //})
+
+                            // Create X-Axis
+                            xxAxis = achart.xAxes.push(
+                                am5xy.CategoryAxis.new(root, {
+                                    maxDeviation: 0.2,
+                                    renderer: am5xy.AxisRendererX.new(root, {
+                                        minGridDistance: 10
+                                    }),
+                                    categoryField: "category"
+                                })
+                            );
+                            var xRenderer = xxAxis.get("renderer");
+                            xRenderer.labels.template.setAll({
+                                rotation: -30,
+                                fontSize: 10,
+                                centerY: am5.percent(50)
+                            });
+
+                            xxAxis.data.setAll(data);
+
+                            // Craete Y-axis
+                            let yAxis = achart.yAxes.push(
+                                am5xy.ValueAxis.new(root, {
+                                    renderer: am5xy.AxisRendererY.new(root, {
+                                    })
+                                })
+                            );
+
+                            //var yAxis = achart.yAxes.push(am5xy.ValueAxis.new(root, {
+                            //    min: 0,
+                            //    renderer: am5xy.AxisRendererY.new(root, {
+                            //        strokeOpacity: 0.1
+                            //    })
+                            //}));
+
+                            //// Add legend
+                            //// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+                            //var legend = achart.children.push(am5.Legend.new(root, {
+                            //    centerX: am5.p50,
+                            //    x: am5.p50
+                            //}));
+
+
+                            // Add legend
+                            var legend = achart.children.push(am5.Legend.new(root, {
+                                centerY: am5.percent(50),
                                 y: am5.percent(50),
-                                x: am5.percent(0),
-                                layout: am5.GridLayout.new(root, {
-                                    maxColumns: 2,
-                                    fixedWidthGrid: true
+                                layout: root.verticalLayout,
+                                height: am5.percent(100),
+                                verticalScrollbar: am5.Scrollbar.new(root, {
+                                    orientation: "vertical"
                                 })
-                                //layout: root.verticalLayout
-                            })
-                        );
+                            }));
 
-                        // Craete Y-axis
-                        let yAxis = achart.yAxes.push(
-                            am5xy.ValueAxis.new(root, {
-                                renderer: am5xy.AxisRendererY.new(root, {
-                                })
-                            })
-                        );
 
-                        // Create X-Axis
-                        var xAxis = achart.xAxes.push(
-                            am5xy.CategoryAxis.new(root, {
-                                maxDeviation: 0.2,
-                                renderer: am5xy.AxisRendererX.new(root, {
-                                    minGridDistance: 10
-                                }),
-                                categoryField: "category"
-                            })
-                        );
 
-                        //xAxis.data.setAll(adata);
+                            // Add series
+                            // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                            function makeSeries(name, fieldName) {
 
-                        // Create series
-                        var aseries1 = achart.series.push(
-                            am5xy.ColumnSeries.new(root, {
-                                name: "Beneficiaries", //"Series"
-                                xAxis: xAxis,
-                                yAxis: yAxis,
-                                valueYField: "value",
-                                categoryXField: "category",
-                                tooltip: am5.Tooltip.new(root, {})
-                            })
-                        );
-                        aseries1.columns.template.setAll({
-                            tooltipText: "{categoryX}: {valueY}"
-                        });
+                                sseries = achart.series.push(am5xy.ColumnSeries.new(root, {
+                                    name: name,
+                                    stacked: true,
+                                    xAxis: xxAxis,
+                                    yAxis: yAxis,
+                                    valueYField: fieldName,
+                                    categoryXField: "category"
+                                }));
 
-                        var xRenderer = xAxis.get("renderer");
-                        xRenderer.labels.template.setAll({
-                            rotation: -15,
-                            fontSize: 10,
-                            centerY: am5.percent(50)
-                        });
+                                sseries.columns.template.setAll({
+                                    tooltipText: "{name}, {categoryX}: {valueY}",
+                                    tooltipY: am5.percent(10)
+                                });
+                                sseries.data.setAll(data);
 
-                        //aseries1.data.setAll(adata);
+                                // Make stuff animate on load
+                                // https://www.amcharts.com/docs/v5/concepts/animations/
+                                //series.appear();
 
-                        //var aseries2 = achart.series.push(
-                        //    am5xy.ColumnSeries.new(root, {
-                        //        name: "Series",
-                        //        xAxis: xAxis,
-                        //        yAxis: yAxis,
-                        //        valueYField: "value",
-                        //        categoryXField: "category"
-                        //    })
-                        //);
-                        //aseries2.data.setAll(adata);
 
-                        // Add legend
-                        var alegend = achart.children.push(am5.Legend.new(root, {}));
-                        alegend.data.setAll(achart.series.values);
+                                sseries.bullets.push(function () {
+                                    return am5.Bullet.new(root, {
+                                        sprite: am5.Label.new(root, {
+                                            //text: "{valueY}",
+                                            fill: root.interfaceColors.get("alternativeText"),
+                                            centerY: am5.p50,
+                                            centerX: am5.p50,
+                                            fontSize: 10,
+                                            populateText: true
+                                        })
+                                    });
+                                });
+
+                                legend.data.push(sseries);
+                                //legend.data.setAll(achart.series.values);
+                            }
+                            console.log("i: ", i)
+                            if (i == 0) {
+
+                                makeSeries("EDPs", "edp");
+                                makeSeries("LIPs", "lip");
+                                makeSeries("CBT", "cbt");
+                                makeSeries("TVS", "tvs");
+                                makeSeries("BDS", "bds");
+
+
+                            }
+                            i = 1;
+
+                            //function end
+
+                        }
+
+
 
 
                         // ==============================================
-                        // Column chart
+                        // END Column chart
                         // ==============================================
 
                         // Create main chart
@@ -1233,19 +1934,19 @@
                         var chart = container.children.push(
                             am5percent.PieChart.new(root, {
                                 tooltip: am5.Tooltip.new(root, {}),
-                                radius: am5.percent(95),
+                                radius: am5.percent(150),
                                 // innerRadius: am5.percent(10)
                                 // panY: false,
                                 //wheelY: "zoomX",
                                 //wheelX: "zoomY",
                                 //layout: root.verticalLayout
                                 width: am5.percent(70),
-                                //height: am5.percent(30),
+                                height: am5.percent(30),
                                 //panX: false,
                                 //panY: false,
 
-                                y: am5.percent(-23),
-                                x: am5.percent(0),
+                                y: am5.percent(10),
+                                x: am5.percent(10),
                                 layout: am5.GridLayout.new(root, {
                                     maxColumns: 2,
                                     fixedWidthGrid: true
@@ -1267,6 +1968,19 @@
                             beneficiaries: 60000
                         }]);
 
+                        series2.bullets.push(function () {
+                            return am5.Bullet.new(root, {
+                                sprite: am5.Label.new(root, {
+                                    text: "Total: {beneficiaries}",
+                                    centerX: am5.percent(50),
+                                    centerY: am5.percent(130),
+                                    populateText: true,
+                                    fill: am5.color(0xffffff)
+                                })
+                            });
+                        });
+
+
                         // Configuring slices
                         series2.slices.template.setAll({
                             stroke: am5.color(0xffffff),
@@ -1274,7 +1988,7 @@
                         })
 
                         series2.labels.template.setAll({
-                           // text: "{beneficiaries}",
+                            // text: "{beneficiaries}",
                             //fontSize: 10,
                             textType: "circular",
                             //inside: true,
@@ -1282,6 +1996,28 @@
                             radius: 10,
                             fill: am5.color(0xffffff)
                         })
+
+                        // add events
+                        //series2.slices.template.events.on("click", function (e) {
+                        //    console.log("Series2 Slice", e.target.get("fill"))
+                        //    selectSlice(e.target);
+                        //    aseries1.columns.template.setAll({
+                        //        fill: e.target.get("fill"), //slice
+                        //        stroke: e.target.get("fill") //slice
+                        //    });
+
+                        //    console.log("DATA: ", e.target.dataItem.dataContext.breakdown)
+
+                        //    aseries1.data.setAll(e.target.dataItem.dataContext.breakdown);
+                        //    // yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
+                        //    xAxis.data.setAll(e.target.dataItem.dataContext.breakdown)
+
+                        //    //makeSeries("LIP", "lip");
+                        //    //makeSeries("BSF", "bsf");
+                        //    //makeSeries("Tech", "tech");
+                        //    //makeSeries("Community Training", "ct");
+                        //    //currentSlice = e.target;
+                        //});
 
                         //series2.ticks.template.set("visible", false);
                         //series2.slices.template.set("toggleKey", "none");
@@ -1305,11 +2041,12 @@
                         //    radius: 4
                         //});
 
-                        
-                        series.labels.template.setAll({                 
+                        series.labels.template.setAll({
                             text: "{category}[/]: [bold]{value}[/]",
-                            fontSize: 10,
-                            textType: "radial",
+                            fontSize: 15,
+                            textType: "circular",
+                            textAlign: "center",
+                            oversizedBehavior: "wrap",
                             inside: true,
                             centerX: am5.percent(90),
                             radius: 10,
@@ -1319,21 +2056,29 @@
                         series.ticks.template.set("visible", false);
                         series.slices.template.set("toggleKey", "none");
 
+                       
                         // add events
                         series.slices.template.events.on("click", function (e) {
                             console.log("Slice", e.target.get("fill"))
                             selectSlice(e.target);
-                            aseries1.columns.template.setAll({
-                                fill: e.target.get("fill"), //slice
-                                stroke: e.target.get("fill") //slice
-                            });
+                            if (sseries) {
+                                sseries.columns.template.setAll({
+                                    fill: e.target.get("fill"), //slice
+                                    stroke: e.target.get("fill") //slice
+                                });
 
-                            console.log(e.target.dataItem.dataContext.breakdown)
+                            }
+                            console.log("IIIIII: ", i)
+                            if (i == 0) {
+                                console.log("Show the bar")
+                                columnStart(e.target.dataItem.dataContext.breakdown)
+                            }
 
-                            aseries1.data.setAll(e.target.dataItem.dataContext.breakdown);
-                            // yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
-                            xAxis.data.setAll(e.target.dataItem.dataContext.breakdown)
-                            //currentSlice = e.target;
+
+                            //sseries.data.setAll(dummy);
+                            //// yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
+                            //xxAxis.data.setAll(dummy)
+                            ////currentSlice = e.target;
                         });
 
 
@@ -1352,8 +2097,8 @@
                                 //panX: false,
                                 //panY: false,
                                 //centerX: am5.percent(10),
-                                y: am5.percent(-23),
-                                x: am5.percent(20),
+                                y: am5.percent(-25),
+                                x: am5.percent(40),
                                 //layout: am5.GridLayout.new(root, {
                                 //    maxColumns: 2,
                                 //    fixedWidthGrid: true
@@ -1373,14 +2118,18 @@
                         );
 
                         subSeries.labels.template.setAll({
-                            text: "{category}",
+                            text: "{category}[/]: [bold]{value}[/]",
                             fontSize: 10,
-                            textType: "radial",
-                            inside: true,
-                            centerX: am5.percent(30),
+                            oversizedBehavior: "wrap",
+                            textAlign: "center",
+                            maxWidth: 90,
+                            textType: "circular",
+                            //inside: true,
+                            //centerX: am5.percent(-40),
                             radius: 10,
                             fill: am5.color(0x000000)
                         })
+
 
                         subSeries.data.setAll([
                             { category: "A", value: 0 },
@@ -1407,8 +2156,6 @@
 
                         function updateLines() {
                             if (selectedSlice) {
-                                //console.log("SelectedSlice: ", selectedSlice);
-
                                 var startAngle = selectedSlice.get("startAngle");
                                 var arc = selectedSlice.get("arc");
                                 var radius = selectedSlice.get("radius");
@@ -1459,26 +2206,27 @@
                             newData
                         );
 
+
                         function selectSlice(slice) {
                             console.log("SelectedSlice 2: ", selectedSlice)
                             selectedSlice = slice;
-                            
+
                             var dataItem = slice.dataItem;
                             var dataContext = dataItem.dataContext;
                             var checkRefugee = JSON.stringify(dataContext["category"]);
 
                             console.log(`
-                                Data Context: ${checkRefugee}
-                            `)
+                                                                                        Data Context: ${checkRefugee}
+                                                                                    `)
 
                             if (!(refugee == 1 && (checkRefugee.toLowerCase().includes("male") || checkRefugee.toLowerCase().includes("female")))) {
                                 console.log("in")
                             }
-                            
+
 
                             if (dataContext) {
                                 var i = 0;
-                               
+
                                 subSeries.data.each(function (dataObject) {
                                     var dataObj = dataContext.subData[i];
                                     if (dataObj) {
@@ -1513,9 +2261,9 @@
                                     to: firstAngle - middleAngle + 360,
                                     duration: 1000,
                                     easing: am5.ease.out(am5.ease.cubic)
-                                });                        
+                                });
                             }
-                            else{
+                            else {
                                 console.log("SelectedSlice 3: ", selectedSlice)
                                 selectedSlice = null
                             }
@@ -1528,439 +2276,20 @@
                         });
 
                     }); // end am5.ready()
-                }     
-         
+                }
+
             </script>
+
 
             <!-- HTML -->
-            <div id="chartdiv"></div>          
+            <div id="chartdiv"></div>
+
 
         </div>
-   
-        <div class="border border-primary col">
-
-        <!-- Styles -->
-        <style>
-            #myChart {
-                width: 200%;
-                height: 10%;
-            }
-
-        </style>
-        <div>
-            <canvas id="myChart"></canvas>
-        </div>
-
-        <script>
-            const ctx = document.getElementById('myChart');
-
-            const data = {
-                labels: [
-                        'Total Beneficiaries',
-                        'Number of Community Based Trainings',
-                        'Individual Supported through LIPs',
-                        'Establishment of Community Based Platforms'
-                        
-                ],
-                /**
-                     * 'Killa Abdullah',
-                            'Killa Saifullah',
-                            'Sherani',
-                            'Chagai',
-                            'Nushki',
-                            'Pishin',
-                            'Zhob',
-                            'Mastung',
-                            'Quetta'
-                 */
-                    //data: [1255, 1948, 232, 2000, 648,3584, 371, 600, 0],
-                    //'rgb(54, 162, 235)',
-                   /**
-                     * 'rgb(54, 162, 235)',
-                         'rgb(255, 232, 0)',
-                         'rgb(112, 60, 78)',
-                         'rgb(122, 245, 46)',
-                         'rgb(29, 92, 161)'
-                    */
-                datasets: [{
-                    label: 'Polar Graph',
-                    data: [12.85, 4.49, 7.69, 2.71],
-                    borderWidth: 0,
-                    backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(75, 192, 192)',
-                        'rgb(255, 205, 86)',
-                        'rgb(201, 203, 207)'
-                  
-                    ],
-                    hoverBackgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(75, 192, 192)',
-                        'rgb(255, 205, 86)',
-                        'rgb(201, 203, 207)'
-                    ]
-                }]
-            };
-
-            var polarChart = new Chart(ctx, {
-                type: 'polarArea',
-                data: data,
-                options: {
-                    scale: {
-                        ticks: {
-                            display: true,
-                            stepSize: 2
-                        }
-                    },
-                    legend: {
-                        position: "bottom",
-                        labels: {
-                            boxWidth: 11,
-                            fontColor: "#757681",
-                            fontSize: 11
-                        }
-                    }
-                }
-            });
-
-        </script>
-
-    </div>
-    </div>
 
 
-    <div class="row row-cols-2">
-        <div class="border border-primary col">
-               <!-- Styles -->
-                <style>
-                    #chartdiv3 {
-                        width: 100%;
-                        height: 300px;
-                    }
-                </style>
-
-                <!-- Chart code -->
-                <script>
-                    am5.ready(function () {
-
-                        // Create root element
-                        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-                        var root = am5.Root.new("chartdiv3");
-
-                        // Set themes
-                        // https://www.amcharts.com/docs/v5/concepts/themes/
-                        root.setThemes([
-                            am5themes_Animated.new(root)
-                        ]);
-
-                        // Create chart
-                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-                        // start and end angle must be set both for chart and series
-                        var chart = root.container.children.push(am5percent.PieChart.new(root, {
-                            layout: root.verticalLayout,
-                            radius: am5.percent(100)
-                        }));
-
-                        // Create series
-                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
-                        // start and end angle must be set both for chart and series
-                        var series0 = chart.series.push(am5percent.PieSeries.new(root, {
-                        valueField: "population", //population
-                            categoryField: "year", //year
-                            alignLabels: false,
-                            radius: am5.percent(80),
-                            innerRadius: am5.percent(25)
-                        }));
-
-                        var bgColor = root.interfaceColors.get("background");
-
-                        series0.ticks.template.setAll({ forceHidden: true });
-
-                        series0.labels.template.setAll({
-                            radius: -10,
-                            text: "{category}",
-                            textType: "radial",
-                            centerX: am5.percent(100)
-                        });
-
-                        series0.slices.template.setAll({
-                            stroke: bgColor,
-                            strokeWidth: 2,
-                            fill: am5.color(0xaaaaaa),
-                            tooltipText:
-                                "{category}: {valuePercentTotal.formatNumber('0.00')}% ({value} bottles)"
-                        });
-                        series0.slices.template.states.create("hover", { scale: 0.95 });
-
-                        var series1 = chart.series.push(am5percent.PieSeries.new(root, {
-                        valueField: "population", //population
-                            categoryField: "country", //country
-                            alignLabels: false,
-                            innerRadius: am5.percent(80),
-                            radius: am5.percent(100)
-                        }));
-
-                        series1.slices.template.setAll({
-                            stroke: bgColor,
-                            strokeWidth: 2,
-                            templateField: "settings"
-                        });
-
-                        series1.labels.template.setAll({
-                            text: "{category}"
-                        });
-
-                        //var data = {
-                        //    "2019":[
-                        //    { district: "Killa Abdullah", beneficiaries: 387, settings: { fill: am5.color(0x1E3888) } },
-                        //    { district: "Killa Saifullah", beneficiaries: 134, settings: { fill: am5.color(0xaaaaaa) } },
-                        //    { district: "Sherani", beneficiaries: 37, settings: { fill: am5.color(0x9C3848) } },
-                            
-                        //    ],
-                        //    "2020":[
-                           
-                        //    { district: "Chagai", beneficiaries: 83, settings: { fill: am5.color(0x1E3888) } },
-                        //    { district: "Nushki", beneficiaries: 407, settings: { fill: am5.color(0x1E3888) } },
-                           
-                        //],
-                        //"2021": [
-                            
-                            
-                        //    { district: "Pishin", beneficiaries: 127, settings: { fill: am5.color(0x1E3888) } },
-                            
-                        //],
-                        //"2022": [
-                            
-                        //    { district: "Zhob", beneficiaries: 117, settings: { fill: am5.color(0x1E3888) } },
-                        //    { district: "Mastung", beneficiaries: 187, settings: { fill: am5.color(0x1E3888) } },
-                        //    { district: "Quetta", beneficiaries: 332, settings: { fill: am5.color(0x1E3888) } },
-                        //],
-                        //};
-
-                        var data = {
-                            "1957": [
-                                { country: "Belgium", population: 11589623, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "France", population: 67413000, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "Germany", population: 83190556, settings: { fill: am5.color(0x9C3848) } },
-                                { country: "Italy", population: 60359546, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "Luxembourg", population: 626108, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "Netherlands", population: 17479000, settings: { fill: am5.color(0xaaaaaa) } }
-                            ],
-                            "1973": [
-                                { country: "Denmark", population: 5806081, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "Ireland", population: 4948200, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "United Kingdom", population: 66647112, settings: { fill: am5.color(0x47A8BD) } }
-                            ],
-                            "1981": [
-                                { country: "Greece", population: 10724599, settings: { fill: am5.color(0x1E3888) } }
-                            ],
-                            "1986": [
-                                { country: "Portugal", population: 10196707, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "Spain", population: 46722980, settings: { fill: am5.color(0x1E3888) } }
-                            ],
-                            "1995": [
-                                { country: "Austria", population: 8902600, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "Finland", population: 5523231, settings: { fill: am5.color(0x47A8BD) } },
-                                { country: "Sweden", population: 10379295, settings: { fill: am5.color(0x1E3888) } }
-                            ],
-                            "2004": [
-                                { country: "Cyprus", population: 1207359, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "Czech Republic", population: 10708981, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "Estonia", population: 1328976, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "Hungary", population: 9771000, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "Latvia", population: 1901548, settings: { fill: am5.color(0x47A8BD) } },
-                                { country: "Lithuania", population: 2790844, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "Malta", population: 514564, settings: { fill: am5.color(0xaaaaaa) } },
-                                { country: "Poland", population: 37846755, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "Slovakia", population: 5459642, settings: { fill: am5.color(0x47A8BD) } },
-                                { country: "Slovenia", population: 2073894, settings: { fill: am5.color(0xaaaaaa) } }
-                            ],
-                            "2007": [
-                                { country: "Bulgaria", population: 6971487, settings: { fill: am5.color(0x1E3888) } },
-                                { country: "Romania", population: 19286123, settings: { fill: am5.color(0x9C3848) } }
-                            ]
-                        };
-
-                        // Generate series data
-                        var innerData = [];
-                        var outerData = [];
-                        am5.object.each(data, function (year, countries) {
-                            var population = 0;
-                            am5.array.each(countries, function (country) {
-                                population += country.population;
-                                outerData.push(country);
-                            });
-                            innerData.push({
-                                year: year,
-                                population: population
-                            });
-                        });
+</div>
 
 
-                        // Set data
-                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
-                        series0.data.setAll(innerData);
-                        series1.data.setAll(outerData);
-
-                        // Play initial series animation
-                        // https://www.amcharts.com/docs/v5/concepts/animations/#Animation_of_series
-                        series0.appear(1000, 100);
-                        series1.appear(1000, 100);
-
-                    }); // end am5.ready()
-                </script>
-
-                <!-- HTML -->
-                <div id="chartdiv3"></div>
-        </div>
-
-        <div class="border border-primary col">
-            <div>
-                <canvas id="barChart"></canvas>
-            </div>
-
-            <script>
-
-                const barChart = document.getElementById('barChart');
-                new Chart(barChart, {
-                    type: 'bar',
-                    data: {
-                        labels: [
-                            'Killa Abdullah',
-                            'Killa Saifullah',
-                            'Sherani',
-                            'Chagai',
-                            'Nushki',
-                            'Pishin',
-                            'Zhob',
-                            'Mastung',
-                            'Quetta'
-                        ],
-                        datasets: [{
-                                label: '# of Beneficiaries',
-                                data: [1255, 1948, 232, 2000, 648, 3584, 371, 600, 0],
-                                borderWidth: 2
-                            },
-                            {
-                                label: 'population',
-                                data: [1255, 1948, 232, 2000, 648, 3584, 371, 600, 0],
-                                borderWidth: 1
-                            }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-
-            </script>
-        </div>
-
-    </div>
-
-    <div class="row row-cols-2">
-
-        <div class="border border-dark col">
-            <style>
-                #myStakeChart {
-                    height: 200%;
-
-                   /* max-width: 100%;
-                    margin: 20px auto;*/
-
-                }
-
-            </style>
-
-            <canvas id="myStakeChart"></canvas>
-          
-            <script>
-                var stakedata = {
-                    labels: ["January", "February", "March", "April", "May"],
-                    datasets: [
-                        {
-                            label: "Dataset 1",
-                            data: [30, 40, 10, 50, 20],
-                            backgroundColor: "rgba(75, 192, 192, 0.5)"
-                        },
-                        {
-                            label: "Dataset 2",
-                            data: [20, 10, 30, 40, 50],
-                            backgroundColor: "rgba(255, 99, 132, 0.5)"
-                        },
-                        {
-                            label: "Dataset 3",
-                            data: [50, 20, 40, 30, 10],
-                            backgroundColor: "rgba(54, 162, 235, 0.5)"
-                        }
-                    ]
-                };
-
-                //var filteredData = JSON.parse(JSON.stringify(stakedata));
-
-                // Chart options
-                var stakeoptions = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            stacked: true,
-                        },
-                        y: {
-                            stacked: true,
-                            beginAtZero: true
-                        }
-                    }
-                };
-
-                // Create the chart
-                var stakectx = document.getElementById("myStakeChart").getContext("2d");
-
-                // Data for the chart
-                var mystakeChart = new Chart(stakectx, {
-                    type: "bar",
-                    data: stakedata,
-                    options: stakeoptions
-                });
-
-              
-
-                //// Search functionality
-                //var searchInput2 = document.getElementById("searchInput2");
-                //searchInput2.addEventListener("input", function () {
-                //    var searchQuery = searchInput2.value.trim().toLowerCase();
-                //    filteredData.labels = originalData.labels.filter(function (label) {
-                //        return label.toLowerCase().includes(searchQuery);
-                //    });
-                //    filteredData.datasets = originalData.datasets.map(function (dataset) {
-                //        var filteredDataset = {
-                //            label: dataset.label,
-                //            backgroundColor: dataset.backgroundColor,
-                //            data: []
-                //        };
-                //        for (var i = 0; i < originalData.labels.length; i++) {
-                //            if (filteredData.labels.includes(originalData.labels[i])) {
-                //                filteredDataset.data.push(dataset.data[i]);
-                //            }
-                //        }
-                //        return filteredDataset;
-                //    });
-
-                //    mystakeChart.update();
-                //});
-
-
-            </script>
-
-           
-           @*<div class="search-container">
-                <input type="text" id="searchInput2" placeholder="Search by label">
-            </div>*@
-        </div>
-       
-    </div>
 </div>
 

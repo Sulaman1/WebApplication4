@@ -1,228 +1,959 @@
-﻿
-@{
-    ViewData["Title"] = "Render";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
 
-<h1>Render</h1>
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart code -->
 <script>
 
-    function rerender() {
-        am5.ready(function () {
+    var newData = []
+    var root;
+    var i =0;
+    var initializeData = (function () {
+        var executed = false;
+        console.log("one time")
+        return function () {
+            if (!executed) {
+                executed = true;
 
-            console.log("In Show...", newData);
+                newData = [
+                    {
+                        "category": "Afghan Refugee",
+                        value: 49,
+                        subData: [
+                            { "category": "LIP", value: 10 },
+                            { "category": "BSF", value: 10 },
+                            { "category": "TECH", value: 10 },
+                            { "category": "COMMUNITY TRAININGS", value: 10 }
+                        ],
+                        breakdown: [{
+                            "category": "Killa Abdullah",
+                            "lip": 2.52,
+                            "bsf": 2.45,
+                            "tech": 2.51,
+                            "ct": 1
+                        }, {
+                            "category": "Killa Saifullah",
+                            "lip": 2.25,
+                            "bsf": 2.45,
+                            "tech": 2.31,
+                            "ct": 1
+                        }, {
+                            "category": "Sherani",
+                            "lip": 2.52,
+                            "bsf": 2.45,
+                            "tech": 2.1,
+                            "ct": 1
+                        }, {
+                            "category": "Chagai",
+                            "lip": 2.65,
+                            "bsf": 2.35,
+                            "tech": 24.1,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Nushki",
+                            "lip": 2.25,
+                            "bsf": 2.65,
+                            "tech": 2.71,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Pishin",
+                            "lip": 2.56,
+                            "bsf": 2.54,
+                            "tech": 2.31,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Zhob",
+                            "lip": 2.53,
+                            "bsf": 2.52,
+                            "tech": 2.81,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Mastung",
+                            "lip": 2.51,
+                            "bsf": 2.65,
+                            "tech": 2.51,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Quetta",
+                            "lip": 2.25,
+                            "bsf": 2.65,
+                            "tech": 2.71,
+                            "ct": 1
+                        }]
+                    },
+                    {
+                        "category": "Female",
+                        value: 30,
+                        subData: [
+                            { "category": "LIP", value: 10 },
+                            { "category": "BSF", value: 10 },
+                            { "category": "TECH", value: 10 },
+                            { "category": "COMMUNITY TRAININGS", value: 10 }
+                        ],
+                        breakdown: [{
+                            "category": "Killa Abdullah",
+                            "lip": 2.75,
+                            "bsf": 2.15,
+                            "tech": 2.41,
+                            "ct": 1
+                        }, {
+                            "category": "Killa Saifullah",
+                            "lip": 2.45,
+                            "bsf": 2.65,
+                            "tech": 2.31,
+                            "ct": 1
+                        }, {
+                            "category": "Sherani",
+                            "lip": 2.25,
+                            "bsf": 2.15,
+                            "tech": 2.51,
+                            "ct": 1
+                        }, {
+                            "category": "Chagai",
+                            "lip": 2.56,
+                            "bsf": 2.57,
+                            "tech": 2.51,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Nushki",
+                            "lip": 2.25,
+                            "bsf": 2.15,
+                            "tech": 26.1,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Pishin",
+                            "lip": 2.85,
+                            "bsf": 2.75,
+                            "tech": 2.81,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Zhob",
+                            "lip": 2.65,
+                            "bsf": 2.85,
+                            "tech": 2.71,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Mastung",
+                            "lip": 2.5,
+                            "bsf": 2.5,
+                            "tech": 2.1,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Quetta",
+                            "lip": 2.5,
+                            "bsf": 2.5,
+                            "tech": 2.1,
+                            "ct": 1
+                        }]
 
-            // Create root element
-            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-            root = am5.Root.new("chartdiv");
+                    }, {
+                        "category": "Male",
+                        value: 21,
+                        subData: [
+                            { "category": "LIP", value: 11 },
+                            { "category": "BSF", value: 10 },
+                            { "category": "TECH", value: 0 }
+                        ],
+                        breakdown: [{
+                            "category": "Killa Abdullah",
+                            "lip": 2.1,
+                            "bsf": 2.2,
+                            "tech": 2.3,
+                            "ct": 1
+                        }, {
+                            "category": "Killa Saifullah",
+                            "lip": 2.1,
+                            "bsf": 2.2,
+                            "tech": 2.3,
+                            "ct": 1
+                        }, {
+                            "category": "Sherani",
+                            "lip": 2.1,
+                            "bsf": 2.2,
+                            "tech": 2.3,
+                            "ct": 1
+                        }, {
+                            "category": "Chagai",
+                            "lip": 2.1,
+                            "bsf": 2.2,
+                            "tech": 2.3,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Nushki",
+                            "lip": 2.2,
+                            "bsf": 2.3,
+                            "tech": 2.1,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Pishin",
+                            "lip": 2.5,
+                            "bsf": 2.2,
+                            "tech": 2.1,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Zhob",
+                            "lip": 2.25,
+                            "bsf": 2.53,
+                            "tech": 2.1,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Mastung",
+                            "lip": 2.52,
+                            "bsf": 2.25,
+                            "tech": 2.1,
+                            "ct": 1
+                        },
+                        {
+                            "category": "Quetta",
+                            "lip": 2.45,
+                            "bsf": 2.55,
+                            "tech": 2.1,
+                            "ct": 1
+                        }]
+                    }
+                ]
 
-            // Set themes
-            // https://www.amcharts.com/docs/v5/concepts/themes/
-            root.setThemes([am5themes_Animated.new(root)]);
+                am5.ready(function () {
 
-            var container = root.container.children.push(
-                am5.Container.new(root, {
-                    width: am5.p50,
-                    height: am5.p50,
-                    layout: root.horizontalLayout
-                })
-            );
+                    console.log("In Show...", newData);
 
-            // Create main chart
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-            var chart = container.children.push(
-                am5percent.PieChart.new(root, {
-                    tooltip: am5.Tooltip.new(root, {})
-                })
-            );
+                    // Create root element
+                    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+                    root = am5.Root.new("chartdiv");
 
-            // Create series
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
-            var series = chart.series.push(
-                am5percent.PieSeries.new(root, {
-                    valueField: "value",
-                    categoryField: "category",
-                    alignLabels: false
-                })
-            );
+                    // Set themes
+                    // https://www.amcharts.com/docs/v5/concepts/themes/
+                    root.setThemes([am5themes_Animated.new(root)]);
 
-            //series.labels.template.setAll({
-            //    textType: "circular",
-            //    radius: 4
-            //});
+                    var container = root.container.children.push(
+                        am5.Container.new(root, {
+                            width: am5.p100,
+                            height: am5.p100,
+                            //y: am5.percent(0),
+                            //x: am5.percent(0),
+                            layout: root.horizontalLayout
+                        })
+                    );
 
-            series.labels.template.setAll({
-                text: "{category}",
-                fontSize: 10,
-                textType: "radial",
-                inside: true,
-                centerX: am5.percent(90),
-                radius: 10,
-                fill: am5.color(0xffffff)
-            })
 
-            series.ticks.template.set("visible", false);
-            series.slices.template.set("toggleKey", "none");
+                    // ==============================================
+                    // Column chart
+                    // ==============================================
+                    var xxAxis;
+                    var sseries;
+                    function columnStart(data){
 
-            // add events
-            series.slices.template.events.on("click", function (e) {
-                selectSlice(e.target);
-            });
+                        console.log("Dataaaa: ", data)
 
-            // Create sub chart
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-            var subChart = container.children.push(
-                am5percent.PieChart.new(root, {
-                    radius: am5.percent(50),
-                    tooltip: am5.Tooltip.new(root, {})
-                })
-            );
+                        // Create chart
+                        // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                        var achart = container.children.push(
+                            am5xy.XYChart.new(root, {
+                                // panY: false,
+                                wheelY: "zoomX",
+                                wheelX: "zoomY",
+                                //layout: root.verticalLayout
+                                width: am5.percent(100),
+                                height: am5.percent(40),
+                                panX: false,
+                                panY: false,
+                                //centerX: am5.percent(10),
+                                y: am5.percent(50),
+                                x: am5.percent(0),
+                                layout: am5.GridLayout.new(root, {
+                                    maxColumns: 2,
+                                    fixedWidthGrid: true
+                                })
+                                //layout: root.verticalLayout
+                            })
+                        );
 
-            // Create sub series
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
-            var subSeries = subChart.series.push(
-                am5percent.PieSeries.new(root, {
-                    valueField: "value",
-                    categoryField: "category",
-                    alignLabels: false
-                })
-            );
+                       
+                        // Create axes
+                        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+                        //var xRenderer = am5xy.AxisRendererX.new(root, {});
+                        //xxAxis = achart.xAxes.push(am5xy.CategoryAxis.new(root, {
+                        //    categoryField: "category",
+                        //    renderer: xRenderer,
+                        //    tooltip: am5.Tooltip.new(root, {})
+                        //}));
 
-            subSeries.labels.template.setAll({
-                text: "{category}",
-                fontSize: 10,
-                textType: "radial",
-                inside: true,
-                centerX: am5.percent(30),
-                radius: 10,
-                fill: am5.color(0x000000)
-            })
+                        //xRenderer.grid.template.setAll({
+                        //    location: 1
+                        //})
 
-            subSeries.data.setAll([
-                { category: "A", value: 0 },
-                { category: "B", value: 0 },
-                { category: "C", value: 0 },
-                { category: "D", value: 0 },
-                { category: "E", value: 0 },
-                { category: "F", value: 0 },
-                { category: "G", value: 0 }
-            ]);
-            subSeries.slices.template.set("toggleKey", "none");
+                        // Create X-Axis
+                        xxAxis = achart.xAxes.push(
+                            am5xy.CategoryAxis.new(root, {
+                                maxDeviation: 0.2,
+                                renderer: am5xy.AxisRendererX.new(root, {
+                                    minGridDistance: 10
+                                }),
+                                categoryField: "category"
+                            })
+                        );
+                        var xRenderer = xxAxis.get("renderer");
+                        xRenderer.labels.template.setAll({
+                            rotation: -30,
+                            fontSize: 10,
+                            centerY: am5.percent(50)
+                        });
 
-            var selectedSlice;
+                        xxAxis.data.setAll(data);
 
-            series.on("startAngle", function () {
-                updateLines();
-            });
+                        // Craete Y-axis
+                        let yAxis = achart.yAxes.push(
+                            am5xy.ValueAxis.new(root, {
+                                renderer: am5xy.AxisRendererY.new(root, {
+                                })
+                            })
+                        );
 
-            container.events.on("boundschanged", function () {
-                root.events.on("frameended", function () {
-                    updateLines();
-                })
-            })
+                        //var yAxis = achart.yAxes.push(am5xy.ValueAxis.new(root, {
+                        //    min: 0,
+                        //    renderer: am5xy.AxisRendererY.new(root, {
+                        //        strokeOpacity: 0.1
+                        //    })
+                        //}));
 
-            function updateLines() {
-                if (selectedSlice) {
-                    var startAngle = selectedSlice.get("startAngle");
-                    var arc = selectedSlice.get("arc");
-                    var radius = selectedSlice.get("radius");
+                        //// Add legend
+                        //// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+                        //var legend = achart.children.push(am5.Legend.new(root, {
+                        //    centerX: am5.p50,
+                        //    x: am5.p50
+                        //}));
 
-                    var x00 = radius * am5.math.cos(startAngle);
-                    var y00 = radius * am5.math.sin(startAngle);
 
-                    var x10 = radius * am5.math.cos(startAngle + arc);
-                    var y10 = radius * am5.math.sin(startAngle + arc);
+                        // Add legend
+                        var legend = achart.children.push(am5.Legend.new(root, {}));
+                     
 
-                    var subRadius = subSeries.slices.getIndex(0).get("radius");
-                    var x01 = 0;
-                    var y01 = -subRadius;
+                        
+                        // Add series
+                        // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                        function makeSeries(name, fieldName) {
+                            
+                            sseries = achart.series.push(am5xy.ColumnSeries.new(root, {
+                                name: name,
+                                stacked: true,
+                                xAxis: xxAxis,
+                                yAxis: yAxis,
+                                valueYField: fieldName,
+                                categoryXField: "category"
+                            }));
 
-                    var x11 = 0;
-                    var y11 = subRadius;
+                            sseries.columns.template.setAll({
+                                tooltipText: "{name}, {categoryX}: {valueY}",
+                                tooltipY: am5.percent(10)
+                            });
+                            sseries.data.setAll(data);
 
-                    var point00 = series.toGlobal({ x: x00, y: y00 });
-                    var point10 = series.toGlobal({ x: x10, y: y10 });
+                            // Make stuff animate on load
+                            // https://www.amcharts.com/docs/v5/concepts/animations/
+                            //series.appear();
 
-                    var point01 = subSeries.toGlobal({ x: x01, y: y01 });
-                    var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+                            //series2.labels.template.setAll({
+                            //    // text: "{beneficiaries}",
+                            //    //fontSize: 10,
+                            //    textType: "circular",
+                            //    //inside: true,
+                            //    //centerX: am5.percent(90),
+                            //    radius: 10,
+                            //    fill: am5.color(0xffffff)
+                            //})
 
-                    line0.set("points", [point00, point01]);
-                    line1.set("points", [point10, point11]);
-                }
-            }
+                            sseries.bullets.push(function () {
+                                return am5.Bullet.new(root, {
+                                    sprite: am5.Label.new(root, {
+                                        //text: "{valueY}",
+                                        fill: root.interfaceColors.get("alternativeText"),
+                                        centerY: am5.p50,
+                                        centerX: am5.p50,
+                                        fontSize: 10,
+                                        populateText: true
+                                    })
+                                });
+                            });
 
-            // lines
-            var line0 = container.children.push(
-                am5.Line.new(root, {
-                    position: "absolute",
-                    stroke: root.interfaceColors.get("text"),
-                    strokeDasharray: [2, 2]
-                })
-            );
-            var line1 = container.children.push(
-                am5.Line.new(root, {
-                    position: "absolute",
-                    stroke: root.interfaceColors.get("text"),
-                    strokeDasharray: [2, 2]
-                })
-            );
-
-            // Set data
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
-            series.data.setAll(
-                newData
-            );
-
-            function selectSlice(slice) {
-
-                selectedSlice = slice;
-                var dataItem = slice.dataItem;
-                var dataContext = dataItem.dataContext;
-
-                if (dataContext) {
-                    var i = 0;
-                    subSeries.data.each(function (dataObject) {
-                        var dataObj = dataContext.subData[i];
-                        if (dataObj) {
-                            subSeries.data.setIndex(i, dataObj);
-                            if (!subSeries.dataItems[i].get("visible")) {
-                                subSeries.dataItems[i].show();
-                            }
+                            legend.data.push(sseries);
+                            //legend.data.setAll(achart.series.values);
                         }
-                        else {
-                            subSeries.dataItems[i].hide();
-                        }
+                        console.log("i: ", i)
+                        if(i==0){
 
-                        i++;
+                            //makeSeries("Europe", "europe");
+                            //makeSeries("North America", "namerica");
+                            //makeSeries("Asia", "asia");
+                            //makeSeries("Latin America", "lamerica");
+                            //makeSeries("Middle East", "meast");
+                            //makeSeries("Africa", "africa");
+
+                            makeSeries("Lip", "lip");
+                            makeSeries("Bsf","bsf");
+                            makeSeries("CT","ct");
+                            makeSeries("Tech", "tech");
+
+                            //makeSeries("LIP", "lip");
+                            //makeSeries("Tech", "tech");
+                            //makeSeries("Community Training", "ct");
+                            //makeSeries("BSF", "bsf");
+
+                            //makeSeries("Killa Abdullah", "killa abdullah");
+                            //makeSeries("Killa Saifullah", "killa saifullah");
+                            //makeSeries("Sherani", "sherani");
+                            //makeSeries("Chagai" , "chagai");
+                            //makeSeries("Nushki", "nushki");
+                            //makeSeries("Pishin", "pishin");
+                            //makeSeries("Zhob", "zhob");
+                            //makeSeries("Mastung", "mastung");
+                            //makeSeries("Quetta", "quetta");
+                        }
+                        i=1;
+
+                    //function end
+
+                    }
+
+                    //// Create chart
+                    //// https://www.amcharts.com/docs/v5/charts/xy-chart/
+                    //var achart = container.children.push(
+                    //    am5xy.XYChart.new(root, {
+                    //        // panY: false,
+                    //        wheelY: "zoomX",
+                    //        wheelX: "zoomY",
+                    //        //layout: root.verticalLayout
+                    //        width: am5.percent(100),
+                    //        height: am5.percent(40),
+                    //        panX: false,
+                    //        panY: false,
+                    //        //centerX: am5.percent(10),
+                    //        y: am5.percent(50),
+                    //        x: am5.percent(0),
+                    //        layout: am5.GridLayout.new(root, {
+                    //            maxColumns: 2,
+                    //            fixedWidthGrid: true
+                    //        })
+                    //        //layout: root.verticalLayout
+                    //    })
+                    //);
+
+
+                    // Craete Y-axis
+                    //let yAxis = achart.yAxes.push(
+                    //    am5xy.ValueAxis.new(root, {
+                    //        renderer: am5xy.AxisRendererY.new(root, {
+                    //        })
+                    //    })
+                    //);
+
+                    //// Create X-Axis
+                    //var xAxis = achart.xAxes.push(
+                    //    am5xy.CategoryAxis.new(root, {
+                    //        maxDeviation: 0.2,
+                    //        renderer: am5xy.AxisRendererX.new(root, {
+                    //            minGridDistance: 10
+                    //        }),
+                    //        categoryField: "category"
+                    //    })
+                    //);
+
+                    ////xAxis.data.setAll(adata);
+
+
+                    //// Add legend
+                    //var alegend = achart.children.push(am5.Legend.new(root, {}));
+                    //alegend.data.setAll(achart.series.values);
+
+                    //var aseries1;
+                    //// Add series
+                    //// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                    //function makeSeries(name, fieldName) {
+
+                    //    console.log(`
+                    //        name: ${name}
+                    //        fieldName: ${fieldName}
+                    //    `)
+                    //    // Create series
+                    //    aseries1 = achart.series.push(
+                    //        am5xy.ColumnSeries.new(root, {
+                    //            name: name, //"Series",
+                    //            stacked: true,
+                    //            xAxis: xAxis,
+                    //            yAxis: yAxis,
+                    //            valueYField: fieldName,
+                    //            categoryXField: "category",
+                    //            tooltip: am5.Tooltip.new(root, {})
+                    //        })
+                    //    );
+
+                    //    //series.data.setAll(data);
+
+
+                    //    aseries1.bullets.push(function () {
+                    //        return am5.Bullet.new(root, {
+                    //            sprite: am5.Label.new(root, {
+                    //                text: "{valueY}",
+                    //                fill: root.interfaceColors.get("alternativeText"),
+                    //                centerY: am5.p50,
+                    //                centerX: am5.p50,
+                    //                populateText: true
+                    //            })
+                    //        });
+                    //    });
+
+                    //    alegend.data.push(aseries1);
+                    //    aseries1.columns.template.setAll({
+                    //        tooltipText: "{categoryX}: {valueY}"
+                    //    });
+                    //}
+
+                    //makeSeries("LIP", "lip");
+                    //makeSeries("Tech", "tech");
+                    //makeSeries("Community Training", "ct");
+                    //makeSeries("BSF", "bsf");
+
+
+                    ////////////////////////////////////////////////////
+
+
+                    //// Create series
+                    //var aseries1 = achart.series.push(
+                    //    am5xy.ColumnSeries.new(root, {
+                    //        name: "Beneficiaries", //"Series",
+                    //        stacked: true,
+                    //        xAxis: xAxis,
+                    //        yAxis: yAxis,
+                    //        valueYField: "lip",
+                    //        categoryXField: "category",
+                    //        tooltip: am5.Tooltip.new(root, {})
+                    //    })
+                    //);
+                    //aseries1.columns.template.setAll({
+                    //    tooltipText: "{categoryX}: {valueY}"
+                    //});
+
+
+
+                    ////////////////////////////////
+
+                    //var xRenderer = xAxis.get("renderer");
+                    //xRenderer.labels.template.setAll({
+                    //    rotation: -15,
+                    //    fontSize: 10,
+                    //    centerY: am5.percent(50)
+                    //});
+                   
+
+                    //////////////////////////////
+
+
+
+
+
+                    //aseries1.data.setAll(adata);
+
+                    //var aseries2 = achart.series.push(
+                    //    am5xy.ColumnSeries.new(root, {
+                    //        name: "Series",
+                    //        xAxis: xAxis,
+                    //        yAxis: yAxis,
+                    //        valueYField: "value",
+                    //        categoryXField: "category"
+                    //    })
+                    //);
+                    //aseries2.data.setAll(adata);
+
+           
+
+
+                    // ==============================================
+                    // END Column chart
+                    // ==============================================
+
+                    // Create main chart
+                    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                    var chart = container.children.push(
+                        am5percent.PieChart.new(root, {
+                            tooltip: am5.Tooltip.new(root, {}),
+                            radius: am5.percent(95),
+                            // innerRadius: am5.percent(10)
+                            // panY: false,
+                            //wheelY: "zoomX",
+                            //wheelX: "zoomY",
+                            //layout: root.verticalLayout
+                            width: am5.percent(70),
+                            //height: am5.percent(30),
+                            //panX: false,
+                            //panY: false,
+
+                            y: am5.percent(-23),
+                            x: am5.percent(0),
+                            layout: am5.GridLayout.new(root, {
+                                maxColumns: 2,
+                                fixedWidthGrid: true
+                            })
+                            //layout: root.verticalLayout
+                        })
+                    );
+
+                    var series2 = chart.series.push(
+                        am5percent.PieSeries.new(root, {
+                            name: "Total",
+                            valueField: "beneficiaries",
+                            categoryField: "total"
+                        })
+                    );
+
+                    series2.data.setAll([{
+                        total: "Total",
+                        beneficiaries: 60000
+                    }]);
+
+                    series2.bullets.push(function () {
+                        return am5.Bullet.new(root, {
+                            sprite: am5.Label.new(root, {
+                                text: "{beneficiaries}",
+                                centerX: am5.percent(50),
+                                centerY: am5.percent(130),
+                                populateText: true,
+                                fill: am5.color(0xffffff)
+                            })
+                        });
                     });
-                }
 
-                var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
-                var firstAngle = series.dataItems[0].get("slice").get("startAngle");
 
-                series.animate({
-                    key: "startAngle",
-                    to: firstAngle - middleAngle,
-                    duration: 1000,
-                    easing: am5.ease.out(am5.ease.cubic)
-                });
-                series.animate({
-                    key: "endAngle",
-                    to: firstAngle - middleAngle + 360,
-                    duration: 1000,
-                    easing: am5.ease.out(am5.ease.cubic)
-                });
+                    // Configuring slices
+                    series2.slices.template.setAll({
+                        stroke: am5.color(0xffffff),
+                        strokeWidth: 2
+                    })
+
+                    series2.labels.template.setAll({
+                        // text: "{beneficiaries}",
+                        //fontSize: 10,
+                        textType: "circular",
+                        //inside: true,
+                        //centerX: am5.percent(90),
+                        radius: 10,
+                        fill: am5.color(0xffffff)
+                    })
+
+                    // add events
+                    //series2.slices.template.events.on("click", function (e) {
+                    //    console.log("Series2 Slice", e.target.get("fill"))
+                    //    selectSlice(e.target);
+                    //    aseries1.columns.template.setAll({
+                    //        fill: e.target.get("fill"), //slice
+                    //        stroke: e.target.get("fill") //slice
+                    //    });
+
+                    //    console.log("DATA: ", e.target.dataItem.dataContext.breakdown)
+
+                    //    aseries1.data.setAll(e.target.dataItem.dataContext.breakdown);
+                    //    // yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
+                    //    xAxis.data.setAll(e.target.dataItem.dataContext.breakdown)
+
+                    //    //makeSeries("LIP", "lip");
+                    //    //makeSeries("BSF", "bsf");
+                    //    //makeSeries("Tech", "tech");
+                    //    //makeSeries("Community Training", "ct");
+                    //    //currentSlice = e.target;
+                    //});
+
+                    //series2.ticks.template.set("visible", false);
+                    //series2.slices.template.set("toggleKey", "none");
+
+                    //// Disabling labels and ticks
+                    //series2.labels.template.set("visible", false);
+                    //series2.ticks.template.set("visible", false);
+
+                    // Create series
+                    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                    var series = chart.series.push(
+                        am5percent.PieSeries.new(root, {
+                            valueField: "value",
+                            categoryField: "category",
+                            alignLabels: false,
+                        })
+                    );
+
+                    //series.labels.template.setAll({
+                    //    textType: "circular",
+                    //    radius: 4
+                    //});
+
+
+                    series.labels.template.setAll({
+                        text: "{category}[/]: [bold]{value}[/]",
+                        fontSize: 10,
+                        oversizedBehavior: "wrap",
+                        textAlign: "center",
+                        maxWidth: 70,
+                        textType: "radial",
+                        inside: true,
+                        centerX: am5.percent(90),
+                        radius: 10,
+                        fill: am5.color(0xffffff)
+                    })
+
+                    series.ticks.template.set("visible", false);
+                    series.slices.template.set("toggleKey", "none");
+
+                    // add events
+                    series.slices.template.events.on("click", function (e) {
+                        console.log("Slice", e.target.get("fill"))
+                        selectSlice(e.target);
+                        if(sseries){
+                            sseries.columns.template.setAll({
+                                fill: e.target.get("fill"), //slice
+                                stroke: e.target.get("fill") //slice
+                            });
+
+                        }
+
+                        var dummy = [{
+                            "year": "2021",
+                            "europe": 2.5,
+                            "namerica": 2.5,
+                            "asia": 2.1,
+                            "lamerica": 1,
+                            "meast": 0.8,
+                            "africa": 0.4
+                        }, {
+                            "year": "2022",
+                            "europe": 2.6,
+                            "namerica": 2.7,
+                            "asia": 2.2,
+                            "lamerica": 0.5,
+                            "meast": 0.4,
+                            "africa": 0.3
+                        }, {
+                            "year": "2023",
+                            "europe": 2.8,
+                            "namerica": 2.9,
+                            "asia": 2.4,
+                            "lamerica": 0.3,
+                            "meast": 0.9,
+                            "africa": 0.5
+                        }]
+
+                        //console.log("Data: ", e.target.dataItem.dataContext.breakdown)
+                        if(i == 0){
+                            columnStart(e.target.dataItem.dataContext.breakdown)
+                        }
+
+
+                        //sseries.data.setAll(dummy);
+                        //// yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
+                        //xxAxis.data.setAll(dummy)
+                        ////currentSlice = e.target;
+                    });
+
+
+                    // Create sub chart
+                    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                    var subChart = container.children.push(
+                        am5percent.PieChart.new(root, {
+                            radius: am5.percent(40),
+                            tooltip: am5.Tooltip.new(root, {}),
+                            // panY: false,
+                            //wheelY: "zoomX",
+                            //wheelX: "zoomY",
+                            //layout: root.verticalLayout
+                            //width: am5.percent(50),
+                            //height: am5.percent(30),
+                            //panX: false,
+                            //panY: false,
+                            //centerX: am5.percent(10),
+                            y: am5.percent(-23),
+                            x: am5.percent(20),
+                            //layout: am5.GridLayout.new(root, {
+                            //    maxColumns: 2,
+                            //    fixedWidthGrid: true
+                            //})
+                            //layout: root.verticalLayout
+                        })
+                    );
+
+                    // Create sub series
+                    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                    var subSeries = subChart.series.push(
+                        am5percent.PieSeries.new(root, {
+                            valueField: "value",
+                            categoryField: "category",
+                            alignLabels: false
+                        })
+                    );
+
+                    subSeries.labels.template.setAll({
+                        text: "{category}[/]: [bold]{value}[/]",
+                        fontSize: 10,
+                        oversizedBehavior: "wrap",
+                        textAlign: "center",
+                        maxWidth: 70,
+                        textType: "circular",
+                        //inside: true,
+                        //centerX: am5.percent(-40),
+                        radius: 10,
+                        fill: am5.color(0x000000)
+                    })
+
+
+                    subSeries.data.setAll([
+                        { category: "A", value: 0 },
+                        { category: "B", value: 0 },
+                        { category: "C", value: 0 },
+                        { category: "D", value: 0 },
+                        { category: "E", value: 0 },
+                        { category: "F", value: 0 },
+                        { category: "G", value: 0 }
+                    ]);
+                    subSeries.slices.template.set("toggleKey", "none");
+
+                    var selectedSlice;
+
+                    series.on("startAngle", function () {
+                        updateLines();
+                    });
+
+                    container.events.on("boundschanged", function () {
+                        root.events.on("frameended", function () {
+                            updateLines();
+                        })
+                    })
+
+                    function updateLines() {
+                        if (selectedSlice) {
+                            var startAngle = selectedSlice.get("startAngle");
+                            var arc = selectedSlice.get("arc");
+                            var radius = selectedSlice.get("radius");
+
+                            var x00 = radius * am5.math.cos(startAngle);
+                            var y00 = radius * am5.math.sin(startAngle);
+
+                            var x10 = radius * am5.math.cos(startAngle + arc);
+                            var y10 = radius * am5.math.sin(startAngle + arc);
+
+                            var subRadius = subSeries.slices.getIndex(0).get("radius");
+                            var x01 = 0;
+                            var y01 = -subRadius;
+
+                            var x11 = 0;
+                            var y11 = subRadius;
+
+                            var point00 = series.toGlobal({ x: x00, y: y00 });
+                            var point10 = series.toGlobal({ x: x10, y: y10 });
+
+                            var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                            var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+                            line0.set("points", [point00, point01]);
+                            line1.set("points", [point10, point11]);
+                        }
+                    }
+
+                    // lines
+                    var line0 = container.children.push(
+                        am5.Line.new(root, {
+                            position: "absolute",
+                            stroke: root.interfaceColors.get("text"),
+                            strokeDasharray: [2, 2]
+                        })
+                    );
+                    var line1 = container.children.push(
+                        am5.Line.new(root, {
+                            position: "absolute",
+                            stroke: root.interfaceColors.get("text"),
+                            strokeDasharray: [2, 2]
+                        })
+                    );
+
+                    // Set data
+                    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
+                    series.data.setAll(
+                        newData
+                    );
+
+                    function selectSlice(slice) {
+                        selectedSlice = slice;
+                        var dataItem = slice.dataItem;
+                        var dataContext = dataItem.dataContext;
+
+                        if (dataContext) {
+                            var i = 0;
+                            subSeries.data.each(function (dataObject) {
+                                var dataObj = dataContext.subData[i];
+                                if (dataObj) {
+                                    subSeries.data.setIndex(i, dataObj);
+                                    if (!subSeries.dataItems[i].get("visible")) {
+                                        subSeries.dataItems[i].show();
+                                    }
+                                }
+                                else {
+                                    subSeries.dataItems[i].hide();
+                                }
+
+                                i++;
+                            });
+                        }
+
+                        var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
+                        var firstAngle = series.dataItems[0].get("slice").get("startAngle");
+
+                        series.animate({
+                            key: "startAngle",
+                            to: firstAngle - middleAngle,
+                            duration: 1000,
+                            easing: am5.ease.out(am5.ease.cubic)
+                        });
+                        series.animate({
+                            key: "endAngle",
+                            to: firstAngle - middleAngle + 360,
+                            duration: 1000,
+                            easing: am5.ease.out(am5.ease.cubic)
+                        });
+                    }
+
+                    container.appear(1000, 10);
+
+                    series.events.on("datavalidated", function () {
+                        selectSlice(series.slices.getIndex(0));
+                    });
+
+                }); // end am5.ready()
 
             }
+        };
+    })();
 
-            container.appear(1000, 10);
-
-            series.events.on("datavalidated", function () {
-                selectSlice(series.slices.getIndex(0));
-            });
-
-        }); // end am5.ready()
-    }
-
+    //It Will Initialize the data on Page Load and would never be called again...
+    initializeData();
 </script>
+
+<div id="chartdiv"></div>
