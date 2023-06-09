@@ -46,62 +46,16 @@
             <script>
                 const ctx = document.getElementById('myChart');
 
-
-                const defaultLegendClickHandler = Chart.defaults.plugins.legend.onClick;                
-                const pieDoughnutLegendClickHandler = Chart.controllers.doughnut.overrides.plugins.legend.onClick;
-                const newLegendClickHandler = function (e, legendItem, legend) {
-                    const index = legendItem.datasetIndex;
-                    const type = legend.chart.config.type;
-                    console.log("IN")
-
-                    if (index > 1) {
-                        // Do the original logic
-                        if (type === 'pie' || type === 'doughnut') {
-                            pieDoughnutLegendClickHandler(e, legendItem, legend)
-                        } else {
-                            defaultLegendClickHandler(e, legendItem, legend);
-                        }
-
-                    } else {
-                        let ci = legend.chart;
-                        [
-                            ci.getDatasetMeta(0),
-                            ci.getDatasetMeta(1)
-                        ].forEach(function (meta) {
-                            meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
-                        });
-                        ci.update();
-                    }
-                };
+                const labels = [
+                    'TB',
+                    'CBT',
+                    'LIP',
+                    'EBP'
+                ];
+                
 
                 const data = {
-                    //labels: [
-                    //    'TB',
-                    //    'CBT',
-                    //    'LIP',
-                    //    'EBP'
-                    //],
-
-                    /**
-                         * 'Killa Abdullah',
-                                'Killa Saifullah',
-                                'Sherani',
-                                'Chagai',
-                                'Nushki',
-                                'Pishin',
-                                'Zhob',
-                                'Mastung',
-                                'Quetta'
-                     */
-                    //data: [1255, 1948, 232, 2000, 648,3584, 371, 600, 0],
-                    //'rgb(54, 162, 235)',
-                    /**
-                      * 'rgb(54, 162, 235)',
-                          'rgb(255, 232, 0)',
-                          'rgb(112, 60, 78)',
-                          'rgb(122, 245, 46)',
-                          'rgb(29, 92, 161)'
-                     */
+                    labels: labels,
                     datasets: [{
                         label: 'Polar Graph',
                         data: [12.85, 4.49, 7.69, 2.71],
@@ -122,23 +76,45 @@
                     }]
                 };
 
+                function simpleStringify(object) {
+                    // stringify an object, avoiding circular structures
+                    // https://stackoverflow.com/a/31557814
+                    var simpleObject = {};
+                    //console.log("Data: ", object)
+                    if (object.chart.tooltip) {
+                        console.log("Selected: ", object.chart.tooltip.title[0])
+
+                    }
+                };
+
                 var polarChart = new Chart(ctx, {
-                    type: 'polarArea',
+                    //type: 'polarArea',
                     data: data,
                     options: {
+                        onClick: function (evt, data) {
+                            var e = simpleStringify(evt)
+
+                        },
+                        scales: {
+                            r: {
+                                pointLabels: {
+                                    display: true,
+                                    centerPointLabels: true,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            }
+                        },
                         scale: {
                             ticks: {
-                                display:true,
+                                display:false,
                                 stepSize: 2
                             }
                         },
                         legend: {
-                            position: "top",
-                            plugins: {
-                                legend: {
-                                    onClick: newLegendClickHandler
-                                }
-                            },
+                            position: "left",
+                            
                             labels: {
                                 boxWidth: 11,
                                 fontColor: "#757681",
@@ -1227,81 +1203,62 @@
                             "category": "Afghan Refugee",
                             value: 49,
                             subData: [
-                                { "category": "EDPs", value: 25500 },
-                                { "category": "LIPs", value: 4500 },
-                                { "category": "CBT", value: 9360 },
-                                { "category": "TVS", value: 12750 },
-                                { "category": "BDS", value: 4500 }
+                                { "category": "Male", value: 25500 },
+                                { "category": "Female", value: 4500 }
+
                             ],
                             breakdown: [{
                                 "category": "Killa Abdullah",
-                                "edp": 2.52,
-                                "lip": 2.45,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.52,
+                                "female": 2.45
+
                             }, {
                                 "category": "Killa Saifullah",
-                                "edp": 2.25,
-                                "lip": 2.45,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.25,
+                                "female": 2.45
+
                             }, {
                                 "category": "Sherani",
-                                "edp": 2.52,
-                                "lip": 2.45,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.52,
+                                "female": 2.45
+
                             }, {
                                 "category": "Chagai",
-                                "edp": 2.65,
-                                "lip": 2.35,
-                                "cbt": 24.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.65,
+                                "female": 2.35
+
                             },
                             {
                                 "category": "Nushki",
-                                "edp": 2.25,
-                                "lip": 2.65,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.25,
+                                "female": 2.65
+
                             },
                             {
                                 "category": "Pishin",
-                                "edp": 2.56,
-                                "lip": 2.54,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.56,
+                                "female": 2.54
+
                             },
                             {
                                 "category": "Zhob",
-                                "edp": 2.53,
-                                "lip": 2.52,
-                                "cbt": 2.81,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.53,
+                                "female": 2.52
+
                             },
                             {
                                 "category": "Mastung",
-                                "edp": 2.51,
-                                "lip": 2.65,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.51,
+                                "female": 2.65
+
                             },
                             {
                                 "category": "Quetta",
-                                "edp": 2.25,
-                                "lip": 2.65,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2.25,
+                                "female": 2.65
+
                             }]
+
                         },
                         {
                             "category": "Female",
@@ -1315,72 +1272,45 @@
                             ],
                             breakdown: [{
                                 "category": "Killa Abdullah",
-                                "edp": 2.75,
-                                "lip": 2.15,
-                                "cbt": 2.41,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.45
+
                             }, {
                                 "category": "Killa Saifullah",
-                                "edp": 2.45,
-                                "lip": 2.65,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.45
+
                             }, {
                                 "category": "Sherani",
-                                "edp": 2.25,
-                                "lip": 2.15,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.45
+
                             }, {
                                 "category": "Chagai",
-                                "edp": 2.56,
-                                "lip": 2.57,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.35
+
                             },
                             {
                                 "category": "Nushki",
-                                "edp": 2.25,
-                                "lip": 2.15,
-                                "cbt": 26.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.65
+
                             },
                             {
                                 "category": "Pishin",
-                                "edp": 2.85,
-                                "lip": 2.75,
-                                "cbt": 2.81,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.54
+
                             },
                             {
                                 "category": "Zhob",
-                                "edp": 2.65,
-                                "lip": 2.85,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.52
+
                             },
                             {
                                 "category": "Mastung",
-                                "edp": 2.5,
-                                "lip": 2.5,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.65
+
                             },
                             {
                                 "category": "Quetta",
-                                "edp": 2.5,
-                                "lip": 2.5,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "female": 2.65
+
                             }]
 
                         }, {
@@ -1395,73 +1325,38 @@
                             ],
                             breakdown: [{
                                 "category": "Killa Abdullah",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 2,
                             }, {
                                 "category": "Killa Saifullah",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 25,
                             }, {
                                 "category": "Sherani",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 22,
                             }, {
                                 "category": "Chagai",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 25,
                             },
                             {
                                 "category": "Nushki",
-                                "edp": 2.2,
-                                "lip": 2.3,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 25,
                             },
                             {
                                 "category": "Pishin",
-                                "edp": 2.5,
-                                "lip": 2.2,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 26,
                             },
                             {
                                 "category": "Zhob",
-                                "edp": 2.25,
-                                "lip": 2.53,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 23,
                             },
                             {
                                 "category": "Mastung",
-                                "edp": 2.52,
-                                "lip": 2.25,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 21,
                             },
                             {
                                 "category": "Quetta",
-                                "edp": 2.45,
-                                "lip": 2.55,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
+                                "male": 25,
                             }]
+
                         }
                     ]
 
@@ -1470,276 +1365,7 @@
                     root.dispose();
                     rerender()
                 }
-
-
-                // Applying Filter/Search on the PieOfPie Chart
-
-                console.log("Search Bar");
-                const searchInput = document.getElementById('searchInput');
-
-                // Add event listener to execute function on change
-                searchInput.addEventListener('keyup', function (event) {
-                    const searchTerm = event.target.value;
-
-                    var list = [
-                        {
-                            "category": "Afghan Refugee",
-                            value: 49,
-                            subData: [
-                                { "category": "EDPs", value: 25500 },
-                                { "category": "LIPs", value: 4500 },
-                                { "category": "CBT", value: 9360 },
-                                { "category": "TVS", value: 12750 },
-                                { "category": "BDS", value: 4500 }
-                            ],
-                            breakdown: [{
-                                "category": "Killa Abdullah",
-                                "edp": 2.52,
-                                "lip": 2.45,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Killa Saifullah",
-                                "edp": 2.25,
-                                "lip": 2.45,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Sherani",
-                                "edp": 2.52,
-                                "lip": 2.45,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Chagai",
-                                "edp": 2.65,
-                                "lip": 2.35,
-                                "cbt": 24.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Nushki",
-                                "edp": 2.25,
-                                "lip": 2.65,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Pishin",
-                                "edp": 2.56,
-                                "lip": 2.54,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Zhob",
-                                "edp": 2.53,
-                                "lip": 2.52,
-                                "cbt": 2.81,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Mastung",
-                                "edp": 2.51,
-                                "lip": 2.65,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Quetta",
-                                "edp": 2.25,
-                                "lip": 2.65,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }]
-                        },
-                        {
-                            "category": "Female",
-                            value: 30,
-                            subData: [
-                                { "category": "EDPs", value: 10 },
-                                { "category": "LIPs", value: 20 },
-                                { "category": "CBT", value: 5 },
-                                { "category": "TVS", value: 17 },
-                                { "category": "BDS", value: 6 }
-                            ],
-                            breakdown: [{
-                                "category": "Killa Abdullah",
-                                "edp": 2.75,
-                                "lip": 2.15,
-                                "cbt": 2.41,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Killa Saifullah",
-                                "edp": 2.45,
-                                "lip": 2.65,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Sherani",
-                                "edp": 2.25,
-                                "lip": 2.15,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Chagai",
-                                "edp": 2.56,
-                                "lip": 2.57,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Nushki",
-                                "edp": 2.25,
-                                "lip": 2.15,
-                                "cbt": 26.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Pishin",
-                                "edp": 2.85,
-                                "lip": 2.75,
-                                "cbt": 2.81,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Zhob",
-                                "edp": 2.65,
-                                "lip": 2.85,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Mastung",
-                                "edp": 2.5,
-                                "lip": 2.5,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Quetta",
-                                "edp": 2.5,
-                                "lip": 2.5,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }]
-
-                        }, {
-                            "category": "Male",
-                            value: 21,
-                            subData: [
-                                { "category": "EDPs", value: 10 },
-                                { "category": "LIPs", value: 20 },
-                                { "category": "CBT", value: 5 },
-                                { "category": "TVS", value: 17 },
-                                { "category": "BDS", value: 6 }
-                            ],
-                            breakdown: [{
-                                "category": "Killa Abdullah",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Killa Saifullah",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Sherani",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Chagai",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Nushki",
-                                "edp": 2.2,
-                                "lip": 2.3,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Pishin",
-                                "edp": 2.5,
-                                "lip": 2.2,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Zhob",
-                                "edp": 2.25,
-                                "lip": 2.53,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Mastung",
-                                "edp": 2.52,
-                                "lip": 2.25,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Quetta",
-                                "edp": 2.45,
-                                "lip": 2.55,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }]
-                        }
-                    ]
-
-
-
-                    const filteredList = list.filter(item => {
-
-                        const itemName = item.category.toLowerCase();
-                        const lowercasedSearchTerm = searchTerm.toLowerCase();
-                        return itemName.includes(lowercasedSearchTerm);
-                    });
-                    // Execute your search function or any desired action here
-                    console.log('Searching for:', filteredList);
-                    newData = filteredList
-                    i=0;
-                    root.dispose();
-                    rerender()
-                });
-
+               
 
                 function rerender() {
                     am5.ready(function () {
@@ -1769,47 +1395,65 @@
                         // ==============================================
                         var xxAxis;
                         var sseries;
-                        function columnStart(data) {
+                        var achart;
+                        var w = 150;
+                        var h = 57;
+                        function columnStart(data, _context, isDisposed) {
+                            var context;
+                            if(_context){
+                                   context = _context.toLowerCase()
+                            }
+                            console.log("Dataaaa:", data)
 
-                            console.log("Dataaaa: ", data)
+                            console.log(`                               
+                                Context: ${context}
+                            `)
 
-                            // Create chart
-                            // https://www.amcharts.com/docs/v5/charts/xy-chart/
-                            var achart = container.children.push(
-                                am5xy.XYChart.new(root, {
-                                    // panY: false,
-                                    wheelY: "zoomX",
-                                    wheelX: "zoomY",
-                                    //layout: root.verticalLayout
-                                    width: am5.percent(150),
-                                    height: am5.percent(57),
-                                    panX: false,
-                                    panY: false,
-                                    //centerX: am5.percent(10),
-                                    y: am5.percent(45),
-                                    x: am5.percent(35),
-                                    layout: am5.GridLayout.new(root, {
-                                        maxColumns: 2,
-                                        fixedWidthGrid: true
+                           console.log("Disposed: ", isDisposed)
+
+                           var ishidden = subChart.isHidden()
+                           console.log("HIDDEN: ", ishidden)
+
+                            if (ishidden && context.includes("afghan")) {
+                               w = 150
+                               h = 57
+                           }
+                            if (w == 80 && context.includes("afghan")) {
+                                w = 150;
+                                h = 57;
+                            }
+
+                            //disposed = undefined, hidden = true, 80, 57  
+                            if(isDisposed && context.includes("male")){
+                                w = 80
+                                h = 57
+                            }
+
+                            console.log("Width: ", w)
+                            console.log("Height: ", h)
+                                // Create chart
+                                // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                                achart = container.children.push(
+                                    am5xy.XYChart.new(root, {
+                                        // panY: false,
+                                        //wheelY: "zoomX",
+                                        //wheelX: "zoomY",
+                                        //layout: root.verticalLayout
+                                        width: am5.percent(w),
+                                        height: am5.percent(h),
+                                        //panX: false,
+                                        //panY: false,
+                                        //centerX: am5.percent(10),
+                                        y: am5.percent(45),
+                                        x: am5.percent(35),
+                                        layout: am5.GridLayout.new(root, {
+                                            maxColumns: 2,
+                                            fixedWidthGrid: true
+                                        })
+                                        //layout: root.verticalLayout
                                     })
-                                    //layout: root.verticalLayout
-                                })
-                            );
-
-
-                            // Create axes
-                            // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-                            //var xRenderer = am5xy.AxisRendererX.new(root, {});
-                            //xxAxis = achart.xAxes.push(am5xy.CategoryAxis.new(root, {
-                            //    categoryField: "category",
-                            //    renderer: xRenderer,
-                            //    tooltip: am5.Tooltip.new(root, {})
-                            //}));
-
-                            //xRenderer.grid.template.setAll({
-                            //    location: 1
-                            //})
-
+                                );
+                                                        
                             // Create X-Axis
                             xxAxis = achart.xAxes.push(
                                 am5xy.CategoryAxis.new(root, {
@@ -1835,29 +1479,19 @@
                                     renderer: am5xy.AxisRendererY.new(root, {
                                     })
                                 })
-                            );
-
-                            //var yAxis = achart.yAxes.push(am5xy.ValueAxis.new(root, {
-                            //    min: 0,
-                            //    renderer: am5xy.AxisRendererY.new(root, {
-                            //        strokeOpacity: 0.1
-                            //    })
-                            //}));
-
-                            //// Add legend
-                            //// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-                            //var legend = achart.children.push(am5.Legend.new(root, {
-                            //    centerX: am5.p50,
-                            //    x: am5.p50
-                            //}));
+                            );                   
 
 
                             // Add legend
                             var legend = achart.children.push(am5.Legend.new(root, {
-                                centerY: am5.percent(50),
-                                y: am5.percent(50),
+                                
+                                y: am5.percent(-20),
+                                x: am5.percent(100),
                                 layout: root.verticalLayout,
-                                height: am5.percent(100),
+                                //layout: root.horizontalLayout,
+                                //y: am5.percent(0),
+                                //centerY: am5.percent(0),
+                               // height: am5.percent(100),
                                 verticalScrollbar: am5.Scrollbar.new(root, {
                                     orientation: "vertical"
                                 })
@@ -1905,8 +1539,47 @@
                                 legend.data.push(sseries);
                                 //legend.data.setAll(achart.series.values);
                             }
-                            console.log("i: ", i)
-                            if (i == 0) {
+                            console.log(`
+                                this i: ${i}
+                                this refugee: ${refugee}
+                                
+                            `)
+
+                            //if i=0 and refugee=1 its refugee                           
+                            /***
+                             * change series to male female
+                             * when context is male show male series and viseversa
+                             */
+                            if ((i == 0 && refugee == 1 && context) || (i == 1 && refugee == 1 && !context) || (i == 1 && refugee == 1 && context)) {
+                                if(context){
+                                    if (context.toLowerCase().includes("afghan")) {//checkRefugee.toLowerCase().includes("male")
+                                        makeSeries("Male", "male");
+                                        makeSeries("Female", "female");
+                                        
+                                        subChart.appear()
+                                        line0.appear()
+                                        line1.appear()
+                                    }
+                                }                                                              
+                            }
+
+                            //if i = 1 and refugee = 1, its local male/female
+                            if((i == 1 && refugee == 1 && context.includes("male")) || (i == 0 && refugee == 1 && context.includes("male"))){
+                                if(context.includes("female")){
+                                    makeSeries("Female", "female")
+                                }
+                                else{
+                                    makeSeries("Male", "male")
+                                }
+                            }
+
+                            //if i=0 and refugee=0 its pdoi
+                            /***
+                             * 
+                             */
+                            //on slice double click i becomes 1
+
+                            if ((i == 0 && refugee == 0) || (i == 1 && refugee == 0) ) {
 
                                 makeSeries("EDPs", "edp");
                                 makeSeries("LIPs", "lip");
@@ -2060,6 +1733,10 @@
                         // add events
                         series.slices.template.events.on("click", function (e) {
                             console.log("Slice", e.target.get("fill"))
+                            var dataItem = e.target.dataItem;
+                            var dataContext = dataItem.dataContext;
+                            var context = JSON.stringify(dataContext["category"]);
+
                             selectSlice(e.target);
                             if (sseries) {
                                 sseries.columns.template.setAll({
@@ -2068,17 +1745,30 @@
                                 });
 
                             }
+
+                            //refugee = 1, i = undefined, context= ar
+
+                            //first click on slice i = 0, second time i = 1, context
                             console.log("IIIIII: ", i)
-                            if (i == 0) {
-                                console.log("Show the bar")
-                                columnStart(e.target.dataItem.dataContext.breakdown)
+                            console.log("SECOND CLICK: ", e.target.dataItem.dataContext.breakdown)
+                            console.log("CONTEXT: ", context)
+
+                            if(achart){
+                                console.log("exist")
+                                achart.dispose()
+                                //send context
+                                columnStart(e.target.dataItem.dataContext.breakdown, context)
                             }
-
-
-                            //sseries.data.setAll(dummy);
-                            //// yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
-                            //xxAxis.data.setAll(dummy)
-                            ////currentSlice = e.target;
+                            else{
+                                console.log("not exist")
+                                //send context
+                                columnStart(e.target.dataItem.dataContext.breakdown, context)
+                            }
+                            //if (i == 0) {
+                            //    console.log("Show the bar")
+                            //    columnStart(e.target.dataItem.dataContext.breakdown)
+                            //}
+                            
                         });
 
 
@@ -2207,8 +1897,7 @@
                         );
 
 
-                        function selectSlice(slice) {
-                            console.log("SelectedSlice 2: ", selectedSlice)
+                        function selectSlice(slice) {                           
                             selectedSlice = slice;
 
                             var dataItem = slice.dataItem;
@@ -2216,13 +1905,10 @@
                             var checkRefugee = JSON.stringify(dataContext["category"]);
 
                             console.log(`
-                                                                                        Data Context: ${checkRefugee}
-                                                                                    `)
-
-                            if (!(refugee == 1 && (checkRefugee.toLowerCase().includes("male") || checkRefugee.toLowerCase().includes("female")))) {
-                                console.log("in")
-                            }
-
+                                Data Context: ${checkRefugee}
+                                refugee: ${refugee}
+                                i: ${i}
+                            `)
 
                             if (dataContext) {
                                 var i = 0;
@@ -2264,7 +1950,36 @@
                                 });
                             }
                             else {
+                                series.animate({
+                                    key: "startAngle",
+                                    to: firstAngle - middleAngle,
+                                    duration: 1000,
+                                    easing: am5.ease.out(am5.ease.cubic)
+                                });
+                                series.animate({
+                                    key: "endAngle",
+                                    to: firstAngle - middleAngle + 360,
+                                    duration: 1000,
+                                    easing: am5.ease.out(am5.ease.cubic)
+                                });
+                                /***
+                                 * hide subchart, lines
+                                 * dispose the barchart and call columnStart with data
+                                 * make series according to context(male, female)
+                                 */
+                                console.log("NEW DATA: ", slice._dataItem.dataContext.breakdown)
                                 console.log("SelectedSlice 3: ", selectedSlice)
+                                subChart.hide()
+                                line0.hide()
+                                line1.hide()
+                                if(!achart){
+                                    columnStart(slice._dataItem.dataContext.breakdown, checkRefugee)                                   
+                                }
+                                else{
+                                    achart.dispose()
+                                    console.log("DISPOSED")
+                                    columnStart(slice._dataItem.dataContext.breakdown, checkRefugee, 1)
+                                }
                                 selectedSlice = null
                             }
                         }
