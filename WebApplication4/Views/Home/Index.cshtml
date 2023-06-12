@@ -57,7 +57,7 @@
                 const data = {
                     labels: labels,
                     datasets: [{
-                        label: 'Polar Graph',
+                        //label: 'Polar Graph',
                         data: [12.85, 4.49, 7.69, 2.71],
                         borderWidth: 0,
                         backgroundColor: [
@@ -88,7 +88,7 @@
                 };
 
                 var polarChart = new Chart(ctx, {
-                    //type: 'polarArea',
+                    type: 'polarArea',
                     data: data,
                     options: {
                         onClick: function (evt, data) {
@@ -116,7 +116,7 @@
                             position: "left",
                             
                             labels: {
-                                boxWidth: 11,
+                                boxWidth: 2,
                                 fontColor: "#757681",
                                 fontSize: 3
                             }
@@ -134,7 +134,7 @@
             <h5>PieOfPie</h5>
             <!-- Resources -->
             @*<div style="float:right; border: solid 2px yellow; height:100px">*@
-                <input type="text" id="searchInput" placeholder="Search..." />
+               @* <input type="text" id="searchInput" placeholder="Search..." />*@
 
                 <button onclick="PDOI()">PDOI</button>
                 <button onclick="REFUGEE()">REFUGEE</button>
@@ -159,8 +159,10 @@
             <script>
 
                 var newData = []
+                var completeData = []
                 var root;
                 var i = 0;
+                var all = 0;
                 var initializeData = (function () {
                     var executed = false;
                     console.log("one time")
@@ -177,16 +179,320 @@
                                     Enterprise Clusters
                              */
 
+                            completeData = [
+                                {
+                                    "category": "Complete",
+                                    value: 60000,
+                                    breakdown: [{
+                                        "category": "Killa Abdullah",
+                                        "edp": 22,
+                                        "lip": 45,
+                                        "cbt": 11,
+                                        "tvs": 19,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e341),
+                                            stroke: am5.color(0xd6e341)
+
+                                        }
+                                    }, {
+                                        "category": "Killa Saifullah",
+                                        "edp": 65,
+                                        "lip": 45,
+                                        "cbt": 21,
+                                        "tvs": 18,
+                                        "bds": 32,
+                                        columnSettings: {
+                                            fill: am5.color(0xbab755),
+                                            stroke: am5.color(0xbab755)
+
+                                        }
+                                    }, {
+                                        "category": "Sherani",
+                                        "edp": 31,
+                                        "lip": 5,
+                                        "cbt": 21,
+                                        "tvs": 41,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4a283),
+                                            stroke: am5.color(0xc4a283)
+
+                                        }
+                                    }, {
+                                        "category": "Chagai",
+                                        "edp": 25,
+                                        "lip": 16,
+                                        "cbt": 52,
+                                        "tvs": 12,
+                                        "bds": 22,
+                                        columnSettings: {
+                                            fill: am5.color(0xd61681),
+                                            stroke: am5.color(0xd61681)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Nushki",
+                                        "edp": 2,
+                                        "lip": 25,
+                                        "cbt": 21,
+                                        "tvs": 41,
+                                        "bds": 25,
+                                        columnSettings: {
+                                            fill: am5.color(0xbab205),
+                                            stroke: am5.color(0xbab205)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Pishin",
+                                        "edp": 16,
+                                        "lip": 45,
+                                        "cbt": 31,
+                                        "tvs": 41,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4a933),
+                                            stroke: am5.color(0xc4a933)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Zhob",
+                                        "edp": 53,
+                                        "lip": 22,
+                                        "cbt": 2,
+                                        "tvs": 18,
+                                        "bds": 22,
+                                        columnSettings: {
+                                            fill: am5.color(0xd69481),
+                                            stroke: am5.color(0xd69481)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Mastung",
+                                        "edp": 11,
+                                        "lip": 65,
+                                        "cbt": 61,
+                                        "tvs": 11,
+                                        "bds": 32,
+                                        columnSettings: {
+                                            fill: am5.color(0x34bf95),
+                                            stroke: am5.color(0x34bf95)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Quetta",
+                                        "edp": 25,                                        
+                                        "lip": 65,
+                                        "cbt": 71,
+                                        "tvs": 11,
+                                        "bds": 41,
+                                        columnSettings: {
+                                            fill: am5.color(0x99ad27),
+                                            stroke: am5.color(0x99ad27)
+
+                                        }
+                                    }],
+
+                                }
+                            ]
+
                             newData = [
                                 {
                                     "category": "Afghan Refugee",
-                                    value: 49,
+                                    value: 49,                                  
                                     subData: [
-                                        { "category": "EDPs", value: 25500 },
-                                        { "category": "LIPs", value: 4500 },
-                                        { "category": "CBT", value: 9360 },
-                                        { "category": "TVS", value: 12750 },
-                                        { "category": "BDS", value: 4500 }
+                                        {
+                                            "category": "EDPs", value: 25500, 
+                                            sliceSettings: {
+                                                fill: am5.color(0xff765f),
+                                                stroke: am5.color(0xff765f)
+                                            }
+                                        },
+                                        {
+                                            "category": "LIPs", value: 4500, 
+                                            sliceSettings: {
+                                                fill: am5.color(0xbabf27),
+                                                stroke: am5.color(0xbabf27)
+                                            }
+                                        },
+                                        { "category": "CBT", value: 9360,
+                                            sliceSettings: {
+                                                fill: am5.color(0xc4a563),
+                                                stroke: am5.color(0xc4a563)
+                                            }
+                                        },
+                                        { "category": "TVS", value: 12750,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        },
+                                        { "category": "BDS", value: 4500,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e561),
+                                                stroke: am5.color(0xd6e561)
+                                            }
+                                        }
+                                    ],
+                                    breakdown: [{
+                                        "category": "Killa Abdullah",
+                                        "edp": 22,
+                                        "lip": 45,
+                                        "cbt": 51,
+                                        "tvs": 31,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e341),
+                                            stroke: am5.color(0xd6e341)
+                                            
+                                        }
+                                    }, {
+                                        "category": "Killa Saifullah",
+                                        "edp": 25,
+                                        "lip": 76,
+                                        "cbt": 31,
+                                        "tvs": 41,
+                                        "bds": 21,
+                                        columnSettings: {
+                                            fill: am5.color(0xbab755),
+                                            stroke: am5.color(0xbab755)
+                                            
+                                        }
+                                    }, {
+                                        "category": "Sherani",
+                                        "edp": 52,
+                                        "lip": 25,
+                                        "cbt": 32,
+                                        "tvs": 43,
+                                        "bds": 22,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4a283),
+                                            stroke: am5.color(0xc4a283)
+                                            
+                                        }
+                                    }, {
+                                        "category": "Chagai",
+                                        "edp": 45,
+                                        "lip": 24,
+                                        "cbt": 12,
+                                        "tvs": 43,
+                                        "bds": 12,
+                                        columnSettings: {
+                                            fill: am5.color(0xd61681),
+                                            stroke: am5.color(0xd61681)
+                                            
+                                        }
+                                    },
+                                    {
+                                        "category": "Nushki",
+                                        "edp": 25,
+                                        "lip": 65,
+                                        "cbt": 71,
+                                        "tvs": 41,
+                                        "bds": 22,
+                                        columnSettings: {
+                                            fill: am5.color(0xbab205),
+                                            stroke: am5.color(0xbab205)
+                                            
+                                        }
+                                    },
+                                    {
+                                        "category": "Pishin",
+                                        "edp": 56,
+                                        "lip": 41,
+                                        "cbt": 31,
+                                        "tvs": 41,
+                                        "bds": 73,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4a933),
+                                            stroke: am5.color(0xc4a933)
+                                            
+                                        }
+                                    },
+                                    {
+                                        "category": "Zhob",
+                                        "edp": 31,
+                                        "lip": 39,
+                                        "cbt": 81,
+                                        "tvs": 11,
+                                        "bds": 12,
+                                        columnSettings: {
+                                            fill: am5.color(0xd69481),
+                                            stroke: am5.color(0xd69481)
+                                            
+                                        }
+                                    },
+                                    {
+                                        "category": "Mastung",
+                                        "edp": 51,
+                                        "lip": 2,
+                                        "cbt": 32,
+                                        "tvs": 13,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0x34bf95),
+                                            stroke: am5.color(0x34bf95)
+                                            
+                                        }
+                                    },
+                                    {
+                                        "category": "Quetta",
+                                        "edp": 15,
+                                        "lip": 65,
+                                        "cbt": 21,
+                                        "tvs": 11,
+                                        "bds": 32,
+                                        columnSettings: {
+                                            fill: am5.color(0x99ad27),
+                                            stroke: am5.color(0x99ad27)
+                                            
+                                        }
+                                    }],
+                                    
+                                    sliceSettings: {
+                                        fill: am5.color(0xe600e6),
+                                        stroke: am5.color(0xe600e6)
+                                    }                                
+                                },
+                                {
+                                    "category": "Female",
+                                    value: 30,
+                                    subData: [
+                                        { "category": "EDPs", value: 10,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        },
+                                        { "category": "LIPs", value: 20,
+                                            sliceSettings: {
+                                                fill: am5.color(0xbabf95),
+                                                stroke: am5.color(0xbabf95)
+                                            }
+                                        },
+                                        { "category": "CBT", value: 5,
+                                            sliceSettings: {
+                                                fill: am5.color(0xc4ad83),
+                                                stroke: am5.color(0xc4ad83)
+                                            }
+                                        },
+                                        { "category": "TVS", value: 17,
+                                            sliceSettings: {
+                                                fill: am5.color(0xbabf95),
+                                                stroke: am5.color(0xbabf95)
+                                            }
+                                        },
+                                        { "category": "BDS", value: 6,
+                                            sliceSettings: {
+                                                fill: am5.color(0xc4ad83),
+                                                stroke: am5.color(0xc4ad83)
+                                            }
+                                        }
                                     ],
                                     breakdown: [{
                                         "category": "Killa Abdullah",
@@ -194,28 +500,48 @@
                                         "lip": 2.45,
                                         "cbt": 2.51,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
                                     }, {
                                         "category": "Killa Saifullah",
                                         "edp": 2.25,
                                         "lip": 2.45,
                                         "cbt": 2.31,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
                                     }, {
                                         "category": "Sherani",
                                         "edp": 2.52,
                                         "lip": 2.45,
                                         "cbt": 2.1,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
                                     }, {
                                         "category": "Chagai",
                                         "edp": 2.65,
                                         "lip": 2.35,
                                         "cbt": 24.1,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
                                     },
                                     {
                                         "category": "Nushki",
@@ -223,7 +549,12 @@
                                         "lip": 2.65,
                                         "cbt": 2.71,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
                                     },
                                     {
                                         "category": "Pishin",
@@ -231,7 +562,12 @@
                                         "lip": 2.54,
                                         "cbt": 2.31,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
                                     },
                                     {
                                         "category": "Zhob",
@@ -239,7 +575,12 @@
                                         "lip": 2.52,
                                         "cbt": 2.81,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
                                     },
                                     {
                                         "category": "Mastung",
@@ -247,176 +588,185 @@
                                         "lip": 2.65,
                                         "cbt": 2.51,
                                         "tvs": 1,
-                                        "bds": 4.2
-                                    },
-                                    {
-                                        "category": "Quetta",
-                                        "edp": 2.25,
-                                        "lip": 2.65,
-                                        "cbt": 2.71,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    }]
-                                },
-                                {
-                                    "category": "Female",
-                                    value: 30,
-                                    subData: [
-                                        { "category": "EDPs", value: 10 },
-                                        { "category": "LIPs", value: 20 },
-                                        { "category": "CBT", value: 5 },
-                                        { "category": "TVS", value: 17 },
-                                        { "category": "BDS", value: 6 }
-                                    ],
-                                    breakdown: [{
-                                        "category": "Killa Abdullah",
-                                        "edp": 2.75,
-                                        "lip": 2.15,
-                                        "cbt": 2.41,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    }, {
-                                        "category": "Killa Saifullah",
-                                        "edp": 2.45,
-                                        "lip": 2.65,
-                                        "cbt": 2.31,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    }, {
-                                        "category": "Sherani",
-                                        "edp": 2.25,
-                                        "lip": 2.15,
-                                        "cbt": 2.51,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    }, {
-                                        "category": "Chagai",
-                                        "edp": 2.56,
-                                        "lip": 2.57,
-                                        "cbt": 2.51,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    },
-                                    {
-                                        "category": "Nushki",
-                                        "edp": 2.25,
-                                        "lip": 2.15,
-                                        "cbt": 26.1,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    },
-                                    {
-                                        "category": "Pishin",
-                                        "edp": 2.85,
-                                        "lip": 2.75,
-                                        "cbt": 2.81,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    },
-                                    {
-                                        "category": "Zhob",
-                                        "edp": 2.65,
-                                        "lip": 2.85,
-                                        "cbt": 2.71,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    },
-                                    {
-                                        "category": "Mastung",
-                                        "edp": 2.5,
-                                        "lip": 2.5,
-                                        "cbt": 2.1,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    },
-                                    {
-                                        "category": "Quetta",
-                                        "edp": 2.5,
-                                        "lip": 2.5,
-                                        "cbt": 2.1,
-                                        "tvs": 1,
-                                        "bds": 4.2
-                                    }]
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
 
+                                        }
+                                    },
+                                    {
+                                        "category": "Quetta",
+                                        "edp": 2.25,
+                                        "lip": 2.65,
+                                        "cbt": 2.71,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    }],
+
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
                                 }, {
                                     "category": "Male",
                                     value: 21,
                                     subData: [
-                                        { "category": "EDPs", value: 10 },
-                                        { "category": "LIPs", value: 20 },
-                                        { "category": "CBT", value: 5 },
-                                        { "category": "TVS", value: 17 },
-                                        { "category": "BDS", value: 6 }
+                                        { "category": "EDPs", value: 10,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        },
+                                        { "category": "LIPs", value: 20,
+                                            sliceSettings: {
+                                                fill: am5.color(0xbabf95),
+                                                stroke: am5.color(0xbabf95) 
+                                            }
+                                        },
+                                        { "category": "CBT", value: 5,
+                                            sliceSettings: {
+                                                fill: am5.color(0xc4ad83),
+                                                stroke: am5.color(0xc4ad83)
+                                            }
+                                        },
+                                        { "category": "TVS", value: 17,
+                                            sliceSettings: {
+                                                fill: am5.color(0xbabf95),
+                                                stroke: am5.color(0xbabf95)
+                                            }
+                                        },
+                                        { "category": "BDS", value: 6,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        }
                                     ],
                                     breakdown: [{
                                         "category": "Killa Abdullah",
-                                        "edp": 2.1,
-                                        "lip": 2.2,
-                                        "cbt": 2.3,
+                                        "edp": 2.52,
+                                        "lip": 2.45,
+                                        "cbt": 2.51,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
                                     }, {
                                         "category": "Killa Saifullah",
-                                        "edp": 2.1,
-                                        "lip": 2.2,
-                                        "cbt": 2.3,
+                                        "edp": 2.25,
+                                        "lip": 2.45,
+                                        "cbt": 2.31,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
                                     }, {
                                         "category": "Sherani",
-                                        "edp": 2.1,
-                                        "lip": 2.2,
-                                        "cbt": 2.3,
+                                        "edp": 2.52,
+                                        "lip": 2.45,
+                                        "cbt": 2.1,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
                                     }, {
                                         "category": "Chagai",
-                                        "edp": 2.1,
-                                        "lip": 2.2,
-                                        "cbt": 2.3,
+                                        "edp": 2.65,
+                                        "lip": 2.35,
+                                        "cbt": 24.1,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
                                     },
                                     {
                                         "category": "Nushki",
-                                        "edp": 2.2,
-                                        "lip": 2.3,
-                                        "cbt": 2.1,
+                                        "edp": 2.25,
+                                        "lip": 2.65,
+                                        "cbt": 2.71,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
                                     },
                                     {
                                         "category": "Pishin",
-                                        "edp": 2.5,
-                                        "lip": 2.2,
-                                        "cbt": 2.1,
+                                        "edp": 2.56,
+                                        "lip": 2.54,
+                                        "cbt": 2.31,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
                                     },
                                     {
                                         "category": "Zhob",
-                                        "edp": 2.25,
-                                        "lip": 2.53,
-                                        "cbt": 2.1,
+                                        "edp": 2.53,
+                                        "lip": 2.52,
+                                        "cbt": 2.81,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
                                     },
                                     {
                                         "category": "Mastung",
-                                        "edp": 2.52,
-                                        "lip": 2.25,
-                                        "cbt": 2.1,
+                                        "edp": 2.51,
+                                        "lip": 2.65,
+                                        "cbt": 2.51,
                                         "tvs": 1,
-                                        "bds": 4.2
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
                                     },
                                     {
                                         "category": "Quetta",
-                                        "edp": 2.45,
-                                        "lip": 2.55,
-                                        "cbt": 2.1,
+                                        "edp": 2.25,
+                                        "lip": 2.65,
+                                        "cbt": 2.71,
                                         "tvs": 1,
-                                        "bds": 4.2
-                                    }]
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    }],
+
+                                    sliceSettings: {
+                                        fill: am5.color(0x660066),
+                                        stroke: am5.color(0x660066)
+                                    }
                                 }
                             ]
 
@@ -430,7 +780,11 @@
 
                                 // Set themes
                                 // https://www.amcharts.com/docs/v5/concepts/themes/
-                                root.setThemes([am5themes_Animated.new(root)]);
+                                root.setThemes([
+                                    am5themes_Animated.new(root)
+                                ]);
+
+
 
                                 var container = root.container.children.push(
                                     am5.Container.new(root, {
@@ -446,24 +800,58 @@
                                 // ==============================================
                                 // Column chart
                                 // ==============================================
+
                                 var xxAxis;
                                 var sseries;
-                                function columnStart(data) {
+                                var achart
+                                var w
+                                var h
 
-                                    console.log("Dataaaa: ", data)
+                                function columnStart(data, _context, isDisposed) {
+                                    var context;
+                                    if (_context) {
+                                        context = _context.toLowerCase()
+                                    }
+                                    console.log("Dataaaa:", data)
 
+                                    console.log(`
+                                                Context: ${context}
+                                            `)
+
+                                    console.log("Disposed: ", isDisposed)
+
+                                    var ishidden = subChart.isHidden()
+                                    console.log("HIDDEN: ", ishidden)
+
+                                    if (ishidden && context.includes("afghan")) {
+                                        w = 150
+                                        h = 57
+                                    }
+                                    if (w == 80 && context.includes("afghan")) {
+                                        w = 150;
+                                        h = 57;
+                                    }
+
+                                    //disposed = undefined, hidden = true, 80, 57
+                                    if (isDisposed && context.includes("male")) {
+                                        w = 80
+                                        h = 57
+                                    }
+
+                                    console.log("Width: ", w)
+                                    console.log("Height: ", h)
                                     // Create chart
                                     // https://www.amcharts.com/docs/v5/charts/xy-chart/
-                                    var achart = container.children.push(
+                                    achart = container.children.push(
                                         am5xy.XYChart.new(root, {
                                             // panY: false,
-                                            wheelY: "zoomX",
-                                            wheelX: "zoomY",
+                                            //wheelY: "zoomX",
+                                            //wheelX: "zoomY",
                                             //layout: root.verticalLayout
-                                            width: am5.percent(150),
-                                            height: am5.percent(57),
-                                            panX: false,
-                                            panY: false,
+                                            width: am5.percent(w),
+                                            height: am5.percent(h),
+                                            //panX: false,
+                                            //panY: false,
                                             //centerX: am5.percent(10),
                                             y: am5.percent(45),
                                             x: am5.percent(35),
@@ -474,20 +862,6 @@
                                             //layout: root.verticalLayout
                                         })
                                     );
-
-
-                                    // Create axes
-                                    // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-                                    //var xRenderer = am5xy.AxisRendererX.new(root, {});
-                                    //xxAxis = achart.xAxes.push(am5xy.CategoryAxis.new(root, {
-                                    //    categoryField: "category",
-                                    //    renderer: xRenderer,
-                                    //    tooltip: am5.Tooltip.new(root, {})
-                                    //}));
-
-                                    //xRenderer.grid.template.setAll({
-                                    //    location: 1
-                                    //})
 
                                     // Create X-Axis
                                     xxAxis = achart.xAxes.push(
@@ -516,33 +890,23 @@
                                         })
                                     );
 
-                                    //var yAxis = achart.yAxes.push(am5xy.ValueAxis.new(root, {
-                                    //    min: 0,
-                                    //    renderer: am5xy.AxisRendererY.new(root, {
-                                    //        strokeOpacity: 0.1
-                                    //    })
-                                    //}));
-
-                                    //// Add legend
-                                    //// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-                                    //var legend = achart.children.push(am5.Legend.new(root, {
-                                    //    centerX: am5.p50,
-                                    //    x: am5.p50
-                                    //}));
-
 
                                     // Add legend
                                     var legend = achart.children.push(am5.Legend.new(root, {
-                                        centerY: am5.percent(50),
-                                        y: am5.percent(50),
+
+                                        y: am5.percent(-20),
+                                        x: am5.percent(100),
                                         layout: root.verticalLayout,
-                                        height: am5.percent(100),
+                                        //layout: root.horizontalLayout,
+                                        //y: am5.percent(0),
+                                        //centerY: am5.percent(0),
+                                        // height: am5.percent(100),
                                         verticalScrollbar: am5.Scrollbar.new(root, {
                                             orientation: "vertical"
                                         })
                                     }));
 
-                                  
+
 
                                     // Add series
                                     // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
@@ -584,8 +948,47 @@
                                         legend.data.push(sseries);
                                         //legend.data.setAll(achart.series.values);
                                     }
-                                    console.log("i: ", i)
-                                    if (i == 0) {
+                                    console.log(`
+                                                this i: ${i}
+                                                this refugee: ${refugee}
+
+                                            `)
+
+                                    //if i=0 and refugee=1 its refugee
+                                    /***
+                                     * change series to male female
+                                     * when context is male show male series and viseversa
+                                     */
+                                    if ((i == 0 && refugee == 1 && context) || (i == 1 && refugee == 1 && !context) || (i == 1 && refugee == 1 && context)) {
+                                        if (context) {
+                                            if (context.toLowerCase().includes("afghan")) {//checkRefugee.toLowerCase().includes("male")
+                                                makeSeries("Male", "male");
+                                                makeSeries("Female", "female");
+
+                                                subChart.appear()
+                                                line0.appear()
+                                                line1.appear()
+                                            }
+                                        }
+                                    }
+
+                                    //if i = 1 and refugee = 1, its local male/female
+                                    if ((i == 1 && refugee == 1 && context.includes("male")) || (i == 0 && refugee == 1 && context.includes("male"))) {
+                                        if (context.includes("female")) {
+                                            makeSeries("Female", "female")
+                                        }
+                                        else {
+                                            makeSeries("Male", "male")
+                                        }
+                                    }
+
+                                    //if i=0 and refugee=0 its pdoi
+                                    /***
+                                     *
+                                     */
+                                    //on slice double click i becomes 1
+
+                                    if ((i == 0 && refugee == 0) || (i == 1 && refugee == 0)) {
 
                                         makeSeries("EDPs", "edp");
                                         makeSeries("LIPs", "lip");
@@ -602,12 +1005,152 @@
                                 }
 
 
+
+
+                                //function columnStart(data) {
+
+                                //    console.log("Dataaaa: ", data)
+
+                                //    // Create chart
+                                //    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                                //    achart = container.children.push(
+                                //        am5xy.XYChart.new(root, {
+                                //            // panY: false,
+                                //            wheelY: "zoomX",
+                                //            wheelX: "zoomY",
+                                //            //layout: root.verticalLayout
+                                //            width: am5.percent(150),
+                                //            height: am5.percent(57),
+                                //            panX: false,
+                                //            panY: false,
+                                //            //centerX: am5.percent(10),
+                                //            y: am5.percent(45),
+                                //            x: am5.percent(35),
+                                //            layout: am5.GridLayout.new(root, {
+                                //                maxColumns: 2,
+                                //                fixedWidthGrid: true
+                                //            })
+                                //            //layout: root.verticalLayout
+                                //        })
+                                //    );                            
+
+                                //    // Create X-Axis
+                                //    xxAxis = achart.xAxes.push(
+                                //        am5xy.CategoryAxis.new(root, {
+                                //            maxDeviation: 0.2,
+                                //            renderer: am5xy.AxisRendererX.new(root, {
+                                //                minGridDistance: 10
+                                //            }),
+                                //            categoryField: "category"
+                                //        })
+                                //    );
+                                //    var xRenderer = xxAxis.get("renderer");
+                                //    xRenderer.labels.template.setAll({
+                                //        rotation: -30,
+                                //        fontSize: 10,
+                                //        centerY: am5.percent(50)
+                                //    });
+
+                                //    xxAxis.data.setAll(data);
+
+                                //    // Craete Y-axis
+                                //    let yAxis = achart.yAxes.push(
+                                //        am5xy.ValueAxis.new(root, {
+                                //            renderer: am5xy.AxisRendererY.new(root, {
+                                //            })
+                                //        })
+                                //    );
+
+                                //    // Add legend
+                                //    var legend = achart.children.push(am5.Legend.new(root, {
+                                //        //nameField: "name",
+                                //        //fillField: "color",
+                                //        //strokeField: "color",
+                                //        centerY: am5.percent(50),
+                                //        y: am5.percent(50),
+                                //        layout: root.verticalLayout,
+                                //        height: am5.percent(100),
+                                //        verticalScrollbar: am5.Scrollbar.new(root, {
+                                //            orientation: "vertical"
+                                //        })
+                                //    }));
+
+                                //    // Add series
+                                //    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                                //    function makeSeries(name, fieldName) {
+
+                                //        sseries = achart.series.push(am5xy.ColumnSeries.new(root, {
+                                //            name: name,
+                                //            stacked: true,
+                                //            xAxis: xxAxis,
+                                //            yAxis: yAxis,
+                                //            valueYField: fieldName,
+                                //            categoryXField: "category"
+                                //        }));                                       
+
+                                //        sseries.columns.template.setAll({
+                                //            tooltipText: "{name}, {categoryX}: {valueY}",
+                                //            tooltipY: am5.percent(10),
+                                //            //templateField: "columnSettings"
+                                //        });                                      
+
+                                //        sseries.data.setAll(data);
+
+                                //        // Make stuff animate on load
+                                //        // https://www.amcharts.com/docs/v5/concepts/animations/
+                                //        //series.appear();                                      
+
+
+                                //        sseries.bullets.push(function () {
+                                //            return am5.Bullet.new(root, {
+                                //                sprite: am5.Label.new(root, {
+                                //                    //text: "{valueY}",
+                                //                    fill: root.interfaceColors.get("alternativeText"),
+                                //                    centerY: am5.p50,
+                                //                    centerX: am5.p50,
+                                //                    fontSize: 10,
+                                //                    populateText: true
+                                //                })
+                                //            });
+                                //        });
+
+                                       
+                                //        legend.data.push(sseries);
+                                //        //console.log("LEGEND: ", achart.series.values)
+                                //        //legend.data.setAll(achart.series.values);
+                                //    }
+                                //    console.log(`
+                                //        i: ${i}
+                                //        all: ${all}
+                                //    `)
+                                //    if(all == 1 && i != 0){
+                                //        makeSeries("EDPs", "edp");
+                                //        makeSeries("LIPs", "lip");
+                                //        makeSeries("CBT", "cbt");
+                                //        makeSeries("TVS", "tvs");
+                                //        makeSeries("BDS", "bds");
+                                //    }
+                                //    if (i == 0) {
+                                //        makeSeries("EDPs", "edp");
+                                //        makeSeries("LIPs", "lip");
+                                //        makeSeries("CBT", "cbt");
+                                //        makeSeries("TVS", "tvs");
+                                //        makeSeries("BDS", "bds");
+                                //    }
+                                //    i = 1;
+
+                                //    //function end
+                                //}
+
+
                                 // ==============================================
                                 // END Column chart
                                 // ==============================================
 
                                 // Create main chart
                                 // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                                                               
+                                
                                 var chart = container.children.push(
                                     am5percent.PieChart.new(root, {
                                         tooltip: am5.Tooltip.new(root, {}),
@@ -640,9 +1183,20 @@
                                     })
                                 );
 
+                                // Configuring slices
+                                series2.slices.template.setAll({
+                                    templateField: "sliceSettings"
+                                    //stroke: am5.color(0xffffff),
+                                    //strokeWidth: 2
+                                })
+
                                 series2.data.setAll([{
                                     total: "Total",
-                                    beneficiaries: 60000
+                                    beneficiaries: 60000,
+                                    sliceSettings: {
+                                        fill: am5.color(0xcc0099),
+                                        stroke: am5.color(0xcc0099)
+                                    }
                                 }]);
 
                                 series2.bullets.push(function () {
@@ -655,14 +1209,8 @@
                                             fill: am5.color(0xffffff)
                                         })
                                     });
-                                });
+                                });                                                                 
 
-
-                                // Configuring slices
-                                series2.slices.template.setAll({
-                                    stroke: am5.color(0xffffff),
-                                    strokeWidth: 2
-                                })
 
                                 series2.labels.template.setAll({
                                     // text: "{beneficiaries}",
@@ -672,37 +1220,20 @@
                                     //centerX: am5.percent(90),
                                     radius: 10,
                                     fill: am5.color(0xffffff)
+                                });
+                                series2.events.on("click", function (e) {
+                                    //Show complete Data
+                                    //Incase of refugee get unique data of refugee first
+                                    if(all == 0){
+                                        all = 1;
+                                    }
+                                    else{
+                                        all = 0
+                                    }
+                                    console.log("Data: ",completeData[0].breakdown)//e.target._dataItems[0].dataContext
+                                    columnStart(completeData[0].breakdown)
                                 })
-
-                                // add events
-                                //series2.slices.template.events.on("click", function (e) {
-                                //    console.log("Series2 Slice", e.target.get("fill"))
-                                //    selectSlice(e.target);
-                                //    aseries1.columns.template.setAll({
-                                //        fill: e.target.get("fill"), //slice
-                                //        stroke: e.target.get("fill") //slice
-                                //    });
-
-                                //    console.log("DATA: ", e.target.dataItem.dataContext.breakdown)
-
-                                //    aseries1.data.setAll(e.target.dataItem.dataContext.breakdown);
-                                //    // yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
-                                //    xAxis.data.setAll(e.target.dataItem.dataContext.breakdown)
-
-                                //    //makeSeries("LIP", "lip");
-                                //    //makeSeries("BSF", "bsf");
-                                //    //makeSeries("Tech", "tech");
-                                //    //makeSeries("Community Training", "ct");
-                                //    //currentSlice = e.target;
-                                //});
-
-                                //series2.ticks.template.set("visible", false);
-                                //series2.slices.template.set("toggleKey", "none");
-
-                                //// Disabling labels and ticks
-                                //series2.labels.template.set("visible", false);
-                                //series2.ticks.template.set("visible", false);
-
+                               
                                 // Create series
                                 // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
                                 var series = chart.series.push(
@@ -733,9 +1264,17 @@
                                 series.ticks.template.set("visible", false);
                                 series.slices.template.set("toggleKey", "none");
 
+                                series.slices.template.setAll({
+                                    templateField: "sliceSettings"
+                                });
+
                                 // add events
                                 series.slices.template.events.on("click", function (e) {
                                     console.log("Slice", e.target.get("fill"))
+                                    var dataItem = e.target.dataItem;
+                                    var dataContext = dataItem.dataContext;
+                                    var context = JSON.stringify(dataContext["category"]);
+
                                     selectSlice(e.target);
                                     if (sseries) {
                                         sseries.columns.template.setAll({
@@ -745,16 +1284,47 @@
 
                                     }
 
+                                    //refugee = 1, i = undefined, context= ar
+
+                                    //first click on slice i = 0, second time i = 1, context
+                                    console.log("IIIIII: ", i)
+                                    console.log("SECOND CLICK: ", e.target.dataItem.dataContext.breakdown)
+                                    console.log("CONTEXT: ", context)
+
+                                    if (achart) {
+                                        console.log("exist")
+                                        achart.dispose()
+                                        //send context
+                                        columnStart(e.target.dataItem.dataContext.breakdown, context)
+                                    }
+                                    else {
+                                        console.log("not exist")
+                                        //send context
+                                        columnStart(e.target.dataItem.dataContext.breakdown, context)
+                                    }
+                                    //if (i == 0) {
+                                    //    console.log("Show the bar")
+                                    //    columnStart(e.target.dataItem.dataContext.breakdown)
+                                    //}
+
+                                });
+
+                                // add events
+                                series.slices.template.events.on("click", function (e) {
+                                    console.log("Slice", e.target.get("fill"))
+                                    all = 0
+                                    selectSlice(e.target);
+                                    if (sseries) {
+                                        sseries.columns.template.setAll({
+                                            fill: e.target.get("fill"), //slice
+                                            stroke: e.target.get("fill") //slice
+                                        });
+                                    }
+
                                     if (i == 0) {
                                         console.log("Show column")
                                         columnStart(e.target.dataItem.dataContext.breakdown)
-                                    }
-
-
-                                    //sseries.data.setAll(dummy);
-                                    //// yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
-                                    //xxAxis.data.setAll(dummy)
-                                    ////currentSlice = e.target;
+                                    }                                   
                                 });
 
 
@@ -806,16 +1376,63 @@
                                     fill: am5.color(0x000000)
                                 })
 
+                                subSeries.slices.template.setAll({
+                                    templateField: "sliceSettings"
+                                });
 
                                 subSeries.data.setAll([
-                                    { category: "A", value: 0 },
-                                    { category: "B", value: 0 },
-                                    { category: "C", value: 0 },
-                                    { category: "D", value: 0 },
-                                    { category: "E", value: 0 },
-                                    { category: "F", value: 0 },
-                                    { category: "G", value: 0 }
+                                    {
+                                        category: "A", value: 0,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        category: "B", value: 0,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+                                        }
+                                    },
+                                    {
+                                        category: "C", value: 0,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+                                        }
+                                    },
+                                    {
+                                        category: "D", value: 0,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        category: "E", value: 0,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+                                        }
+                                    },
+                                    {
+                                        category: "F", value: 0,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+                                        }
+                                    },
+                                    {
+                                        category: "G", value: 0,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    }
                                 ]);
+
+
                                 subSeries.slices.template.set("toggleKey", "none");
 
                                 var selectedSlice;
@@ -884,6 +1501,7 @@
 
                                 function selectSlice(slice) {
                                     selectedSlice = slice;
+                                    console.log("Slice Select: ", slice)
                                     var dataItem = slice.dataItem;
                                     var dataContext = dataItem.dataContext;
 
@@ -943,247 +1561,348 @@
                     i=0;
                     refugee = 0;
                     var pdoi = [
-                        {
-                            "category": "Afghan Refugee",
-                            value: 49,
-                            subData: [
-                                { "category": "EDPs", value: 25500 },
-                                { "category": "LIPs", value: 4500 },
-                                { "category": "CBT", value: 9360 },
-                                { "category": "TVS", value: 12750 },
-                                { "category": "BDS", value: 4500 }
-                            ],
-                            breakdown: [{
-                                "category": "Killa Abdullah",
-                                "edp": 2.52,
-                                "lip": 2.45,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
+                            {
+                                "category": "Afghan Refugee",
+                                value: 49,
+                                subData: [
+                                    {
+                                        "category": "EDPs", value: 25500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        "category": "LIPs", value: 4500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+                                        }
+                                    },
+                                    {
+                                        "category": "CBT", value: 9360,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+                                        }
+                                    },
+                                    {
+                                        "category": "TVS", value: 12750,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        "category": "BDS", value: 4500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    }
+                                ],
+                                breakdown: [{
+                                    "category": "Killa Abdullah",
+                                    "edp": 2.52,
+                                    "lip": 2.45,
+                                    "cbt": 2.51,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Killa Saifullah",
+                                    "edp": 2.25,
+                                    "lip": 2.45,
+                                    "cbt": 2.31,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Sherani",
+                                    "edp": 2.52,
+                                    "lip": 2.45,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Chagai",
+                                    "edp": 2.65,
+                                    "lip": 2.35,
+                                    "cbt": 24.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Nushki",
+                                    "edp": 2.25,
+                                    "lip": 2.65,
+                                    "cbt": 2.71,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Pishin",
+                                    "edp": 2.56,
+                                    "lip": 2.54,
+                                    "cbt": 2.31,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Zhob",
+                                    "edp": 2.53,
+                                    "lip": 2.52,
+                                    "cbt": 2.81,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Mastung",
+                                    "edp": 2.51,
+                                    "lip": 2.65,
+                                    "cbt": 2.51,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Quetta",
+                                    "edp": 2.25,
+                                    "lip": 2.65,
+                                    "cbt": 2.71,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }],
+                                sliceSettings: {
+                                fill: am5.color(0xcc0066),
+                                stroke: am5.color(0xcc0066)
+                                }
+                            },
+                            {
+                                "category": "Female",
+                                value: 30,
+                                subData: [
+                                    {
+                                        "category": "EDPs", value: 10,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        "category": "LIPs", value: 20,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+                                        }
+                                    },
+                                    {
+                                        "category": "CBT", value: 5,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+                                        }
+                                    },
+                                    {
+                                        "category": "TVS", value: 17,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+                                        }
+                                    },
+                                    {
+                                        "category": "BDS", value: 6,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+                                        }
+                                    }
+                                ],
+                                breakdown: [{
+                                    "category": "Killa Abdullah",
+                                    "edp": 2.75,
+                                    "lip": 2.15,
+                                    "cbt": 2.41,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Killa Saifullah",
+                                    "edp": 2.45,
+                                    "lip": 2.65,
+                                    "cbt": 2.31,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Sherani",
+                                    "edp": 2.25,
+                                    "lip": 2.15,
+                                    "cbt": 2.51,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Chagai",
+                                    "edp": 2.56,
+                                    "lip": 2.57,
+                                    "cbt": 2.51,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Nushki",
+                                    "edp": 2.25,
+                                    "lip": 2.15,
+                                    "cbt": 26.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Pishin",
+                                    "edp": 2.85,
+                                    "lip": 2.75,
+                                    "cbt": 2.81,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Zhob",
+                                    "edp": 2.65,
+                                    "lip": 2.85,
+                                    "cbt": 2.71,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Mastung",
+                                    "edp": 2.5,
+                                    "lip": 2.5,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Quetta",
+                                    "edp": 2.5,
+                                    "lip": 2.5,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }],
+                                sliceSettings: {
+                                fill: am5.color(0xb300b3),
+                                stroke: am5.color(0xb300b3)
+                                }
                             }, {
-                                "category": "Killa Saifullah",
-                                "edp": 2.25,
-                                "lip": 2.45,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Sherani",
-                                "edp": 2.52,
-                                "lip": 2.45,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Chagai",
-                                "edp": 2.65,
-                                "lip": 2.35,
-                                "cbt": 24.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Nushki",
-                                "edp": 2.25,
-                                "lip": 2.65,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Pishin",
-                                "edp": 2.56,
-                                "lip": 2.54,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Zhob",
-                                "edp": 2.53,
-                                "lip": 2.52,
-                                "cbt": 2.81,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Mastung",
-                                "edp": 2.51,
-                                "lip": 2.65,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Quetta",
-                                "edp": 2.25,
-                                "lip": 2.65,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }]
-                        },
-                        {
-                            "category": "Female",
-                            value: 30,
-                            subData: [
-                                { "category": "EDPs", value: 10 },
-                                { "category": "LIPs", value: 20 },
-                                { "category": "CBT", value: 5 },
-                                { "category": "TVS", value: 17 },
-                                { "category": "BDS", value: 6 }
-                            ],
-                            breakdown: [{
-                                "category": "Killa Abdullah",
-                                "edp": 2.75,
-                                "lip": 2.15,
-                                "cbt": 2.41,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Killa Saifullah",
-                                "edp": 2.45,
-                                "lip": 2.65,
-                                "cbt": 2.31,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Sherani",
-                                "edp": 2.25,
-                                "lip": 2.15,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Chagai",
-                                "edp": 2.56,
-                                "lip": 2.57,
-                                "cbt": 2.51,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Nushki",
-                                "edp": 2.25,
-                                "lip": 2.15,
-                                "cbt": 26.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Pishin",
-                                "edp": 2.85,
-                                "lip": 2.75,
-                                "cbt": 2.81,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Zhob",
-                                "edp": 2.65,
-                                "lip": 2.85,
-                                "cbt": 2.71,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Mastung",
-                                "edp": 2.5,
-                                "lip": 2.5,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Quetta",
-                                "edp": 2.5,
-                                "lip": 2.5,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }]
-
-                        }, {
-                            "category": "Male",
-                            value: 21,
-                            subData: [
-                                { "category": "EDPs", value: 10 },
-                                { "category": "LIPs", value: 20 },
-                                { "category": "CBT", value: 5 },
-                                { "category": "TVS", value: 17 },
-                                { "category": "BDS", value: 6 }
-                            ],
-                            breakdown: [{
-                                "category": "Killa Abdullah",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Killa Saifullah",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Sherani",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }, {
-                                "category": "Chagai",
-                                "edp": 2.1,
-                                "lip": 2.2,
-                                "cbt": 2.3,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Nushki",
-                                "edp": 2.2,
-                                "lip": 2.3,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Pishin",
-                                "edp": 2.5,
-                                "lip": 2.2,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Zhob",
-                                "edp": 2.25,
-                                "lip": 2.53,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Mastung",
-                                "edp": 2.52,
-                                "lip": 2.25,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            },
-                            {
-                                "category": "Quetta",
-                                "edp": 2.45,
-                                "lip": 2.55,
-                                "cbt": 2.1,
-                                "tvs": 1,
-                                "bds": 4.2
-                            }]
-                        }
-                    ]
+                                "category": "Male",
+                                value: 21,
+                                subData: [
+                                    {
+                                        "category": "EDPs", value: 10,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        "category": "LIPs", value: 20,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+                                        }
+                                    },
+                                    {
+                                        "category": "CBT", value: 5,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+                                        }
+                                    },
+                                    {
+                                        "category": "TVS", value: 17,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+                                        }
+                                    },
+                                    {
+                                        "category": "BDS", value: 6,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    }
+                                ],
+                                breakdown: [{
+                                    "category": "Killa Abdullah",
+                                    "edp": 2.1,
+                                    "lip": 2.2,
+                                    "cbt": 2.3,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Killa Saifullah",
+                                    "edp": 2.1,
+                                    "lip": 2.2,
+                                    "cbt": 2.3,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Sherani",
+                                    "edp": 2.1,
+                                    "lip": 2.2,
+                                    "cbt": 2.3,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }, {
+                                    "category": "Chagai",
+                                    "edp": 2.1,
+                                    "lip": 2.2,
+                                    "cbt": 2.3,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Nushki",
+                                    "edp": 2.2,
+                                    "lip": 2.3,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Pishin",
+                                    "edp": 2.5,
+                                    "lip": 2.2,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Zhob",
+                                    "edp": 2.25,
+                                    "lip": 2.53,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Mastung",
+                                    "edp": 2.52,
+                                    "lip": 2.25,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                },
+                                {
+                                    "category": "Quetta",
+                                    "edp": 2.45,
+                                    "lip": 2.55,
+                                    "cbt": 2.1,
+                                    "tvs": 1,
+                                    "bds": 4.2
+                                }],
+                                sliceSettings: {
+                                fill: am5.color(0xe600e6),
+                                stroke: am5.color(0xe600e6)
+                                }
+                            }
+                        ]
 
 
                     newData = pdoi
@@ -1203,8 +1922,18 @@
                             "category": "Afghan Refugee",
                             value: 49,
                             subData: [
-                                { "category": "Male", value: 25500 },
-                                { "category": "Female", value: 4500 }
+                                { "category": "Male", value: 25500,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                { "category": "Female", value: 4500,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                }
 
                             ],
                             breakdown: [{
@@ -1257,18 +1986,47 @@
                                 "male": 2.25,
                                 "female": 2.65
 
-                            }]
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xf2ad83),
+                                stroke: am5.color(0xf2ad83)
+                            }
 
                         },
                         {
                             "category": "Female",
                             value: 30,
                             subData: [
-                                { "category": "EDPs", value: 10 },
-                                { "category": "LIPs", value: 20 },
-                                { "category": "CBT", value: 5 },
-                                { "category": "TVS", value: 17 },
-                                { "category": "BDS", value: 6 }
+                                { "category": "EDPs", value: 10,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                { "category": "LIPs", value: 20,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                { "category": "CBT", value: 5,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                { "category": "TVS", value: 17,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                { "category": "BDS", value: 6,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                }
                             ],
                             breakdown: [{
                                 "category": "Killa Abdullah",
@@ -1311,17 +2069,46 @@
                                 "category": "Quetta",
                                 "female": 2.65
 
-                            }]
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xc4ad83),
+                                stroke: am5.color(0xc4ad83)
+                            }
 
                         }, {
                             "category": "Male",
                             value: 21,
                             subData: [
-                                { "category": "EDPs", value: 10 },
-                                { "category": "LIPs", value: 20 },
-                                { "category": "CBT", value: 5 },
-                                { "category": "TVS", value: 17 },
-                                { "category": "BDS", value: 6 }
+                                { "category": "EDPs", value: 10,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                { "category": "LIPs", value: 20,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                { "category": "CBT", value: 5,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                { "category": "TVS", value: 17,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                { "category": "BDS", value: 6,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                }
                             ],
                             breakdown: [{
                                 "category": "Killa Abdullah",
@@ -1355,7 +2142,11 @@
                             {
                                 "category": "Quetta",
                                 "male": 25,
-                            }]
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xba1295),
+                                stroke: am5.color(0xba1295)
+                            }
 
                         }
                     ]
@@ -1542,7 +2333,7 @@
                             console.log(`
                                 this i: ${i}
                                 this refugee: ${refugee}
-                                
+                                this all: ${all}
                             `)
 
                             //if i=0 and refugee=1 its refugee                           
@@ -1579,8 +2370,8 @@
                              */
                             //on slice double click i becomes 1
 
-                            if ((i == 0 && refugee == 0) || (i == 1 && refugee == 0) ) {
-
+                            if (((i == 0 && refugee == 0) || (i == 1 && refugee == 0)) && !context.includes("total")) {
+                                console.log("In pdoi series")
                                 makeSeries("EDPs", "edp");
                                 makeSeries("LIPs", "lip");
                                 makeSeries("CBT", "cbt");
@@ -1589,7 +2380,16 @@
 
 
                             }
-                            i = 1;
+                            i = 1;       
+                            
+                            if(all == 1 && context.includes("total")){
+                                console.log("In Total series")
+                                makeSeries("EDPs", "edp");
+                                makeSeries("LIPs", "lip");
+                                makeSeries("CBT", "cbt");
+                                makeSeries("TVS", "tvs");
+                                makeSeries("BDS", "bds");
+                            }
 
                             //function end
 
@@ -1636,9 +2436,20 @@
                             })
                         );
 
+                        // Configuring slices
+                        series2.slices.template.setAll({
+                            templateField: "sliceSettings"
+                            //stroke: am5.color(0xffffff),
+                            //strokeWidth: 2
+                        })
+
                         series2.data.setAll([{
                             total: "Total",
-                            beneficiaries: 60000
+                            beneficiaries: 60000,
+                            sliceSettings: {
+                                fill: am5.color(0xbabf95),
+                                stroke: am5.color(0xbabf95)
+                            }
                         }]);
 
                         series2.bullets.push(function () {
@@ -1654,11 +2465,12 @@
                         });
 
 
-                        // Configuring slices
-                        series2.slices.template.setAll({
-                            stroke: am5.color(0xffffff),
-                            strokeWidth: 2
-                        })
+                       
+
+                        //series2.slices.template.setAll({
+                        //    templateField: "sliceSettings"
+                        //});
+
 
                         series2.labels.template.setAll({
                             // text: "{beneficiaries}",
@@ -1668,6 +2480,25 @@
                             //centerX: am5.percent(90),
                             radius: 10,
                             fill: am5.color(0xffffff)
+                        })
+
+                        series2.events.on("click", function (e) {
+                            //Show complete Data
+                            //Incase of refugee get unique data of refugee first
+
+                            //all = 1
+                            if (all == 0) {
+                                all = 1;
+                                if(achart){
+                                    achart.dispose()
+                                }
+                                columnStart(completeData[0].breakdown, "total")
+                            }
+                            else {
+                                all = 0
+                            }
+                            console.log("Data: ", completeData[0].breakdown)//e.target._dataItems[0].dataContext
+                                                        
                         })
 
                         // add events
@@ -1729,6 +2560,10 @@
                         series.ticks.template.set("visible", false);
                         series.slices.template.set("toggleKey", "none");
 
+                        series.slices.template.setAll({
+                            templateField: "sliceSettings"
+                        });
+
                        
                         // add events
                         series.slices.template.events.on("click", function (e) {
@@ -1736,6 +2571,7 @@
                             var dataItem = e.target.dataItem;
                             var dataContext = dataItem.dataContext;
                             var context = JSON.stringify(dataContext["category"]);
+                            all = 0
 
                             selectSlice(e.target);
                             if (sseries) {
@@ -1820,17 +2656,58 @@
                             fill: am5.color(0x000000)
                         })
 
+                        subSeries.slices.template.setAll({
+                            templateField: "sliceSettings"
+                        });
 
                         subSeries.data.setAll([
-                            { category: "A", value: 0 },
-                            { category: "B", value: 0 },
-                            { category: "C", value: 0 },
-                            { category: "D", value: 0 },
-                            { category: "E", value: 0 },
-                            { category: "F", value: 0 },
-                            { category: "G", value: 0 }
+                            { category: "A", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xd6e681),
+                                    stroke: am5.color(0xd6e681)
+                                }
+                            },
+                            { category: "B", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            },
+                            { category: "C", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xc4ad83),
+                                    stroke: am5.color(0xc4ad83)
+                                }
+                            },
+                            { category: "D", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xd6e681),
+                                    stroke: am5.color(0xd6e681)
+                                }
+                            },
+                            { category: "E", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            },
+                            { category: "F", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xc4ad83),
+                                    stroke: am5.color(0xc4ad83)
+                                }
+                            },
+                            { category: "G", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xd6e681),
+                                    stroke: am5.color(0xd6e681)
+                                }
+                            }
                         ]);
+                        
                         subSeries.slices.template.set("toggleKey", "none");
+
+                        
 
                         var selectedSlice;
 
