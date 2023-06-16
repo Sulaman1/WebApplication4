@@ -11,6 +11,7 @@
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -26,15 +27,17 @@
 *@
 
 
-<div class="border border-primary container">
-    <div class="row" style="height:800px; border:solid 2px blue ">
+<div class=" container">
+    @*border border-primary*@
+    <div class="row" style="height:1000px; ">
+        @*border:solid 2px blue *@
 
-
-        <div class="border border-primary col-3">
+        <div class=" col-3">
 
             <!-- Styles -->
             <style>
                 #myChart {
+                    margin-top:50%;
                     width: 100%;
                     height: 10%;
                 }
@@ -151,11 +154,10 @@
             </script>
 
         </div>
-
+        @*border border-primary*@
        
-        <div class="border border-primary col-9" id="mainDiv" style="display:block">
-
-            <h5>PieOfPie</h5>
+        <div class=" col-9" id="mainDiv" style="display:block">
+         @*border border-primary*@
             <!-- Resources -->
             @*<div style="float:right; border: solid 2px yellow; height:100px">*@
                @* <input type="text" id="searchInput" placeholder="Search..." />*@
@@ -171,9 +173,9 @@
             <!-- Styles -->
             <style>
                 #chartdiv {
-                    border: dashed 2px green;
-                    width: 100%;
-                    height: 700px;
+                    /*border: dashed 2px green;*/
+                    width: 105%;
+                    height: 1000px;
                 }
 
             </style>
@@ -187,7 +189,10 @@
                 var root;
                 var i = 0;
                 var all = 0;
-                var mainPieSize = 0;
+                var x = 6
+          
+                var subRadius = 80;
+                var subChartCreated = 0
 
                 var initializeData = (function () {
                   
@@ -759,22 +764,24 @@
                                 // Create root element
                                 // https://www.amcharts.com/docs/v5/getting-started/#Root_element
                                 root = am5.Root.new("chartdiv");
-
+                                
                                 // Set themes
                                 // https://www.amcharts.com/docs/v5/concepts/themes/
                                 root.setThemes([
+                                    //am5themes_Responsive.new(root)
                                     am5themes_Animated.new(root)
                                 ]);
 
                                 var container = root.container.children.push(
                                     am5.Container.new(root, {
-                                        width: am5.p100,
-                                        height: am5.p100,
+                                        width: am5.percent(100),
+                                        height: am5.percent(100),
                                         //y: am5.percent(0),
                                         //x: am5.percent(0),
                                         layout: root.horizontalLayout
                                     })
                                 );
+                               
 
                                 // ==============================================
                                 // Column chart
@@ -785,6 +792,7 @@
                                 var achart
                                 var w
                                 var h
+                                var subX = 60
 
                                 function columnStart(data, _context, isDisposed) {
                                     var context;
@@ -827,7 +835,7 @@
                                             //wheelY: "zoomX",
                                             //wheelX: "zoomY",
                                             //layout: root.verticalLayout
-                                            width: am5.percent(200),
+                                            width: am5.percent(250),
                                             height: am5.percent(45),
                                             //panX: false,
                                             //panY: false,
@@ -998,40 +1006,53 @@
 
 
                                 // Create main chart
-                                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-                                                               
-                                var resetInnerPie;
-                                
-                                if (mainPieSize == 0){
-                                    rad = 150
-                                }
-                                console.log("MAIN RADIUS: ", rad)
+                                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/                                                                                                            
+                          
+                                var chart
+                                function mainChartInitailize(_x){
+                                    if(_x){
+                                        x = _x
+                                    }
+                                    console.log("X: ", x)
+                                    chart = container.children.push(
+                                        am5percent.PieChart.new(root, {
+                                            tooltip: am5.Tooltip.new(root, {}),
+                                            radius: am5.percent(140),
+                                            // innerRadius: am5.percent(10)
+                                            // panY: false,
+                                            //wheelY: "zoomX",
+                                            //wheelX: "zoomY",
+                                            //layout: root.verticalLayout
+                                            width: am5.percent(140),
+                                            height: am5.percent(25),
+                                            //panX: false,
+                                            //panY: false,
 
-                                var chart = container.children.push(
-                                    am5percent.PieChart.new(root, {
-                                        tooltip: am5.Tooltip.new(root, {}),
-                                        radius: am5.percent(rad),
-                                        // innerRadius: am5.percent(10)
-                                        // panY: false,
-                                        //wheelY: "zoomX",
-                                        //wheelX: "zoomY",
-                                        //layout: root.verticalLayout
-                                        width: am5.percent(70),
-                                        height: am5.percent(30),
-                                        //panX: false,
-                                        //panY: false,                                       
-
-                                        y: am5.percent(10),
-                                        x: am5.percent(10),
-                                        layout: am5.GridLayout.new(root, {
-                                            maxColumns: 2,
-                                            fixedWidthGrid: true
+                                            y: am5.percent(10),
+                                            x: am5.percent(x),
+                                            layout: am5.GridLayout.new(root, {
+                                                maxColumns: 2,
+                                                fixedWidthGrid: true
+                                            })
+                                            //layout: root.verticalLayout
                                         })
-                                        //layout: root.verticalLayout
-                                    })
-                                );
+                                    );
 
-                                rad = 1;
+                                }
+
+                                var initializeMainData = (function () {
+
+                                    var executed = false;
+                                    console.log("initialize subchart")
+                                    return function () {
+                                        if (!executed) {
+                                            executed = true;
+                                            //subChartCreated = 1
+                                            mainChartInitailize()
+                                        }
+                                    }
+                                })();
+                                initializeMainData();                                
                                 
                                 var series2 = chart.series.push(
                                     am5percent.PieSeries.new(root, {
@@ -1041,7 +1062,7 @@
                                         
                                     })
                                 );
-
+                                
                                 // Configuring slices
                                 series2.slices.template.setAll({
                                     templateField: "sliceSettings"
@@ -1089,6 +1110,7 @@
                                             }
                                         }
                                     ],
+                                    
                                     sliceSettings: {
                                         fill: am5.color(0xcc0099),
                                         stroke: am5.color(0xcc0099)
@@ -1106,7 +1128,6 @@
                                         })
                                     });
                                 });                                                                 
-
 
                                 series2.labels.template.setAll({
                                     // text: "{beneficiaries}",
@@ -1127,23 +1148,22 @@
                                 //    duration: 2000,
                                 //    easing: am5.ease.yoyo(am5.ease.cubic)
                                 //});
-
-                                //series2.slices.template.events.on("click", function(ev){
-                                //    console.log("HITTTT")
-                                //    series2.slices.each(function (slice) {
-                                //        if (slice != e.target && slice.get("active")) {
-                                //            slice.set("active", false);
-                                //        }
-                                //    })
-                                //})
-                                
-
+                             
                                 series2.events.on("click", function (e) {   
-                                    rad = 200
-                                    e.target.set("active", false)
+
+                                    //dispose it only one time
+                                    if (subChartCreated) {
+                                        subChart.dispose()
+                                        subChartCreate(150)
+                                        //chart.dispose()
+                                        //mainChartInitailize()
+                                        subChartCreated = 0
+                                    }
+                                                                     
+                                   // e.target.set("active", false)
                                     //console.log("EVENT: ", e.target)
                                     console.log("INNER SLICE: ", e.target)
-                                    //resetInnerPie.target.slices.events._enabled = false
+                                   
 
                                     selectSlice(e.target);
                                     if (sseries) {
@@ -1152,10 +1172,10 @@
                                             //stroke: e.target.get("fill") //slice
                                         });
                                     }
-
+                                    console.log("All: ", all)
                                     //Show complete Data
                                     //Incase of refugee get unique data of refugee first
-                                    if (all == 0) {
+                                    if (all == 0 || all == 1) {
                                         all = 1;
                                         if (achart) {
                                             achart.dispose()
@@ -1165,7 +1185,7 @@
                                     else {
                                         all = 0
                                     }
-                                    console.log("Data: ", completeData[0].breakdown)//e.target._dataItems[0].dataContext                                    
+                                    console.log("Daata: ", completeData[0].breakdown)//e.target._dataItems[0].dataContext                                    
                                 })
                                
                                 // Create series
@@ -1193,7 +1213,7 @@
                                     centerX: am5.percent(90),
                                     radius: 10,
                                     fill: am5.color(0xffffff)
-                                    })
+                                })
 
                                 series.ticks.template.set("visible", false);
                                 series.slices.template.set("toggleKey", "none");
@@ -1204,7 +1224,16 @@
 
                                 // add events
                                 series.slices.template.events.on("click", function (e) {
-                                    rad = 400
+                                   
+                                    //dispose it only one time
+                                    if (subChartCreated) {
+                                        subChart.dispose()
+                                        subChartCreate(150)
+                                        //chart.dispose()
+                                        //mainChartInitailize()
+                                        subChartCreated = 0
+                                    }
+                                 
                                     console.log("Slice", e.target)
                                     var dataItem = e.target.dataItem;
                                     var dataContext = dataItem.dataContext;
@@ -1243,26 +1272,39 @@
                                     //}
 
                                 });
+                               
 
+                                var subChart
+                                var subSeries
+                                function subChartCreate(_subRadius){
 
-
+                                if(_subRadius){
+                                    subRadius = _subRadius                                    
+                                }
+                               
+                                // initial r=70 , w=100
+                                // onClick r=100, w=150 
                                 // Create sub chart
                                 // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-                                var subChart = container.children.push(
+                                subChart = container.children.push(
                                     am5percent.PieChart.new(root, {
-                                        radius: am5.percent(50),
+                                        radius: am5.percent(subRadius),
                                         tooltip: am5.Tooltip.new(root, {}),
                                         // panY: false,
                                         //wheelY: "zoomX",
                                         //wheelX: "zoomY",
                                         //layout: root.verticalLayout
-                                        //width: am5.percent(50),
-                                        //height: am5.percent(30),
+                                        width: am5.percent(100),
+                                        height: am5.percent(100),
+
+                                            
+                                        //PaddingLeft: 20,
+
                                         //panX: false,
                                         //panY: false,
-                                        //centerX: am5.percent(10),
+                                        //centerX: am5.percent(100),
                                         y: am5.percent(-25),
-                                        x: am5.percent(50),
+                                        x: am5.percent(60),
                                         //layout: am5.GridLayout.new(root, {
                                         //    maxColumns: 2,
                                         //    fixedWidthGrid: true
@@ -1273,13 +1315,32 @@
 
                                 // Create sub series
                                 // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
-                                var subSeries = subChart.series.push(
+                                subSeries = subChart.series.push(
                                     am5percent.PieSeries.new(root, {
                                         valueField: "value",
                                         categoryField: "category",
                                         alignLabels: false
                                     })
                                 );
+
+                                subSeries.events.on("datavalidated", function (ev) {
+                                    console.log("VALIDATING...", ev.target.chart.radius())
+                                    var s = ev.target
+                                    var c = s.chart
+                                    var r = c.radius()
+                                    c.root.dom.style.radius = 200;
+                                    console.log("subRad: ", subRadius)
+                                    subRadius = 200
+                                    //var series = ev.target;
+                                    //var chart = series.chart;
+                                    //var xAxis = chart.xAxes.getIndex(0);
+
+                                    //// Calculate how we need to adjust chart height
+                                    //var chartHeight = series.data.length * cellSize + xAxis.height() + chart.get("paddingTop", 0) + chart.get("paddingBottom", 0);
+
+                                    //// Set it on chart's container
+                                    //chart.root.dom.style.height = chartHeight + "px";
+                                });
 
                                 subSeries.labels.template.setAll({
                                     text: "{category}[/]: [bold]{value}[/]",
@@ -1350,8 +1411,25 @@
                                     }
                                 ]);
 
-
                                 subSeries.slices.template.set("toggleKey", "none");
+
+                                }
+
+
+                                var initializeSubData = (function () {
+                                    
+                                    var executed = false;
+                                    console.log("initialize subchart")
+                                    return function () {
+                                        if (!executed) {
+                                            executed = true;
+                                            subChartCreated = 1
+                                            subChartCreate()
+                                        }
+                                    }
+                                })();
+                                initializeSubData();
+
 
                                 var selectedSlice;
 
@@ -1375,6 +1453,7 @@
                                 })
 
                                 function updateLines() {
+                                    //console.log("In Update")
                                     if (selectedSlice._dataItem && selectedSlice) {
                                         //console.log("MAIN update lines")
                                         var startAngle = selectedSlice.get("startAngle");
@@ -1412,12 +1491,12 @@
 
                                     }
                                     else {
-                                      //  console.log("INNER update lines")
+                                        //console.log("INNER update lines")
                                         var startAngle = selectedSlice.get("startAngle");
                                         var arc = selectedSlice.get("arc");
                                         arc = 176.4;
                                         var radius = selectedSlice.get("radius");
-                                        radius = 112.5
+                                        radius = 170
 
                                         //console.log(
                                         //    `
@@ -1448,6 +1527,7 @@
                                         line0.set("points", [point00, point01]);
                                         line1.set("points", [point10, point11]);
                                     }
+                               
                                 }
 
                                 // lines
@@ -1474,6 +1554,7 @@
 
 
                                 function selectSlice(slice) {
+                                   
                                     selectedSlice = slice;
                                     console.log("Slice Select: ", slice)
                                     var dataItem
@@ -1550,7 +1631,6 @@
                                 }
 
                                 container.appear(1000, 10);
-
                                 
                                 series2.events.on("datavalidated", function(){
                                     console.log("THIS SLICE INNER", series2.slices.getIndex(0))
@@ -1954,53 +2034,53 @@
                             ],
                             breakdown: [{
                                 "category": "Killa Abdullah",
-                                "male": 2.52,
-                                "female": 2.45
+                                "male": 52,
+                                "female": 45
 
                             }, {
                                 "category": "Killa Saifullah",
-                                "male": 2.25,
-                                "female": 2.45
+                                "male": 25,
+                                "female": 45
 
                             }, {
                                 "category": "Sherani",
-                                "male": 2.52,
-                                "female": 2.45
+                                "male": 32,
+                                "female": 5
 
                             }, {
                                 "category": "Chagai",
-                                "male": 2.65,
-                                "female": 2.35
+                                "male": 15,
+                                "female": 35
 
                             },
                             {
                                 "category": "Nushki",
-                                "male": 2.25,
-                                "female": 2.65
+                                "male": 72,
+                                "female": 13
 
                             },
                             {
                                 "category": "Pishin",
-                                "male": 2.56,
-                                "female": 2.54
+                                "male": 32,
+                                "female": 24
 
                             },
                             {
                                 "category": "Zhob",
-                                "male": 2.53,
-                                "female": 2.52
+                                "male": 53,
+                                "female": 55
 
                             },
                             {
                                 "category": "Mastung",
-                                "male": 2.51,
-                                "female": 2.65
+                                "male": 21,
+                                "female": 65
 
                             },
                             {
                                 "category": "Quetta",
-                                "male": 2.25,
-                                "female": 2.65
+                                "male": 5,
+                                "female": 5
 
                             }],
                             sliceSettings: {
@@ -2046,44 +2126,44 @@
                             ],
                             breakdown: [{
                                 "category": "Killa Abdullah",
-                                "female": 2.45
+                                "female": 72
 
                             }, {
                                 "category": "Killa Saifullah",
-                                "female": 2.45
+                                "female": 35
 
                             }, {
                                 "category": "Sherani",
-                                "female": 2.45
+                                "female": 27
 
                             }, {
                                 "category": "Chagai",
-                                "female": 2.35
+                                "female": 63
 
                             },
                             {
                                 "category": "Nushki",
-                                "female": 2.65
+                                "female":91
 
                             },
                             {
                                 "category": "Pishin",
-                                "female": 2.54
+                                "female": 89
 
                             },
                             {
                                 "category": "Zhob",
-                                "female": 2.52
+                                "female": 22
 
                             },
                             {
                                 "category": "Mastung",
-                                "female": 2.65
+                                "female": 65
 
                             },
                             {
                                 "category": "Quetta",
-                                "female": 2.65
+                                "female": 25
 
                             }],
                             sliceSettings: {
@@ -2172,13 +2252,13 @@
                     root.dispose();
                     rerender()
                 }
-               
+
 
                 function rerender() {
-                   
+
                     am5.ready(function () {
                         console.log("In Show...", newData);
-                        
+
                         // Create root element
                         // https://www.amcharts.com/docs/v5/getting-started/#Root_element
                         root = am5.Root.new("chartdiv");
@@ -2204,104 +2284,102 @@
                         var xxAxis;
                         var sseries;
                         var achart;
-                        var w = 150;
-                        var h = 57;
+                        var w = 250;
+                        var h = 45;
                         var set = 0;
                         var set2 = 0;
                         function columnStart(data, _context, isDisposed) {
                             var context;
-                            if(_context){
-                                   context = _context.toLowerCase()
+                            if (_context) {
+                                context = _context.toLowerCase()
                             }
                             console.log("Dataaaa:", data)
 
-                            console.log(`                               
-                                Context: ${context}
-                            `)
+                            console.log(`
+                                                                        Context: ${context}
+                                                                    `)
 
-                           console.log("Disposed: ", isDisposed)
+                            console.log("Disposed: ", isDisposed)
 
-                           var ishidden = subChart.isHidden()
-                           
-                           console.log("HIDDEN: ", ishidden)
-                           
+                            var ishidden = subChart.isHidden()
+
+                            console.log("HIDDEN: ", ishidden)
+
 
                             if (ishidden && context.includes("afghan")) {
-                               w = 150
-                               h = 57
-                               set = 0
-                           }
+                                w = 250
+                                h = 45
+                                set = 0
+                            }
                             if (w == 80 && context.includes("afghan")) {
-                                w = 150;
-                                h = 57;
+                                w = 250;
+                                h = 45;
                                 set = 0
                             }
 
-                            //disposed = undefined, hidden = true, 80, 57  
-                           
+                            //disposed = undefined, hidden = true, 80, 57
+
                             //Refugee Section Bar size Setting
                             if (!isDisposed && context.includes("male") && refugee == 1) {
                                 console.log(`
-                                                set ${set}
-                                                set2: ${set2}
-                                                w ${w}
-                                                h ${h}
-                                               `)
-                               
-                                if (w == 150 && set == 1) {
+                                                                                        set ${set}
+                                                                                        set2: ${set2}
+                                                                                        w ${w}
+                                                                                        h ${h}
+                                                                                       `)
+
+                                if (w == 250 && set == 1) {
                                     console.log("INIT")
-                                    w = 70
-                                    h = 57
+                                    w = 190
+                                    h = 45
                                     set = 0
                                 }
                                 if (set2 == 1) {
                                     set = 1
                                 }
-                               
+
                             }
 
-                            if (!isDisposed && context.includes("total") && refugee == 1 && set ==1 && set2 == 1) {
+                            if (!isDisposed && context.includes("total") && refugee == 1 && set == 1 && set2 == 1) {
                                 console.log(`
-                                    set ${set}
-                                    set2: ${set2}
-                                    w ${w}
-                                    h ${h}
-                                `)
-                                w = 70
-                                h = 57
+                                                                            set ${set}
+                                                                            set2: ${set2}
+                                                                            w ${w}
+                                                                            h ${h}
+                                                                        `)
+                                w = 250
+                                h = 45
                             }
-                            // if(ishidden && context.includes("male")){
-                            //    console.log("INIT2")
-                            //    set = 1
-                            //    w = 150
-                            //    h = 57
-                            //}
+                            if (!ishidden && context.includes("total") && !isDisposed && i == 0 && refugee == 1 && all == 1) {
+                                console.log("INIT2")
+
+                            }
 
                             console.log("Width: ", w)
                             console.log("Height: ", h)
-                                // Create chart
-                                // https://www.amcharts.com/docs/v5/charts/xy-chart/
-                                achart = container.children.push(
-                                    am5xy.XYChart.new(root, {
-                                        // panY: false,
-                                        //wheelY: "zoomX",
-                                        //wheelX: "zoomY",
-                                        //layout: root.verticalLayout
-                                        width: am5.percent(w),
-                                        height: am5.percent(h),
-                                        //panX: false,
-                                        //panY: false,
-                                        //centerX: am5.percent(10),
-                                        y: am5.percent(45),
-                                        x: am5.percent(35),
-                                        layout: am5.GridLayout.new(root, {
-                                            maxColumns: 2,
-                                            fixedWidthGrid: true
-                                        })
-                                        //layout: root.verticalLayout
+                            // Create chart
+                            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                            achart = container.children.push(
+                                am5xy.XYChart.new(root, {
+                                    // panY: false,
+                                    //wheelY: "zoomX",
+                                    //wheelX: "zoomY",
+                                    //layout: root.verticalLayout
+                                    width: am5.percent(w),
+                                    height: am5.percent(h),
+                                    //panX: false,
+                                    //panY: false,
+                                    //centerX: am5.percent(10),
+                                    y: am5.percent(50),
+                                    x: am5.percent(15),
+                                    layout: am5.GridLayout.new(root, {
+                                        maxColumns: 2,
+                                        fixedWidthGrid: true
                                     })
-                                );
-                                                        
+                                    //layout: root.verticalLayout
+                                })
+                            );
+
                             // Create X-Axis
                             xxAxis = achart.xAxes.push(
                                 am5xy.CategoryAxis.new(root, {
@@ -2318,7 +2396,7 @@
                                 fontSize: 10,
                                 centerY: am5.percent(50)
                             });
-
+                            console.log("TOTAL DATA: ", data)
                             xxAxis.data.setAll(data);
 
                             // Craete Y-axis
@@ -2327,19 +2405,19 @@
                                     renderer: am5xy.AxisRendererY.new(root, {
                                     })
                                 })
-                            );                   
+                            );
 
 
                             // Add legend
                             var legend = achart.children.push(am5.Legend.new(root, {
-                                
-                                y: am5.percent(-20),
+
+                                y: am5.percent(0),
                                 x: am5.percent(100),
                                 layout: root.verticalLayout,
                                 //layout: root.horizontalLayout,
                                 //y: am5.percent(0),
                                 //centerY: am5.percent(0),
-                               // height: am5.percent(100),
+                                // height: am5.percent(100),
                                 verticalScrollbar: am5.Scrollbar.new(root, {
                                     orientation: "vertical"
                                 })
@@ -2387,42 +2465,42 @@
                                 //legend.data.setAll(achart.series.values);
                             }
                             console.log(`
-                                this i: ${i}
-                                this refugee: ${refugee}
-                                this all: ${all}
-                            `)
+                                                                        this i: ${i}
+                                                                        this refugee: ${refugee}
+                                                                        this all: ${all}
+                                                                    `)
 
-                            //if i=0 and refugee=1 its refugee                           
+                            //if i=0 and refugee=1 its refugee
                             /***
                              * change series to male female
                              * when context is male show male series and viseversa
                              */
                             if ((i == 0 && refugee == 1 && context) || (i == 1 && refugee == 1 && !context) || (i == 1 && refugee == 1 && context)) {
-                                if(context){
+                                if (context) {
                                     if (context.toLowerCase().includes("afghan")) {//checkRefugee.toLowerCase().includes("male")
                                         makeSeries("Male", "male");
                                         makeSeries("Female", "female");
-                                        
+
                                         subChart.appear()
                                         line0.appear()
                                         line1.appear()
                                     }
-                                }                                                              
+                                }
                             }
 
                             //if i = 1 and refugee = 1, its local male/female
-                            if((i == 1 && refugee == 1 && context.includes("male")) || (i == 0 && refugee == 1 && context.includes("male"))){
-                                if(context.includes("female")){
+                            if ((i == 1 && refugee == 1 && context.includes("male")) || (i == 0 && refugee == 1 && context.includes("male"))) {
+                                if (context.includes("female")) {
                                     makeSeries("Female", "female")
                                 }
-                                else{
+                                else {
                                     makeSeries("Male", "male")
                                 }
                             }
 
                             //if i=0 and refugee=0 its pdoi
                             /***
-                             * 
+                             *
                              */
                             //on slice double click i becomes 1
 
@@ -2436,9 +2514,9 @@
 
 
                             }
-                            i = 1;       
-                            
-                            if(all == 1 && context.includes("total")){
+                            i = 1;
+
+                            if (all == 1 && context.includes("total") && refugee == 0) {
                                 console.log("In Total series")
                                 makeSeries("EDPs", "edp");
                                 makeSeries("LIPs", "lip");
@@ -2447,11 +2525,15 @@
                                 makeSeries("BDS", "bds");
                             }
 
+                            if (all == 1 && context.includes("total") && refugee == 1) {
+                                console.log("In Refugee Total series")
+                                makeSeries("Male", "male");
+                                makeSeries("Female", "female");
+                            }
+
                             //function end
 
                         }
-
-
 
 
                         // ==============================================
@@ -2463,14 +2545,14 @@
                         var chart = container.children.push(
                             am5percent.PieChart.new(root, {
                                 tooltip: am5.Tooltip.new(root, {}),
-                                radius: am5.percent(150),
+                                radius: am5.percent(140),
                                 // innerRadius: am5.percent(10)
                                 // panY: false,
                                 //wheelY: "zoomX",
                                 //wheelX: "zoomY",
                                 //layout: root.verticalLayout
-                                width: am5.percent(70),
-                                height: am5.percent(30),
+                                width: am5.percent(140),
+                                height: am5.percent(25),
                                 //panX: false,
                                 //panY: false,
 
@@ -2499,14 +2581,136 @@
                             //strokeWidth: 2
                         })
 
-                        series2.data.setAll([{
-                            total: "Total",
-                            beneficiaries: 60000,
-                            sliceSettings: {
-                                fill: am5.color(0xbabf95),
-                                stroke: am5.color(0xbabf95)
-                            }
-                        }]);
+
+                        console.log("WHAT IS CONTEXT HERE: ", refugee)
+                        if (refugee == 1) {
+                            series2.data.setAll([{
+                                total: "Total",
+                                beneficiaries: 60000,
+                                subData: [
+                                    {
+                                        "category": "Male", value: 250,
+                                        sliceSettings: {
+                                            fill: am5.color(0xff235f),
+                                            stroke: am5.color(0xff235f)
+                                        }
+                                    },
+                                    {
+                                        "category": "Female", value: 2500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbab767),
+                                            stroke: am5.color(0xbab767)
+                                        }
+                                    }
+                                ],
+                                breakdown: [{
+                                    "category": "Killa Abdullah",
+                                    "male": 52,
+                                    "female": 45
+
+                                }, {
+                                    "category": "Killa Saifullah",
+                                    "male": 25,
+                                    "female": 45
+
+                                }, {
+                                    "category": "Sherani",
+                                    "male": 32,
+                                    "female": 5
+
+                                }, {
+                                    "category": "Chagai",
+                                    "male": 15,
+                                    "female": 35
+
+                                },
+                                {
+                                    "category": "Nushki",
+                                    "male": 72,
+                                    "female": 13
+
+                                },
+                                {
+                                    "category": "Pishin",
+                                    "male": 32,
+                                    "female": 24
+
+                                },
+                                {
+                                    "category": "Zhob",
+                                    "male": 53,
+                                    "female": 55
+
+                                },
+                                {
+                                    "category": "Mastung",
+                                    "male": 21,
+                                    "female": 65
+
+                                },
+                                {
+                                    "category": "Quetta",
+                                    "male": 5,
+                                    "female": 5
+
+                                }],
+
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            }]);
+
+                        }
+                        else {
+                            series2.data.setAll([{
+                                total: "Total",
+                                beneficiaries: 60000,
+                                subData: [
+                                    {
+                                        "category": "EDPs", value: 250,
+                                        sliceSettings: {
+                                            fill: am5.color(0xff235f),
+                                            stroke: am5.color(0xff235f)
+                                        }
+                                    },
+                                    {
+                                        "category": "LIPs", value: 2500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbab767),
+                                            stroke: am5.color(0xbab767)
+                                        }
+                                    },
+                                    {
+                                        "category": "CBT", value: 360,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4a563),
+                                            stroke: am5.color(0xc4a563)
+                                        }
+                                    },
+                                    {
+                                        "category": "TVS", value: 1750,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        "category": "BDS", value: 4500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e561),
+                                            stroke: am5.color(0xd6e561)
+                                        }
+                                    }
+                                ],
+
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            }]);
+
+                        }
 
                         series2.bullets.push(function () {
                             return am5.Bullet.new(root, {
@@ -2519,9 +2723,6 @@
                                 })
                             });
                         });
-
-
-                       
 
                         //series2.slices.template.setAll({
                         //    templateField: "sliceSettings"
@@ -2541,55 +2742,70 @@
                         series2.slices.template.set("toggleKey", "none");
 
                         series2.events.on("click", function (e) {
+                            console.log(`
+                                                SubChartCreated: ${subChartCreated}
+                                                refugee: ${refugee}
+                                                i: ${i}
+                                                all: ${all}
+                                                set1: ${set}
+                                                set2: ${set2}                                               
+                                              
+                                            `)
+                            console.log("Event:", e )
+                            var subChartIsHidded = subChart.isHidden()
+                            
+
+
+                            if (refugee == 1 && i == 1 && set == 1 && set2 == 1 && all == 0 && subChartIsHidded) { //double click => all=1
+                                subChartCreate2(150)
+                                
+                            }
+
+                            //dispose it only one time
+                            if (subChartCreated) {
+                                if (subChart) {
+                                    subChart.dispose()
+                                    subChartCreate2(150)
+                                    //chart.dispose()
+                                    //mainChartInitailize()
+                                    subChartCreated = 0
+                                }
+                            }
+
+                            console.log("INNER SLICE: ", e.target)
+
+                            selectSlice(e.target);
+                            if (sseries) {
+                                sseries.columns.template.setAll({
+                                    // fill: e.target.get("fill"), //slice
+                                    //stroke: e.target.get("fill") //slice
+                                });
+                            }
+                            console.log("All: ", all)
                             //Show complete Data
                             //Incase of refugee get unique data of refugee first
 
                             //all = 1
-                            if (all == 0) {
+                            if (all == 0 || all == 1) {
                                 all = 1;
-                                if(achart){
+                                if (achart) {
                                     achart.dispose()
                                 }
-                                columnStart(completeData[0].breakdown, "total")
+                                if (refugee == 1) {
+                                    columnStart(e.target._dataItems[0].dataContext.breakdown, "total")
+                                }
+                                else {
+                                    columnStart(completeData[0].breakdown, "total")
+                                }
                             }
                             else {
                                 all = 0
                             }
                             console.log("Data: ", completeData[0].breakdown)//e.target._dataItems[0].dataContext
-                                                        
+
                         })
 
-                        // add events
-                        //series2.slices.template.events.on("click", function (e) {
-                        //    console.log("Series2 Slice", e.target.get("fill"))
-                        //    selectSlice(e.target);
-                        //    aseries1.columns.template.setAll({
-                        //        fill: e.target.get("fill"), //slice
-                        //        stroke: e.target.get("fill") //slice
-                        //    });
 
-                        //    console.log("DATA: ", e.target.dataItem.dataContext.breakdown)
-
-                        //    aseries1.data.setAll(e.target.dataItem.dataContext.breakdown);
-                        //    // yAxis.data.setAll(e.target.dataItem.dataContext.breakdown);
-                        //    xAxis.data.setAll(e.target.dataItem.dataContext.breakdown)
-
-                        //    //makeSeries("LIP", "lip");
-                        //    //makeSeries("BSF", "bsf");
-                        //    //makeSeries("Tech", "tech");
-                        //    //makeSeries("Community Training", "ct");
-                        //    //currentSlice = e.target;
-                        //});
-
-                        //series2.ticks.template.set("visible", false);
-                        //series2.slices.template.set("toggleKey", "none");
-
-                        //// Disabling labels and ticks
-                        //series2.labels.template.set("visible", false);
-                        //series2.ticks.template.set("visible", false);
-
-                        // Create series
-                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
                         var series = chart.series.push(
                             am5percent.PieSeries.new(root, {
                                 valueField: "value",
@@ -2622,9 +2838,21 @@
                             templateField: "sliceSettings"
                         });
 
-                       
+
                         // add events
                         series.slices.template.events.on("click", function (e) {
+
+                            console.log("SubChartCreated : ", subChartCreated)
+                            //dispose it only one time
+                            if (subChartCreated) {
+                                console.log("In side")
+                                subChart.dispose()
+                                subChartCreate2(150)
+                                //chart.dispose()
+                                //mainChartInitailize()
+                                subChartCreated = 0
+                            }
+
                             console.log("Slice", e.target.get("fill"))
                             var dataItem = e.target.dataItem;
                             var dataContext = dataItem.dataContext;
@@ -2647,134 +2875,188 @@
                             console.log("SECOND CLICK: ", e.target.dataItem.dataContext.breakdown)
                             console.log("CONTEXT: ", context)
 
-                            if(achart){
+                            if (achart) {
                                 console.log("exist")
                                 achart.dispose()
                                 //send context
                                 set2 = 1
                                 columnStart(e.target.dataItem.dataContext.breakdown, context)
                             }
-                            else{
+                            else {
                                 console.log("not exist")
-                                //send context                                                
-                                                            
+                                //send context
+
                                 columnStart(e.target.dataItem.dataContext.breakdown, context)
                             }
                             //if (i == 0) {
                             //    console.log("Show the bar")
                             //    columnStart(e.target.dataItem.dataContext.breakdown)
                             //}
-                            
+
                         });
 
 
                         // Create sub chart
                         // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
-                        var subChart = container.children.push(
-                            am5percent.PieChart.new(root, {
-                                radius: am5.percent(40),
-                                tooltip: am5.Tooltip.new(root, {}),
-                                // panY: false,
-                                //wheelY: "zoomX",
-                                //wheelX: "zoomY",
-                                //layout: root.verticalLayout
-                                //width: am5.percent(50),
-                                //height: am5.percent(30),
-                                //panX: false,
-                                //panY: false,
-                                //centerX: am5.percent(10),
-                                y: am5.percent(-25),
-                                x: am5.percent(40),
-                                //layout: am5.GridLayout.new(root, {
-                                //    maxColumns: 2,
-                                //    fixedWidthGrid: true
-                                //})
-                                //layout: root.verticalLayout
+
+                        var subChart
+                        var subSeries
+                        function subChartCreate2(_subRadius) {
+                            if (_subRadius) {
+                                subRadius = _subRadius
+                            }
+
+                            subChart = container.children.push(
+                                am5percent.PieChart.new(root, {
+                                    radius: am5.percent(subRadius),
+                                    tooltip: am5.Tooltip.new(root, {}),
+                                    // panY: false,
+                                    //wheelY: "zoomX",
+                                    //wheelX: "zoomY",
+                                    //layout: root.verticalLayout
+                                    width: am5.percent(100),
+                                    height: am5.percent(100),
+                                    //panX: false,
+                                    //panY: false,
+                                    //centerX: am5.percent(10),
+                                    y: am5.percent(-25),
+                                    x: am5.percent(60),
+                                    //layout: am5.GridLayout.new(root, {
+                                    //    maxColumns: 2,
+                                    //    fixedWidthGrid: true
+                                    //})
+                                    //layout: root.verticalLayout
+                                })
+                            );
+
+                            // Create sub series
+                            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                            subSeries = subChart.series.push(
+                                am5percent.PieSeries.new(root, {
+                                    valueField: "value",
+                                    categoryField: "category",
+                                    alignLabels: false
+                                })
+                            );
+
+                            subSeries.events.on("datavalidated", function (ev) {
+                                console.log("VALIDATING...", ev.target.chart.radius())
+                                var s = ev.target
+                                var c = s.chart
+                                var r = c.radius()
+                                c.root.dom.style.radius = 200;
+                                console.log("subRad: ", subRadius)
+                                subRadius = 200
+                                //var series = ev.target;
+                                //var chart = series.chart;
+                                //var xAxis = chart.xAxes.getIndex(0);
+
+                                //// Calculate how we need to adjust chart height
+                                //var chartHeight = series.data.length * cellSize + xAxis.height() + chart.get("paddingTop", 0) + chart.get("paddingBottom", 0);
+
+                                //// Set it on chart's container
+                                //chart.root.dom.style.height = chartHeight + "px";
+                            });
+
+                            subSeries.labels.template.setAll({
+                                text: "{category}[/]: [bold]{value}[/]",
+                                fontSize: 10,
+                                oversizedBehavior: "wrap",
+                                textAlign: "center",
+                                maxWidth: 90,
+                                textType: "circular",
+                                //inside: true,
+                                //centerX: am5.percent(-40),
+                                radius: 10,
+                                fill: am5.color(0x000000)
                             })
-                        );
 
-                        // Create sub series
-                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
-                        var subSeries = subChart.series.push(
-                            am5percent.PieSeries.new(root, {
-                                valueField: "value",
-                                categoryField: "category",
-                                alignLabels: false
-                            })
-                        );
+                            subSeries.slices.template.setAll({
+                                //templateField: "sliceSettings"
+                            });
 
-                        subSeries.labels.template.setAll({
-                            text: "{category}[/]: [bold]{value}[/]",
-                            fontSize: 10,
-                            oversizedBehavior: "wrap",
-                            textAlign: "center",
-                            maxWidth: 90,
-                            textType: "circular",
-                            //inside: true,
-                            //centerX: am5.percent(-40),
-                            radius: 10,
-                            fill: am5.color(0x000000)
-                        })
+                            subSeries.data.setAll([
+                                {
+                                    category: "A", value: 0,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    category: "B", value: 0,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    category: "C", value: 0,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    category: "D", value: 0,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    category: "E", value: 0,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    category: "F", value: 0,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    category: "G", value: 0,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                }
+                            ]);
 
-                        subSeries.slices.template.setAll({
-                            //templateField: "sliceSettings"
-                        });
+                            subSeries.slices.template.set("toggleKey", "none");
 
-                        subSeries.data.setAll([
-                            { category: "A", value: 0,
-                                sliceSettings: {
-                                    fill: am5.color(0xd6e681),
-                                    stroke: am5.color(0xd6e681)
-                                }
-                            },
-                            { category: "B", value: 0,
-                                sliceSettings: {
-                                    fill: am5.color(0xbabf95),
-                                    stroke: am5.color(0xbabf95)
-                                }
-                            },
-                            { category: "C", value: 0,
-                                sliceSettings: {
-                                    fill: am5.color(0xc4ad83),
-                                    stroke: am5.color(0xc4ad83)
-                                }
-                            },
-                            { category: "D", value: 0,
-                                sliceSettings: {
-                                    fill: am5.color(0xd6e681),
-                                    stroke: am5.color(0xd6e681)
-                                }
-                            },
-                            { category: "E", value: 0,
-                                sliceSettings: {
-                                    fill: am5.color(0xbabf95),
-                                    stroke: am5.color(0xbabf95)
-                                }
-                            },
-                            { category: "F", value: 0,
-                                sliceSettings: {
-                                    fill: am5.color(0xc4ad83),
-                                    stroke: am5.color(0xc4ad83)
-                                }
-                            },
-                            { category: "G", value: 0,
-                                sliceSettings: {
-                                    fill: am5.color(0xd6e681),
-                                    stroke: am5.color(0xd6e681)
+                        }
+
+                        var initializeSubData = (function () {
+
+                            var executed = false;
+                            console.log("initialize subchart")
+                            return function () {
+                                if (!executed) {
+                                    executed = true;
+                                    subChartCreated = 1
+                                    subChartCreate2(80)
                                 }
                             }
-                        ]);
-                        
-                        subSeries.slices.template.set("toggleKey", "none");
-
-                        
+                        })();
+                        initializeSubData();
 
                         var selectedSlice;
+
+
+                        //series2.events.on("startAngle", function () {
+                        //    console.log("updateline2")
+                        //    updateLines();
+                        //})
 
                         series.on("startAngle", function () {
                             updateLines();
                         });
-                     
+
 
                         container.events.on("boundschanged", function () {
                             root.events.on("frameended", function () {
@@ -2783,7 +3065,8 @@
                         })
 
                         function updateLines() {
-                            if (selectedSlice) {
+                            //console.log("in update")
+                            if (selectedSlice._dataItem && selectedSlice) {
                                 var startAngle = selectedSlice.get("startAngle");
                                 var arc = selectedSlice.get("arc");
                                 var radius = selectedSlice.get("radius");
@@ -2810,6 +3093,38 @@
                                 line0.set("points", [point00, point01]);
                                 line1.set("points", [point10, point11]);
                             }
+                            else {
+                                //  console.log("INNER update lines")
+                                var startAngle = selectedSlice.get("startAngle");
+                                var arc = selectedSlice.get("arc");
+                                arc = 176.4;
+                                var radius = selectedSlice.get("radius");
+                                radius = 170
+
+                                var x00 = radius * am5.math.cos(startAngle);
+                                var y00 = radius * am5.math.sin(startAngle);
+
+                                var x10 = radius * am5.math.cos(startAngle + arc);
+                                var y10 = radius * am5.math.sin(startAngle + arc);
+
+                                var subRadius = subSeries.slices.getIndex(0).get("radius");
+                                var x01 = 0;
+                                var y01 = -subRadius;
+
+                                var x11 = 0;
+                                var y11 = subRadius;
+
+                                var point00 = series2.toGlobal({ x: x00, y: y00 });
+                                var point10 = series2.toGlobal({ x: x10, y: y10 });
+
+                                var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                                var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+
+                                line0.set("points", [point00, point01]);
+                                line1.set("points", [point10, point11]);
+                            }
+
                         }
 
                         // lines
@@ -2835,94 +3150,152 @@
                         );
 
 
-                        function selectSlice(slice) {                           
+                        function selectSlice(slice) {
                             selectedSlice = slice;
+                            console.log("THIS SELECT SLICE: ", slice)
+                            var dataItem
+                            var dataContext
+                            var checkRefugee
 
-                            var dataItem = slice.dataItem;
-                            var dataContext = dataItem.dataContext;
-                            var checkRefugee = JSON.stringify(dataContext["category"]);
+                            if (!slice._dataItem) {
+                                dataItem = slice.dataItems[0];
+                                dataContext = dataItem.dataContext;
+                                checkRefugee = JSON.stringify(dataContext["category"]);
 
-                            console.log(`
-                                Data Context: ${checkRefugee}
-                                refugee: ${refugee}
-                                i: ${i}
-                            `)
-
-                            if (dataContext) {
-                                var i = 0;
-
-                                subSeries.data.each(function (dataObject) {
-                                    var dataObj = dataContext.subData[i];
-                                    if (dataObj) {
-                                        subSeries.data.setIndex(i, dataObj);
-                                        if (!subSeries.dataItems[i].get("visible")) {
-                                            subSeries.dataItems[i].show();
+                                console.log("Appeared: ", line0.isHidden())
+                                if(line0.isHidden()){
+                                    line0.appear()
+                                    line1.appear()
+                                }
+                                if (dataContext) {
+                                    var i = 0;
+                                   
+                                    subSeries.data.each(function (dataObject) {
+                                        var dataObj = dataContext.subData[i];
+                                        if (dataObj) {
+                                            subSeries.data.setIndex(i, dataObj);
+                                            if (!subSeries.dataItems[i].get("visible")) {
+                                                subSeries.dataItems[i].show();
+                                            }
                                         }
-                                    }
-                                    else {
-                                        subSeries.dataItems[i].hide();
-                                    }
+                                        else {
+                                            subSeries.dataItems[i].hide();
+                                        }
 
-                                    i++;
-                                });
-                            }
-
-                            var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
-                            var firstAngle = series.dataItems[0].get("slice").get("startAngle");
-
-
-                            if (!(refugee == 1 && (checkRefugee.toLowerCase().includes("male") || checkRefugee.toLowerCase().includes("female")))) {
-                                console.log("OK")
-                                refugee == 0;
-                                series.animate({
-                                    key: "startAngle",
-                                    to: firstAngle - middleAngle,
-                                    duration: 1000,
-                                    easing: am5.ease.out(am5.ease.cubic)
-                                });
-                                series.animate({
-                                    key: "endAngle",
-                                    to: firstAngle - middleAngle + 360,
-                                    duration: 1000,
-                                    easing: am5.ease.out(am5.ease.cubic)
-                                });
+                                        i++;
+                                    });
+                                }
                             }
                             else {
-                                series.animate({
-                                    key: "startAngle",
-                                    to: firstAngle - middleAngle,
-                                    duration: 1000,
-                                    easing: am5.ease.out(am5.ease.cubic)
-                                });
-                                series.animate({
-                                    key: "endAngle",
-                                    to: firstAngle - middleAngle + 360,
-                                    duration: 1000,
-                                    easing: am5.ease.out(am5.ease.cubic)
-                                });
-                                /***
-                                 * hide subchart, lines
-                                 * dispose the barchart and call columnStart with data
-                                 * make series according to context(male, female)
-                                 */
-                                console.log("NEW DATA: ", slice._dataItem.dataContext.breakdown)
-                                console.log("SelectedSlice 3: ", selectedSlice)
-                                subChart.hide()
-                                line0.hide()
-                                line1.hide()
-                                if(!achart){
-                                    columnStart(slice._dataItem.dataContext.breakdown, checkRefugee)                                   
+
+                                dataItem = slice._dataItem
+                                dataContext = dataItem.dataContext
+                                console.log("NOw SLICE: ", dataContext)
+                                checkRefugee = JSON.stringify(dataContext["category"]);
+                                console.log("SECOND CONTEXT DATA: ", dataContext)
+                                if (dataContext) {
+                                    var i = 0;
+                                    subSeries.data.each(function (dataObject) {
+                                        var dataObj = dataContext.subData[i];
+                                        console.log("1")
+                                        if (dataObj) {
+                                            console.log("2")
+                                            subSeries.data.setIndex(i, dataObj);
+                                            if (!subSeries.dataItems[i].get("visible")) {
+                                                console.log("3")
+                                                subSeries.dataItems[i].show();
+                                            }
+                                        }
+                                        else {
+                                            console.log("4")
+                                            subSeries.dataItems[i].hide();
+                                        }
+
+                                        i++;
+                                    });
                                 }
-                                else{
-                                    achart.dispose()
-                                    console.log("DISPOSED")
-                                    columnStart(slice._dataItem.dataContext.breakdown, checkRefugee, 1)
+
+
+                                var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
+                                var firstAngle = series.dataItems[0].get("slice").get("startAngle");
+
+                                console.log("REFUGEE: ", checkRefugee)
+                                console.log("R: ", refugee)
+                                if (checkRefugee) {
+                                    if (!(refugee == 1 && (checkRefugee.toLowerCase().includes("male") || checkRefugee.toLowerCase().includes("female")))) {
+                                        console.log("OK")
+                                        refugee == 0;
+                                        series.animate({
+                                            key: "startAngle",
+                                            to: firstAngle - middleAngle,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        series.animate({
+                                            key: "endAngle",
+                                            to: firstAngle - middleAngle + 360,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                    }
+
+                                    else {
+                                        console.log("IN THE ELSE")
+                                        series.animate({
+                                            key: "startAngle",
+                                            to: firstAngle - middleAngle,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        series.animate({
+                                            key: "endAngle",
+                                            to: firstAngle - middleAngle + 360,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        /***
+                                            * hide subchart, lines
+                                            * dispose the barchart and call columnStart with data
+                                            * make series according to context(male, female)
+                                            */
+                                        console.log("NEW DATA: ", slice._dataItem.dataContext.breakdown)
+                                        console.log("SelectedSlice 3: ", selectedSlice)
+                                        subChart.hide()
+                                        line0.hide()
+                                        line1.hide()
+                                        if (!achart) {
+                                            if (!checkRefugee) {
+                                                columnStart(completeData[0].breakdown, "total")
+                                            }
+                                            else {
+                                                columnStart(slice._dataItem.dataContext.breakdown, checkRefugee)
+                                            }
+                                        }
+                                        else {
+                                            achart.dispose()
+                                            console.log("DISPOSED")
+                                            if (!checkRefugee) {
+                                                columnStart(completeData[0].breakdown, "total", 1)
+                                            }
+                                            else {
+                                                columnStart(slice._dataItem.dataContext.breakdown, checkRefugee, 1)
+                                            }
+                                        }
+                                        //selectedSlice = null
+                                    }
+
                                 }
-                                selectedSlice = null
+
+
                             }
                         }
 
                         container.appear(1000, 10);
+
+                        series2.events.on("datavalidated", function () {
+                            console.log("THIS SLICE INNER", series2.slices.getIndex(0))
+                            selectSlice(series2.slices.getIndex(0));
+                        })
 
                         series.events.on("datavalidated", function () {
                             selectSlice(series.slices.getIndex(0));
@@ -2941,8 +3314,8 @@
         </div>
 
 
-        <div class="border border-primary col-9" id="secondDiv" style="display:none">
-
+        <div class=" col-9" id="secondDiv" style="display:none">
+            @*border border-primary*@
             <h5>PieOfPie2</h5>
             <!-- Resources -->
             @*<div style="float:right; border: solid 2px yellow; height:100px">*@

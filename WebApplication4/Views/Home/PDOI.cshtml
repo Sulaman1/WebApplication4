@@ -1,234 +1,3309 @@
-﻿<!-- Styles -->
-<style>
-    #chartdiv {
-        width: 100%;
-        height: 400px;
-    }
-</style>
+﻿@using Microsoft.AspNetCore.Identity
 
-<!-- Resources -->
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "PieOfPie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 
-<!-- Chart code -->
-<script>
-    am5.ready(function () {
-
-        // Set up data
-        var data = [{
-            category: "Critical",
-            value: 89,
-            sliceSettings: {
-                fill: am5.color(0xdc4534),
-            },
-            breakdown: [{
-                category: "Sales inquiries",
-                value: 29
-            }, {
-                category: "Support requests",
-                value: 40
-            }, {
-                category: "Bug reports",
-                value: 11
-            }, {
-                category: "Other",
-                value: 9
-            }]
-        }, {
-            category: "Acceptable",
-            value: 71,
-            sliceSettings: {
-                fill: am5.color(0xd7a700),
-            },
-            breakdown: [{
-                category: "Sales inquiries",
-                value: 22
-            }, {
-                category: "Support requests",
-                value: 30
-            }, {
-                category: "Bug reports",
-                value: 11
-            }, {
-                category: "Other",
-                value: 10
-            }]
-        }, {
-            category: "Good",
-            value: 120,
-            sliceSettings: {
-                fill: am5.color(0x68ad5c),
-            },
-            breakdown: [{
-                category: "Sales inquiries",
-                value: 60
-            }, {
-                category: "Support requests",
-                value: 35
-            }, {
-                category: "Bug reports",
-                value: 15
-            }, {
-                category: "Other",
-                value: 10
-            }]
-        }]
-
-        // Create root element
-        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("chartdiv");
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-        // Set themes
-        // https://www.amcharts.com/docs/v5/concepts/themes/
-        root.setThemes([
-            am5themes_Animated.new(root)
-        ]);
-
-        // Create wrapper container
-        var container = root.container.children.push(am5.Container.new(root, {
-            width: am5.p100,
-            height: am5.p100,
-            layout: root.horizontalLayout
-        }));
+@*
+    SUB PIE CHART
+    Community Trainning
+    Vocational Trainning
+    LIP
+    Bds
+    Enterprise Clusters
+*@
 
 
-        // ==============================================
-        // Column chart
-        // ==============================================
+<div class=" container">
+    @*border border-primary*@
+    <div class="row" style="height:1000px; ">
+        @*border:solid 2px blue *@
 
-        // Create chart
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/
-        var columnChart = container.children.push(am5xy.XYChart.new(root, {
-            width: am5.p50,
-            panX: false,
-            panY: false,
-            wheelX: "none",
-            wheelY: "none",
-            layout: root.verticalLayout
-        }));
+        <div class=" col-3">
 
-        // Create axes
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-        var yRenderer = am5xy.AxisRendererY.new(root, {});
-        var yAxis = columnChart.yAxes.push(am5xy.CategoryAxis.new(root, {
-            categoryField: "category",
-            renderer: yRenderer
-        }));
+            <!-- Styles -->
+            <style>
+                #myChart {
+                    margin-top: 50%;
+                    width: 100%;
+                    height: 10%;
+                }
 
-        yRenderer.grid.template.setAll({
-            location: 1
-        })
+            </style>
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
 
-        var xAxis = columnChart.xAxes.push(am5xy.ValueAxis.new(root, {
-            renderer: am5xy.AxisRendererX.new(root, {
-                strokeOpacity: 0.1
-            })
-        }));
+            <script>
+                const ctx = document.getElementById('myChart');
+
+                const labels = [
+                    'TB',
+                    'CBT',
+                    'LIP',
+                    'EBP'
+                ];
 
 
-        // Add series
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-        var columnSeries = columnChart.series.push(am5xy.ColumnSeries.new(root, {
-            name: name,
-            xAxis: xAxis,
-            yAxis: yAxis,
-            valueXField: "value",
-            categoryYField: "category"
-        }));
+                const data = {
+                    labels: labels,
+                    datasets: [{
+                        //label: 'Polar Graph',
+                        data: [12.85, 4.49, 7.69, 2.71],
+                        borderWidth: 0,
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 205, 86)',
+                            'rgb(201, 203, 207)'
 
-        columnSeries.columns.template.setAll({
-            tooltipText: "{categoryY}: {valueX}"
-        });
+                        ],
+                        hoverBackgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 205, 86)',
+                            'rgb(201, 203, 207)'
+                        ]
+                    }]
+                };
 
-        //series.data.setAll(data);
+                function simpleStringify(object) {
+                    // stringify an object, avoiding circular structures
+                    // https://stackoverflow.com/a/31557814
+                    var simpleObject = {};
+                    var selected;
+                    //console.log("Data: ", object)
+                    if (object.chart.tooltip) {
+                        selected = object.chart.tooltip.title[0];
+                        console.log("Selected: ", selected)
 
-        // Make stuff animate on load
-        // https://www.amcharts.com/docs/v5/concepts/animations/
-        columnChart.appear(1000, 100);
+                        var mDiv = document.getElementById("mainDiv")
+                        var secDiv = document.getElementById("secondDiv")
+
+                        /***
+                         * Main div block (all hidden)
+                         * Lip div block (all hidded) ...
+                         */
+
+                        if (mDiv.style.display === "block" && selected.toLowerCase().includes("tb")) {
+
+                        }
+
+                        if (mDiv.style.display === "none" && selected.toLowerCase().includes("tb")) {
+                            mDiv.style.display = "block";
+                            secDiv.style.display = "none";
+                        }
+
+                        if (secDiv.style.display === "none" && selected.toLowerCase().includes("lip")) {
+                            secDiv.style.display = "block";
+                            mDiv.style.display = "none";
+                        }
+                    }
+                };
+
+                var polarChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: data,
+                    options: {
+                        onClick: function (evt, data) {
+                            var e = simpleStringify(evt)
+
+                        },
+                        scales: {
+                            r: {
+                                pointLabels: {
+                                    display: true,
+                                    centerPointLabels: true,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            }
+                        },
+                        scale: {
+                            ticks: {
+                                display: false,
+                                stepSize: 2
+                            }
+                        },
+                        legend: {
+                            position: "left",
+
+                            labels: {
+                                boxWidth: 2,
+                                fontColor: "#757681",
+                                fontSize: 3
+                            }
+                        }
+                    }
+                });
+
+            </script>
+
+        </div>
+        @*border border-primary*@
+
+        <div class=" col-9" id="mainDiv" style="display:block">
+            @*border border-primary*@
+            <!-- Resources -->
+            @*<div style="float:right; border: solid 2px yellow; height:100px">*@
+            @* <input type="text" id="searchInput" placeholder="Search..." />*@
+
+            <button onclick="PDOI()">PDOI</button>
+            <button onclick="REFUGEE()">REFUGEE</button>
+
+            @*</div>*@
+
+            @* <div style="border: solid 2px yellow; height:100px; width:100px">
+            </div>*@
+
+            <!-- Styles -->
+            <style>
+                #chartdiv {
+                    /*border: dashed 2px green;*/
+                    width: 105%;
+                    height: 1000px;
+                }
+
+            </style>
 
 
-        // ==============================================
-        // Column chart
-        // ==============================================
+            <!-- Chart code -->
+            <script>
 
-        var pieChart = container.children.push(
-            am5percent.PieChart.new(root, {
-                width: am5.p50,
-                innerRadius: am5.percent(50)
-            })
-        );
+                var newData = []
+                var completeData = []
+                var root;
+                var i = 0;
+                var all = 0;
+                var x = 6
 
-        // Create series
-        var pieSeries = pieChart.series.push(
-            am5percent.PieSeries.new(root, {
-                valueField: "value",
-                categoryField: "category"
-            })
-        );
+                var subRadius = 80;
+                var subChartCreated = 0
 
-        pieSeries.slices.template.setAll({
-            templateField: "sliceSettings",
-            strokeOpacity: 0
-        });
+                var initializeData = (function () {
 
-        var currentSlice;
-        pieSeries.slices.template.on("active", function (active, slice) {
-            if (currentSlice && currentSlice != slice && active) {
-                currentSlice.set("active", false)
-            }
+                    var executed = false;
+                    console.log("one time")
+                    return function () {
+                        if (!executed) {
+                            executed = true;
 
-            var color = slice.get("fill");
+                            completeData = [
+                                {
+                                    "category": "Complete",
+                                    value: 60000,
+                                    breakdown: [{
+                                        "category": "Killa Abdullah",
+                                        "edp": 22,
+                                        "lip": 45,
+                                        "cbt": 11,
+                                        "tvs": 19,
+                                        "bds": 42
 
-            label1.setAll({
-                fill: color,
-                text: root.numberFormatter.format(slice.dataItem.get("valuePercentTotal"), "#.'%'")
-            });
+                                    }, {
+                                        "category": "Killa Saifullah",
+                                        "edp": 65,
+                                        "lip": 45,
+                                        "cbt": 21,
+                                        "tvs": 18,
+                                        "bds": 32
 
-            label2.set("text", slice.dataItem.get("category"));
+                                    }, {
+                                        "category": "Sherani",
+                                        "edp": 31,
+                                        "lip": 5,
+                                        "cbt": 21,
+                                        "tvs": 41,
+                                        "bds": 42
 
-            columnSeries.columns.template.setAll({
-                fill: slice.get("fill"),
-                stroke: slice.get("fill")
-            });
+                                    }, {
+                                        "category": "Chagai",
+                                        "edp": 25,
+                                        "lip": 16,
+                                        "cbt": 52,
+                                        "tvs": 12,
+                                        "bds": 22
 
-            columnSeries.data.setAll(slice.dataItem.dataContext.breakdown);
-            yAxis.data.setAll(slice.dataItem.dataContext.breakdown);
+                                    },
+                                    {
+                                        "category": "Nushki",
+                                        "edp": 2,
+                                        "lip": 25,
+                                        "cbt": 21,
+                                        "tvs": 41,
+                                        "bds": 25
 
-            currentSlice = slice;
-        });
+                                    },
+                                    {
+                                        "category": "Pishin",
+                                        "edp": 16,
+                                        "lip": 45,
+                                        "cbt": 31,
+                                        "tvs": 41,
+                                        "bds": 42
 
-        pieSeries.labels.template.set("forceHidden", true);
-        pieSeries.ticks.template.set("forceHidden", true);
+                                    },
+                                    {
+                                        "category": "Zhob",
+                                        "edp": 53,
+                                        "lip": 22,
+                                        "cbt": 2,
+                                        "tvs": 18,
+                                        "bds": 22
 
-        pieSeries.data.setAll(data);
+                                    },
+                                    {
+                                        "category": "Mastung",
+                                        "edp": 11,
+                                        "lip": 65,
+                                        "cbt": 61,
+                                        "tvs": 11,
+                                        "bds": 32
 
-        // Add label
-        var label1 = pieChart.seriesContainer.children.push(am5.Label.new(root, {
-            text: "",
-            fontSize: 35,
-            fontweight: "bold",
-            centerX: am5.p50,
-            centerY: am5.p50
-        }));
+                                    },
+                                    {
+                                        "category": "Quetta",
+                                        "edp": 25,
+                                        "lip": 65,
+                                        "cbt": 71,
+                                        "tvs": 11,
+                                        "bds": 41
 
-        var label2 = pieChart.seriesContainer.children.push(am5.Label.new(root, {
-            text: "",
-            fontSize: 12,
-            centerX: am5.p50,
-            centerY: am5.p50,
-            dy: 30
-        }));
+                                    }]
 
-        // Pre-select first slice
-        pieSeries.events.on("datavalidated", function () {
-            pieSeries.slices.getIndex(0).set("active", true);
-        });
+                                }
+                            ]
 
-    }); // end am5.ready()
-</script>
+                            newData = [
+                                {
+                                    "category": "Afghan Refugee",
+                                    value: 49,
+                                    subData: [
+                                        {
+                                            "category": "EDPs", value: 25500,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xff765f),
+                                            //    stroke: am5.color(0xff765f)
+                                            //}
+                                        },
+                                        {
+                                            "category": "LIPs", value: 4500,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xbabf27),
+                                            //    stroke: am5.color(0xbabf27)
+                                            //}
+                                        },
+                                        {
+                                            "category": "CBT", value: 9360,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xc4a563),
+                                            //    stroke: am5.color(0xc4a563)
+                                            //}
+                                        },
+                                        {
+                                            "category": "TVS", value: 12750,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xd6e681),
+                                            //    stroke: am5.color(0xd6e681)
+                                            //}
+                                        },
+                                        {
+                                            "category": "BDS", value: 4500,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xd6e561),
+                                            //    stroke: am5.color(0xd6e561)
+                                            //}
+                                        }
+                                    ],
+                                    breakdown: [{
+                                        "category": "Killa Abdullah",
+                                        "edp": 22,
+                                        "lip": 45,
+                                        "cbt": 51,
+                                        "tvs": 31,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e341),
+                                            stroke: am5.color(0xd6e341)
 
-<!-- HTML -->
-<div id="chartdiv"></div>
+                                        }
+                                    }, {
+                                        "category": "Killa Saifullah",
+                                        "edp": 25,
+                                        "lip": 76,
+                                        "cbt": 31,
+                                        "tvs": 41,
+                                        "bds": 21,
+                                        columnSettings: {
+                                            fill: am5.color(0xbab755),
+                                            stroke: am5.color(0xbab755)
+
+                                        }
+                                    }, {
+                                        "category": "Sherani",
+                                        "edp": 52,
+                                        "lip": 25,
+                                        "cbt": 32,
+                                        "tvs": 43,
+                                        "bds": 22,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4a283),
+                                            stroke: am5.color(0xc4a283)
+
+                                        }
+                                    }, {
+                                        "category": "Chagai",
+                                        "edp": 45,
+                                        "lip": 24,
+                                        "cbt": 12,
+                                        "tvs": 43,
+                                        "bds": 12,
+                                        columnSettings: {
+                                            fill: am5.color(0xd61681),
+                                            stroke: am5.color(0xd61681)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Nushki",
+                                        "edp": 25,
+                                        "lip": 65,
+                                        "cbt": 71,
+                                        "tvs": 41,
+                                        "bds": 22,
+                                        columnSettings: {
+                                            fill: am5.color(0xbab205),
+                                            stroke: am5.color(0xbab205)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Pishin",
+                                        "edp": 56,
+                                        "lip": 41,
+                                        "cbt": 31,
+                                        "tvs": 41,
+                                        "bds": 73,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4a933),
+                                            stroke: am5.color(0xc4a933)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Zhob",
+                                        "edp": 31,
+                                        "lip": 39,
+                                        "cbt": 81,
+                                        "tvs": 11,
+                                        "bds": 12,
+                                        columnSettings: {
+                                            fill: am5.color(0xd69481),
+                                            stroke: am5.color(0xd69481)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Mastung",
+                                        "edp": 51,
+                                        "lip": 2,
+                                        "cbt": 32,
+                                        "tvs": 13,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0x34bf95),
+                                            stroke: am5.color(0x34bf95)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Quetta",
+                                        "edp": 15,
+                                        "lip": 65,
+                                        "cbt": 21,
+                                        "tvs": 11,
+                                        "bds": 32,
+                                        columnSettings: {
+                                            fill: am5.color(0x99ad27),
+                                            stroke: am5.color(0x99ad27)
+
+                                        }
+                                    }],
+
+                                    sliceSettings: {
+                                        fill: am5.color(0xe600e6),
+                                        stroke: am5.color(0xe600e6)
+                                    }
+                                },
+                                {
+                                    "category": "Female",
+                                    value: 30,
+                                    subData: [
+                                        {
+                                            "category": "EDPs", value: 10,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xd6e681),
+                                            //    stroke: am5.color(0xd6e681)
+                                            //}
+                                        },
+                                        {
+                                            "category": "LIPs", value: 20,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xbabf95),
+                                            //    stroke: am5.color(0xbabf95)
+                                            //}
+                                        },
+                                        {
+                                            "category": "CBT", value: 5,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xc4ad83),
+                                            //    stroke: am5.color(0xc4ad83)
+                                            //}
+                                        },
+                                        {
+                                            "category": "TVS", value: 17,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xbabf95),
+                                            //    stroke: am5.color(0xbabf95)
+                                            //}
+                                        },
+                                        {
+                                            "category": "BDS", value: 6,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xc4ad83),
+                                            //    stroke: am5.color(0xc4ad83)
+                                            //}
+                                        }
+                                    ],
+                                    breakdown: [{
+                                        "category": "Killa Abdullah",
+                                        "edp": 52,
+                                        "lip": 25,
+                                        "cbt": 26,
+                                        "tvs": 19,
+                                        "bds": 92,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
+                                    }, {
+                                        "category": "Killa Saifullah",
+                                        "edp": 12,
+                                        "lip": 76,
+                                        "cbt": 31,
+                                        "tvs": 13,
+                                        "bds": 39,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
+                                    }, {
+                                        "category": "Sherani",
+                                        "edp": 92,
+                                        "lip": 25,
+                                        "cbt": 41,
+                                        "tvs": 19,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    }, {
+                                        "category": "Chagai",
+                                        "edp": 65,
+                                        "lip": 35,
+                                        "cbt": 24,
+                                        "tvs": 11,
+                                        "bds": 32,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Nushki",
+                                        "edp": 45,
+                                        "lip": 25,
+                                        "cbt": 71,
+                                        "tvs": 66,
+                                        "bds": 11,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Pishin",
+                                        "edp": 16,
+                                        "lip": 24,
+                                        "cbt": 73,
+                                        "tvs": 24,
+                                        "bds": 54,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Zhob",
+                                        "edp": 36,
+                                        "lip": 52,
+                                        "cbt": 81,
+                                        "tvs": 16,
+                                        "bds": 63,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Mastung",
+                                        "edp": 51,
+                                        "lip": 54,
+                                        "cbt": 41,
+                                        "tvs": 12,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Quetta",
+                                        "edp": 25,
+                                        "lip": 65,
+                                        "cbt": 71,
+                                        "tvs": 12,
+                                        "bds": 42,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    }],
+
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                }, {
+                                    "category": "Male",
+                                    value: 21,
+                                    subData: [
+                                        {
+                                            "category": "EDPs", value: 10,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xd6e681),
+                                            //    stroke: am5.color(0xd6e681)
+                                            //}
+                                        },
+                                        {
+                                            "category": "LIPs", value: 20,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xbabf95),
+                                            //    stroke: am5.color(0xbabf95)
+                                            //}
+                                        },
+                                        {
+                                            "category": "CBT", value: 5,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xc4ad83),
+                                            //    stroke: am5.color(0xc4ad83)
+                                            //}
+                                        },
+                                        {
+                                            "category": "TVS", value: 17,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xbabf95),
+                                            //    stroke: am5.color(0xbabf95)
+                                            //}
+                                        },
+                                        {
+                                            "category": "BDS", value: 6,
+                                            //sliceSettings: {
+                                            //    fill: am5.color(0xd6e681),
+                                            //    stroke: am5.color(0xd6e681)
+                                            //}
+                                        }
+                                    ],
+                                    breakdown: [{
+                                        "category": "Killa Abdullah",
+                                        "edp": 2.52,
+                                        "lip": 2.45,
+                                        "cbt": 2.51,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
+                                    }, {
+                                        "category": "Killa Saifullah",
+                                        "edp": 2.25,
+                                        "lip": 2.45,
+                                        "cbt": 2.31,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
+                                    }, {
+                                        "category": "Sherani",
+                                        "edp": 2.52,
+                                        "lip": 2.45,
+                                        "cbt": 2.1,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    }, {
+                                        "category": "Chagai",
+                                        "edp": 2.65,
+                                        "lip": 2.35,
+                                        "cbt": 24.1,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Nushki",
+                                        "edp": 2.25,
+                                        "lip": 2.65,
+                                        "cbt": 2.71,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Pishin",
+                                        "edp": 2.56,
+                                        "lip": 2.54,
+                                        "cbt": 2.31,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Zhob",
+                                        "edp": 2.53,
+                                        "lip": 2.52,
+                                        "cbt": 2.81,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Mastung",
+                                        "edp": 2.51,
+                                        "lip": 2.65,
+                                        "cbt": 2.51,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xbabf95),
+                                            stroke: am5.color(0xbabf95)
+
+                                        }
+                                    },
+                                    {
+                                        "category": "Quetta",
+                                        "edp": 2.25,
+                                        "lip": 2.65,
+                                        "cbt": 2.71,
+                                        "tvs": 1,
+                                        "bds": 4.2,
+                                        columnSettings: {
+                                            fill: am5.color(0xc4ad83),
+                                            stroke: am5.color(0xc4ad83)
+
+                                        }
+                                    }],
+
+                                    sliceSettings: {
+                                        fill: am5.color(0x660066),
+                                        stroke: am5.color(0x660066)
+                                    }
+                                }
+                            ]
+
+                            am5.ready(function () {
+
+                                console.log("In Show...", newData);
+
+                                // Create root element
+                                // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+                                root = am5.Root.new("chartdiv");
+
+                                // Set themes
+                                // https://www.amcharts.com/docs/v5/concepts/themes/
+                                root.setThemes([
+                                    //am5themes_Responsive.new(root)
+                                    am5themes_Animated.new(root)
+                                ]);
+
+                                var container = root.container.children.push(
+                                    am5.Container.new(root, {
+                                        width: am5.percent(100),
+                                        height: am5.percent(100),
+                                        //y: am5.percent(0),
+                                        //x: am5.percent(0),
+                                        layout: root.horizontalLayout
+                                    })
+                                );
+
+
+                                // ==============================================
+                                // Column chart
+                                // ==============================================
+
+                                var xxAxis;
+                                var sseries;
+                                var achart
+                                var w
+                                var h
+
+                                function columnStart(data, _context, isDisposed) {
+                                    var context;
+                                    if (_context) {
+                                        context = _context.toLowerCase()
+                                    }
+                                    console.log("Dataaaa:", data)
+
+                                    console.log(`
+                                                                Context: ${context}
+                                                            `)
+
+                                    console.log("Disposed: ", isDisposed)
+
+                                    var ishidden = subChart.isHidden()
+                                    console.log("HIDDEN: ", ishidden)
+
+                                    //if (ishidden && context.includes("afghan")) {
+                                    //    w = 150
+                                    //    h = 57
+                                    //}
+                                    //if (w == 80 && context.includes("afghan")) {
+                                    //    w = 150;
+                                    //    h = 57;
+                                    //}
+
+                                    ////disposed = undefined, hidden = true, 80, 57
+                                    //if (isDisposed && context.includes("male")) {
+                                    //    w = 80
+                                    //    h = 57
+                                    //}
+
+                                    console.log("Width: ", w)
+                                    console.log("Height: ", h)
+                                    // Create chart
+                                    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                                    achart = container.children.push(
+                                        am5xy.XYChart.new(root, {
+                                            // panY: false,
+                                            //wheelY: "zoomX",
+                                            //wheelX: "zoomY",
+                                            //layout: root.verticalLayout
+                                            width: am5.percent(250),
+                                            height: am5.percent(45),
+                                            //panX: false,
+                                            //panY: false,
+                                            //centerX: am5.percent(10),
+                                            y: am5.percent(50),
+                                            x: am5.percent(15),
+                                            layout: am5.GridLayout.new(root, {
+                                                maxColumns: 2,
+                                                fixedWidthGrid: true
+                                            })
+                                            //layout: root.verticalLayout
+                                        })
+                                    );
+
+                                    // Create X-Axis
+                                    xxAxis = achart.xAxes.push(
+                                        am5xy.CategoryAxis.new(root, {
+                                            maxDeviation: 0.2,
+                                            renderer: am5xy.AxisRendererX.new(root, {
+                                                minGridDistance: 10
+                                            }),
+                                            categoryField: "category"
+                                        })
+                                    );
+                                    var xRenderer = xxAxis.get("renderer");
+                                    xRenderer.labels.template.setAll({
+                                        rotation: -30,
+                                        fontSize: 10,
+                                        centerY: am5.percent(50)
+                                    });
+
+                                    xxAxis.data.setAll(data);
+
+                                    // Craete Y-axis
+                                    let yAxis = achart.yAxes.push(
+                                        am5xy.ValueAxis.new(root, {
+                                            renderer: am5xy.AxisRendererY.new(root, {
+                                            })
+                                        })
+                                    );
+
+
+                                    // Add legend
+                                    var legend = achart.children.push(am5.Legend.new(root, {
+
+                                        y: am5.percent(0),
+                                        x: am5.percent(100),
+                                        layout: root.verticalLayout,
+                                        //layout: root.horizontalLayout,
+                                        //y: am5.percent(0),
+                                        //centerY: am5.percent(0),
+                                        // height: am5.percent(100),
+                                        verticalScrollbar: am5.Scrollbar.new(root, {
+                                            orientation: "vertical"
+                                        })
+                                    }));
+
+
+
+                                    // Add series
+                                    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                                    function makeSeries(name, fieldName) {
+
+                                        sseries = achart.series.push(am5xy.ColumnSeries.new(root, {
+                                            name: name,
+                                            stacked: true,
+                                            xAxis: xxAxis,
+                                            yAxis: yAxis,
+                                            valueYField: fieldName,
+                                            categoryXField: "category"
+                                        }));
+
+                                        sseries.columns.template.setAll({
+                                            tooltipText: "{name}, {categoryX}: {valueY}",
+                                            tooltipY: am5.percent(10)
+                                        });
+                                        sseries.data.setAll(data);
+
+                                        // Make stuff animate on load
+                                        // https://www.amcharts.com/docs/v5/concepts/animations/
+                                        //series.appear();
+
+
+                                        sseries.bullets.push(function () {
+                                            return am5.Bullet.new(root, {
+                                                sprite: am5.Label.new(root, {
+                                                    //text: "{valueY}",
+                                                    fill: root.interfaceColors.get("alternativeText"),
+                                                    centerY: am5.p50,
+                                                    centerX: am5.p50,
+                                                    fontSize: 10,
+                                                    populateText: true
+                                                })
+                                            });
+                                        });
+
+                                        legend.data.push(sseries);
+                                        //legend.data.setAll(achart.series.values);
+                                    }
+                                    console.log(`
+                                                                this i: ${i}
+                                                                this refugee: ${refugee}
+                                                                this all: ${all}
+                                                            `)
+
+                                    //if i=0 and refugee=1 its refugee
+                                    /***
+                                     * change series to male female
+                                     * when context is male show male series and viseversa
+                                     */
+                                    if ((i == 0 && refugee == 1 && context) || (i == 1 && refugee == 1 && !context) || (i == 1 && refugee == 1 && context)) {
+                                        if (context) {
+                                            if (context.toLowerCase().includes("afghan")) {//checkRefugee.toLowerCase().includes("male")
+                                                makeSeries("Male", "male");
+                                                makeSeries("Female", "female");
+
+                                                subChart.appear()
+                                                line0.appear()
+                                                line1.appear()
+                                            }
+                                        }
+                                    }
+
+                                    //if i = 1 and refugee = 1, its local male/female
+                                    if ((i == 1 && refugee == 1 && context.includes("male")) || (i == 0 && refugee == 1 && context.includes("male"))) {
+                                        if (context.includes("female")) {
+                                            makeSeries("Female", "female")
+                                        }
+                                        else {
+                                            makeSeries("Male", "male")
+                                        }
+                                    }
+
+                                    //if i=0 and refugee=0 its pdoi
+                                    /***
+                                     *
+                                     */
+                                    //on slice double click i becomes 1
+
+                                    if (((i == 0 && refugee == 0) || (i == 1 && refugee == 0)) && !context.includes("total")) {
+                                        console.log("In pdoi series")
+                                        makeSeries("EDPs", "edp");
+                                        makeSeries("LIPs", "lip");
+                                        makeSeries("CBT", "cbt");
+                                        makeSeries("TVS", "tvs");
+                                        makeSeries("BDS", "bds");
+
+
+                                    }
+                                    i = 1;
+
+                                    if (all == 1 && context.includes("total")) {
+                                        console.log("In Total series")
+                                        makeSeries("EDPs", "edp");
+                                        makeSeries("LIPs", "lip");
+                                        makeSeries("CBT", "cbt");
+                                        makeSeries("TVS", "tvs");
+                                        makeSeries("BDS", "bds");
+                                    }
+
+                                    //function end
+
+                                }
+
+                                // ==============================================
+                                // END Column chart
+                                // ==============================================
+
+
+                                // Create main chart
+                                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+
+                                var chart
+                                function mainChartInitailize(_x) {
+                                    if (_x) {
+                                        x = _x
+                                    }
+                                    console.log("X: ", x)
+                                    chart = container.children.push(
+                                        am5percent.PieChart.new(root, {
+                                            tooltip: am5.Tooltip.new(root, {}),
+                                            radius: am5.percent(140),
+                                            // innerRadius: am5.percent(10)
+                                            // panY: false,
+                                            //wheelY: "zoomX",
+                                            //wheelX: "zoomY",
+                                            //layout: root.verticalLayout
+                                            width: am5.percent(140),
+                                            height: am5.percent(30),
+                                            //panX: false,
+                                            //panY: false,
+
+                                            y: am5.percent(10),
+                                            x: am5.percent(x),
+                                            layout: am5.GridLayout.new(root, {
+                                                maxColumns: 2,
+                                                fixedWidthGrid: true
+                                            })
+                                            //layout: root.verticalLayout
+                                        })
+                                    );
+
+                                }
+
+                                var initializeMainData = (function () {
+
+                                    var executed = false;
+                                    console.log("initialize subchart")
+                                    return function () {
+                                        if (!executed) {
+                                            executed = true;
+                                            //subChartCreated = 1
+                                            mainChartInitailize()
+                                        }
+                                    }
+                                })();
+                                initializeMainData();
+
+                                var series2 = chart.series.push(
+                                    am5percent.PieSeries.new(root, {
+                                        name: "Total",
+                                        valueField: "beneficiaries",
+                                        categoryField: "total",
+
+                                    })
+                                );
+
+                                // Configuring slices
+                                series2.slices.template.setAll({
+                                    templateField: "sliceSettings"
+                                    //stroke: am5.color(0xffffff),
+                                    //strokeWidth: 2
+                                })
+
+                                series2.data.setAll([{
+                                    total: "Total",
+                                    beneficiaries: 60000,
+                                    subData: [
+                                        {
+                                            "category": "EDPs", value: 250,
+                                            sliceSettings: {
+                                                fill: am5.color(0xff235f),
+                                                stroke: am5.color(0xff235f)
+                                            }
+                                        },
+                                        {
+                                            "category": "LIPs", value: 2500,
+                                            sliceSettings: {
+                                                fill: am5.color(0xbab767),
+                                                stroke: am5.color(0xbab767)
+                                            }
+                                        },
+                                        {
+                                            "category": "CBT", value: 360,
+                                            sliceSettings: {
+                                                fill: am5.color(0xc4a563),
+                                                stroke: am5.color(0xc4a563)
+                                            }
+                                        },
+                                        {
+                                            "category": "TVS", value: 1750,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        },
+                                        {
+                                            "category": "BDS", value: 4500,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e561),
+                                                stroke: am5.color(0xd6e561)
+                                            }
+                                        }
+                                    ],
+                                    sliceSettings: {
+                                        fill: am5.color(0xcc0099),
+                                        stroke: am5.color(0xcc0099)
+                                    }
+                                }]);
+
+                                series2.bullets.push(function () {
+                                    return am5.Bullet.new(root, {
+                                        sprite: am5.Label.new(root, {
+                                            text: "Total: {beneficiaries}",
+                                            centerX: am5.percent(50),
+                                            centerY: am5.percent(130),
+                                            populateText: true,
+                                            fill: am5.color(0xffffff)
+                                        })
+                                    });
+                                });
+
+                                series2.labels.template.setAll({
+                                    // text: "{beneficiaries}",
+                                    //fontSize: 10,
+                                    textType: "circular",
+                                    //inside: true,
+                                    //centerX: am5.percent(90),
+                                    radius: 10,
+                                    fill: am5.color(0xffffff)
+                                });
+
+                                series2.slices.template.set("toggleKey", "none");
+
+                                //series2.animate({
+                                //    key: "startAngle",
+                                //    to: 180,
+                                //    loops: Infinity,
+                                //    duration: 2000,
+                                //    easing: am5.ease.yoyo(am5.ease.cubic)
+                                //});
+
+                                series2.events.on("click", function (e) {
+
+                                    //dispose it only one time
+                                    if (subChartCreated) {
+                                        subChart.dispose()
+                                        subChartCreate(150)
+                                        //chart.dispose()
+                                        //mainChartInitailize()
+                                        subChartCreated = 0
+                                    }
+
+                                    // e.target.set("active", false)
+                                    //console.log("EVENT: ", e.target)
+                                    console.log("INNER SLICE: ", e.target)
+
+
+                                    selectSlice(e.target);
+                                    if (sseries) {
+                                        sseries.columns.template.setAll({
+                                            // fill: e.target.get("fill"), //slice
+                                            //stroke: e.target.get("fill") //slice
+                                        });
+                                    }
+                                    console.log("All: ", all)
+                                    //Show complete Data
+                                    //Incase of refugee get unique data of refugee first
+                                    if (all == 0 || all == 1) {
+                                        all = 1;
+                                        if (achart) {
+                                            achart.dispose()
+                                        }
+                                        columnStart(completeData[0].breakdown, "total")
+                                    }
+                                    else {
+                                        all = 0
+                                    }
+                                    console.log("Daata: ", completeData[0].breakdown)//e.target._dataItems[0].dataContext
+                                })
+
+                                // Create series
+                                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                                var series = chart.series.push(
+                                    am5percent.PieSeries.new(root, {
+                                        valueField: "value",
+                                        categoryField: "category",
+                                        alignLabels: false,
+                                    })
+                                );
+
+                                //series.labels.template.setAll({
+                                //    textType: "circular",
+                                //    radius: 4
+                                //});
+
+                                series.labels.template.setAll({
+                                    text: "{category}[/]: [bold]{value}[/]",
+                                    fontSize: 15,
+                                    textType: "circular",
+                                    textAlign: "center",
+                                    oversizedBehavior: "wrap",
+                                    inside: true,
+                                    centerX: am5.percent(90),
+                                    radius: 10,
+                                    fill: am5.color(0xffffff)
+                                })
+
+                                series.ticks.template.set("visible", false);
+                                series.slices.template.set("toggleKey", "none");
+
+                                series.slices.template.setAll({
+                                    templateField: "sliceSettings"
+                                });
+
+                                // add events
+                                series.slices.template.events.on("click", function (e) {
+
+                                    //dispose it only one time
+                                    if (subChartCreated) {
+                                        subChart.dispose()
+                                        subChartCreate(150)
+                                        //chart.dispose()
+                                        //mainChartInitailize()
+                                        subChartCreated = 0
+                                    }
+
+                                    console.log("Slice", e.target)
+                                    var dataItem = e.target.dataItem;
+                                    var dataContext = dataItem.dataContext;
+                                    var context = JSON.stringify(dataContext["category"]);
+
+                                    selectSlice(e.target);
+                                    if (sseries) {
+                                        sseries.columns.template.setAll({
+                                            fill: e.target.get("fill"), //slice
+                                            stroke: e.target.get("fill") //slice
+                                        });
+
+                                    }
+
+                                    //refugee = 1, i = undefined, context= ar
+
+                                    //first click on slice i = 0, second time i = 1, context
+                                    console.log("IIIIII: ", i)
+                                    console.log("SECOND CLICK: ", e.target.dataItem.dataContext.breakdown)
+                                    console.log("CONTEXT: ", context)
+
+                                    if (achart) {
+                                        console.log("exist")
+                                        achart.dispose()
+                                        //send context
+                                        columnStart(e.target.dataItem.dataContext.breakdown, context)
+                                    }
+                                    else {
+                                        console.log("not exist")
+                                        //send context
+                                        columnStart(e.target.dataItem.dataContext.breakdown, context)
+                                    }
+                                    //if (i == 0) {
+                                    //    console.log("Show the bar")
+                                    //    columnStart(e.target.dataItem.dataContext.breakdown)
+                                    //}
+
+                                });
+
+
+                                var subChart
+                                var subSeries
+                                function subChartCreate(_subRadius) {
+
+                                    if (_subRadius) {
+                                        subRadius = _subRadius
+                                    }
+                                    // initial r=70 , w=100
+                                    // onClick r=100, w=150
+                                    // Create sub chart
+                                    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                                    subChart = container.children.push(
+                                        am5percent.PieChart.new(root, {
+                                            radius: am5.percent(subRadius),
+                                            tooltip: am5.Tooltip.new(root, {}),
+                                            // panY: false,
+                                            //wheelY: "zoomX",
+                                            //wheelX: "zoomY",
+                                            //layout: root.verticalLayout
+                                            width: am5.percent(100),
+                                            height: am5.percent(100),
+
+
+                                            //marginLeft: 100,
+
+                                            //panX: false,
+                                            //panY: false,
+                                            //centerX: am5.percent(100),
+                                            y: am5.percent(-25),
+                                            x: am5.percent(60),
+                                            //layout: am5.GridLayout.new(root, {
+                                            //    maxColumns: 2,
+                                            //    fixedWidthGrid: true
+                                            //})
+                                            //layout: root.verticalLayout
+                                        })
+                                    );
+
+                                    // Create sub series
+                                    // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                                    subSeries = subChart.series.push(
+                                        am5percent.PieSeries.new(root, {
+                                            valueField: "value",
+                                            categoryField: "category",
+                                            alignLabels: false
+                                        })
+                                    );
+
+                                    subSeries.events.on("datavalidated", function (ev) {
+                                        console.log("VALIDATING...", ev.target.chart.radius())
+                                        var s = ev.target
+                                        var c = s.chart
+                                        var r = c.radius()
+                                        c.root.dom.style.radius = 200;
+                                        console.log("subRad: ", subRadius)
+                                        subRadius = 200
+                                        //var series = ev.target;
+                                        //var chart = series.chart;
+                                        //var xAxis = chart.xAxes.getIndex(0);
+
+                                        //// Calculate how we need to adjust chart height
+                                        //var chartHeight = series.data.length * cellSize + xAxis.height() + chart.get("paddingTop", 0) + chart.get("paddingBottom", 0);
+
+                                        //// Set it on chart's container
+                                        //chart.root.dom.style.height = chartHeight + "px";
+                                    });
+
+                                    subSeries.labels.template.setAll({
+                                        text: "{category}[/]: [bold]{value}[/]",
+                                        fontSize: 10,
+                                        oversizedBehavior: "wrap",
+                                        textAlign: "center",
+                                        maxWidth: 90,
+                                        textType: "circular",
+                                        //inside: true,
+                                        //centerX: am5.percent(-40),
+                                        radius: 10,
+                                        fill: am5.color(0x000000)
+                                    })
+
+                                    subSeries.slices.template.setAll({
+                                        // templateField: "sliceSettings"
+                                    });
+
+                                    subSeries.data.setAll([
+                                        {
+                                            category: "A", value: 0,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        },
+                                        {
+                                            category: "B", value: 0,
+                                            sliceSettings: {
+                                                fill: am5.color(0xbabf95),
+                                                stroke: am5.color(0xbabf95)
+                                            }
+                                        },
+                                        {
+                                            category: "C", value: 0,
+                                            sliceSettings: {
+                                                fill: am5.color(0xc4ad83),
+                                                stroke: am5.color(0xc4ad83)
+                                            }
+                                        },
+                                        {
+                                            category: "D", value: 0,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        },
+                                        {
+                                            category: "E", value: 0,
+                                            sliceSettings: {
+                                                fill: am5.color(0xbabf95),
+                                                stroke: am5.color(0xbabf95)
+                                            }
+                                        },
+                                        {
+                                            category: "F", value: 0,
+                                            sliceSettings: {
+                                                fill: am5.color(0xc4ad83),
+                                                stroke: am5.color(0xc4ad83)
+                                            }
+                                        },
+                                        {
+                                            category: "G", value: 0,
+                                            sliceSettings: {
+                                                fill: am5.color(0xd6e681),
+                                                stroke: am5.color(0xd6e681)
+                                            }
+                                        }
+                                    ]);
+
+                                    subSeries.slices.template.set("toggleKey", "none");
+
+                                }
+
+
+                                var initializeSubData = (function () {
+
+                                    var executed = false;
+                                    console.log("initialize subchart")
+                                    return function () {
+                                        if (!executed) {
+                                            executed = true;
+                                            subChartCreated = 1
+                                            subChartCreate()
+                                        }
+                                    }
+                                })();
+                                initializeSubData();
+
+
+                                var selectedSlice;
+
+                                series2.events.on("startAngle", function () {
+                                    console.log("updateline2")
+                                    //updateLines();
+                                })
+                                //series2.on("startAngle", function () {
+                                //    updateLines();
+                                //});
+
+                                series.on("startAngle", function () {
+                                    console.log("updateline")
+                                    updateLines();
+                                });
+
+                                container.events.on("boundschanged", function () {
+                                    root.events.on("frameended", function () {
+                                        updateLines();
+                                    })
+                                })
+
+                                function updateLines() {
+                                    if (selectedSlice._dataItem && selectedSlice) {
+                                        //console.log("MAIN update lines")
+                                        var startAngle = selectedSlice.get("startAngle");
+                                        var arc = selectedSlice.get("arc");
+                                        var radius = selectedSlice.get("radius");
+                                       
+
+                                        var x00 = radius * am5.math.cos(startAngle);
+                                        var y00 = radius * am5.math.sin(startAngle);
+
+                                        var x10 = radius * am5.math.cos(startAngle + arc);
+                                        var y10 = radius * am5.math.sin(startAngle + arc);
+
+                                        var subRadius = subSeries.slices.getIndex(0).get("radius");
+                                        var x01 = 0;
+                                        var y01 = -subRadius;
+
+                                        var x11 = 0;
+                                        var y11 = subRadius;
+
+                                        var point00 = series.toGlobal({ x: x00, y: y00 });
+                                        var point10 = series.toGlobal({ x: x10, y: y10 });
+
+                                        var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                                        var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+                                        line0.set("points", [point00, point01]);
+                                        line1.set("points", [point10, point11]);
+
+                                    }
+                                    else {
+                                        //  console.log("INNER update lines")
+                                        var startAngle = selectedSlice.get("startAngle");
+                                        var arc = selectedSlice.get("arc");
+                                        arc = 176.4;
+                                        var radius = selectedSlice.get("radius");
+                                        radius = 170
+                                        
+                                        var x00 = radius * am5.math.cos(startAngle);
+                                        var y00 = radius * am5.math.sin(startAngle);
+
+                                        var x10 = radius * am5.math.cos(startAngle + arc);
+                                        var y10 = radius * am5.math.sin(startAngle + arc);
+
+                                        var subRadius = subSeries.slices.getIndex(0).get("radius");
+                                        var x01 = 0;
+                                        var y01 = -subRadius;
+
+                                        var x11 = 0;
+                                        var y11 = subRadius;
+
+                                        var point00 = series2.toGlobal({ x: x00, y: y00 });
+                                        var point10 = series2.toGlobal({ x: x10, y: y10 });
+
+                                        var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                                        var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+
+                                        line0.set("points", [point00, point01]);
+                                        line1.set("points", [point10, point11]);
+                                    }
+                                }
+
+                                // lines
+                                var line0 = container.children.push(
+                                    am5.Line.new(root, {
+                                        position: "absolute",
+                                        stroke: root.interfaceColors.get("text"),
+                                        strokeDasharray: [2, 2]
+                                    })
+                                );
+                                var line1 = container.children.push(
+                                    am5.Line.new(root, {
+                                        position: "absolute",
+                                        stroke: root.interfaceColors.get("text"),
+                                        strokeDasharray: [2, 2]
+                                    })
+                                );
+
+                                // Set data
+                                // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
+                                series.data.setAll(
+                                    newData
+                                );
+
+
+                                function selectSlice(slice) {
+
+                                    selectedSlice = slice;
+                                    console.log("Slice Select: ", slice)
+                                    var dataItem
+                                    var dataContext
+                                    if (!slice._dataItem) {
+                                        dataItem = slice._dataItems[0];
+                                        dataContext = dataItem.dataContext;
+                                        console.log("FIRST CONTEXT DATA: ", dataContext)
+                                        if (dataContext) {
+                                            var i = 0;
+                                            subSeries.data.each(function (dataObject) {
+                                                var dataObj = dataContext.subData[i];
+                                                if (dataObj) {
+                                                    subSeries.data.setIndex(i, dataObj);
+                                                    if (!subSeries.dataItems[i].get("visible")) {
+                                                        subSeries.dataItems[i].show();
+                                                    }
+                                                }
+                                                else {
+                                                    subSeries.dataItems[i].hide();
+                                                }
+
+                                                i++;
+                                            });
+                                        }
+
+                                    }
+                                    else {
+                                        dataItem = slice._dataItem
+                                        dataContext = dataItem.dataContext
+                                        console.log("SECOND CONTEXT DATA: ", dataContext)
+                                        if (dataContext) {
+                                            var i = 0;
+                                            subSeries.data.each(function (dataObject) {
+                                                var dataObj = dataContext.subData[i];
+                                                console.log("1")
+                                                if (dataObj) {
+                                                    console.log("2")
+                                                    subSeries.data.setIndex(i, dataObj);
+                                                    if (!subSeries.dataItems[i].get("visible")) {
+                                                        console.log("3")
+                                                        subSeries.dataItems[i].show();
+                                                    }
+                                                }
+                                                else {
+                                                    console.log("4")
+                                                    subSeries.dataItems[i].hide();
+                                                }
+
+                                                i++;
+                                            });
+                                        }
+
+                                        var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
+                                        var firstAngle = series.dataItems[0].get("slice").get("startAngle");
+
+                                        series.animate({
+                                            key: "startAngle",
+                                            to: firstAngle - middleAngle,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        series.animate({
+                                            key: "endAngle",
+                                            to: firstAngle - middleAngle + 360,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                    }
+
+                                    console.log("CONTEXT DATA: ", dataContext)
+
+
+                                }
+
+                                container.appear(1000, 10);
+
+                                series2.events.on("datavalidated", function () {
+                                    console.log("THIS SLICE INNER", series2.slices.getIndex(0))
+                                    selectSlice(series2.slices.getIndex(0));
+                                })
+
+                                series.events.on("datavalidated", function () {
+                                    console.log("THIS SLICE: ", series.slices.getIndex(0))
+                                    selectSlice(series.slices.getIndex(0));
+                                });
+
+                            }); // end am5.ready()
+
+                        }
+                    };
+                })();
+
+                //It Will Initialize the data on Page Load and would never be called again...
+                initializeData();
+
+
+                function PDOI() {
+                    console.log("PDOI")
+                    i = 0;
+                    refugee = 0;
+                    var pdoi = [
+                        {
+                            "category": "Afghan Refugee",
+                            value: 49,
+                            subData: [
+                                {
+                                    "category": "EDPs", value: 25500,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    "category": "LIPs", value: 4500,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "CBT", value: 9360,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    "category": "TVS", value: 12750,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    "category": "BDS", value: 4500,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                }
+                            ],
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Killa Saifullah",
+                                "edp": 2.25,
+                                "lip": 2.45,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Sherani",
+                                "edp": 2.52,
+                                "lip": 2.45,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Chagai",
+                                "edp": 2.65,
+                                "lip": 2.35,
+                                "cbt": 24.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Pishin",
+                                "edp": 2.56,
+                                "lip": 2.54,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Zhob",
+                                "edp": 2.53,
+                                "lip": 2.52,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Mastung",
+                                "edp": 2.51,
+                                "lip": 2.65,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Quetta",
+                                "edp": 2.25,
+                                "lip": 2.65,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xcc0066),
+                                stroke: am5.color(0xcc0066)
+                            }
+                        },
+                        {
+                            "category": "Female",
+                            value: 30,
+                            subData: [
+                                {
+                                    "category": "EDPs", value: 10,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    "category": "LIPs", value: 20,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "CBT", value: 5,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    "category": "TVS", value: 17,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "BDS", value: 6,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                }
+                            ],
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "edp": 2.75,
+                                "lip": 2.15,
+                                "cbt": 2.41,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Killa Saifullah",
+                                "edp": 2.45,
+                                "lip": 2.65,
+                                "cbt": 2.31,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Sherani",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Chagai",
+                                "edp": 2.56,
+                                "lip": 2.57,
+                                "cbt": 2.51,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Nushki",
+                                "edp": 2.25,
+                                "lip": 2.15,
+                                "cbt": 26.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Pishin",
+                                "edp": 2.85,
+                                "lip": 2.75,
+                                "cbt": 2.81,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Zhob",
+                                "edp": 2.65,
+                                "lip": 2.85,
+                                "cbt": 2.71,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Mastung",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Quetta",
+                                "edp": 2.5,
+                                "lip": 2.5,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xb300b3),
+                                stroke: am5.color(0xb300b3)
+                            }
+                        }, {
+                            "category": "Male",
+                            value: 21,
+                            subData: [
+                                {
+                                    "category": "EDPs", value: 10,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    "category": "LIPs", value: 20,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "CBT", value: 5,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    "category": "TVS", value: 17,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "BDS", value: 6,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                }
+                            ],
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Killa Saifullah",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Sherani",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }, {
+                                "category": "Chagai",
+                                "edp": 2.1,
+                                "lip": 2.2,
+                                "cbt": 2.3,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Nushki",
+                                "edp": 2.2,
+                                "lip": 2.3,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Pishin",
+                                "edp": 2.5,
+                                "lip": 2.2,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Zhob",
+                                "edp": 2.25,
+                                "lip": 2.53,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Mastung",
+                                "edp": 2.52,
+                                "lip": 2.25,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            },
+                            {
+                                "category": "Quetta",
+                                "edp": 2.45,
+                                "lip": 2.55,
+                                "cbt": 2.1,
+                                "tvs": 1,
+                                "bds": 4.2
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xe600e6),
+                                stroke: am5.color(0xe600e6)
+                            }
+                        }
+                    ]
+
+
+                    newData = pdoi
+
+                    root.dispose();
+                    rerender()
+                }
+
+                var refugee = 0;
+
+                function REFUGEE() {
+                    console.log("Refugee");
+                    i = 0;
+                    refugee = 1;
+                    var pdoi = [
+                        {
+                            "category": "Afghan Refugee",
+                            value: 49,
+                            subData: [
+                                {
+                                    "category": "Male", value: 25500,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "Female", value: 4500,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                }
+
+                            ],
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "male": 52,
+                                "female": 45
+
+                            }, {
+                                "category": "Killa Saifullah",
+                                "male": 25,
+                                "female": 45
+
+                            }, {
+                                "category": "Sherani",
+                                "male": 32,
+                                "female": 5
+
+                            }, {
+                                "category": "Chagai",
+                                "male": 15,
+                                "female": 35
+
+                            },
+                            {
+                                "category": "Nushki",
+                                "male": 72,
+                                "female": 13
+
+                            },
+                            {
+                                "category": "Pishin",
+                                "male": 32,
+                                "female": 24
+
+                            },
+                            {
+                                "category": "Zhob",
+                                "male": 53,
+                                "female": 55
+
+                            },
+                            {
+                                "category": "Mastung",
+                                "male": 21,
+                                "female": 65
+
+                            },
+                            {
+                                "category": "Quetta",
+                                "male": 5,
+                                "female": 5
+
+                            }],
+                           
+                            sliceSettings: {
+                                fill: am5.color(0xf2ad83),
+                                stroke: am5.color(0xf2ad83)
+                            }
+
+                        },
+                        {
+                            "category": "Female",
+                            value: 30,
+                            subData: [
+                                {
+                                    "category": "EDPs", value: 10,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    "category": "LIPs", value: 20,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "CBT", value: 5,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    "category": "TVS", value: 17,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "BDS", value: 6,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                }
+                            ],
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "female": 72
+
+                            }, {
+                                "category": "Killa Saifullah",
+                                "female": 35
+
+                            }, {
+                                "category": "Sherani",
+                                "female": 27
+
+                            }, {
+                                "category": "Chagai",
+                                "female": 63
+
+                            },
+                            {
+                                "category": "Nushki",
+                                "female": 91
+
+                            },
+                            {
+                                "category": "Pishin",
+                                "female": 89
+
+                            },
+                            {
+                                "category": "Zhob",
+                                "female": 22
+
+                            },
+                            {
+                                "category": "Mastung",
+                                "female": 65
+
+                            },
+                            {
+                                "category": "Quetta",
+                                "female": 25
+
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xc4ad83),
+                                stroke: am5.color(0xc4ad83)
+                            }
+
+                        }, {
+                            "category": "Male",
+                            value: 21,
+                            subData: [
+                                {
+                                    "category": "EDPs", value: 10,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    "category": "LIPs", value: 20,
+                                    sliceSettings: {
+                                        fill: am5.color(0xd6e681),
+                                        stroke: am5.color(0xd6e681)
+                                    }
+                                },
+                                {
+                                    "category": "CBT", value: 5,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                },
+                                {
+                                    "category": "TVS", value: 17,
+                                    sliceSettings: {
+                                        fill: am5.color(0xc4ad83),
+                                        stroke: am5.color(0xc4ad83)
+                                    }
+                                },
+                                {
+                                    "category": "BDS", value: 6,
+                                    sliceSettings: {
+                                        fill: am5.color(0xbabf95),
+                                        stroke: am5.color(0xbabf95)
+                                    }
+                                }
+                            ],
+                            breakdown: [{
+                                "category": "Killa Abdullah",
+                                "male": 2,
+                            }, {
+                                "category": "Killa Saifullah",
+                                "male": 25,
+                            }, {
+                                "category": "Sherani",
+                                "male": 22,
+                            }, {
+                                "category": "Chagai",
+                                "male": 25,
+                            },
+                            {
+                                "category": "Nushki",
+                                "male": 25,
+                            },
+                            {
+                                "category": "Pishin",
+                                "male": 26,
+                            },
+                            {
+                                "category": "Zhob",
+                                "male": 23,
+                            },
+                            {
+                                "category": "Mastung",
+                                "male": 21,
+                            },
+                            {
+                                "category": "Quetta",
+                                "male": 25,
+                            }],
+                            sliceSettings: {
+                                fill: am5.color(0xba1295),
+                                stroke: am5.color(0xba1295)
+                            }
+
+                        }
+                    ]
+
+                    newData = pdoi
+
+                    root.dispose();
+                    rerender()
+                }
+
+
+                function rerender() {
+
+                    am5.ready(function () {
+                        console.log("In Show...", newData);
+
+                        // Create root element
+                        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+                        root = am5.Root.new("chartdiv");
+
+                        // Set themes
+                        // https://www.amcharts.com/docs/v5/concepts/themes/
+                        root.setThemes([am5themes_Animated.new(root)]);
+
+                        var container = root.container.children.push(
+                            am5.Container.new(root, {
+                                width: am5.p100,
+                                height: am5.p100,
+                                //y: am5.percent(0),
+                                //x: am5.percent(0),
+                                layout: root.horizontalLayout
+                            })
+                        );
+
+
+                        // ==============================================
+                        // Column chart
+                        // ==============================================
+                        var xxAxis;
+                        var sseries;
+                        var achart;
+                        var w = 250;
+                        var h = 45;
+                        var set = 0;
+                        var set2 = 0;
+                        function columnStart(data, _context, isDisposed) {
+                            var context;
+                            if (_context) {
+                                context = _context.toLowerCase()
+                            }
+                            console.log("Dataaaa:", data)
+
+                            console.log(`
+                                                        Context: ${context}
+                                                    `)
+
+                            console.log("Disposed: ", isDisposed)
+
+                            var ishidden = subChart.isHidden()
+
+                            console.log("HIDDEN: ", ishidden)
+
+
+                            if (ishidden && context.includes("afghan")) {
+                                w = 250
+                                h = 45
+                                set = 0
+                            }
+                            if (w == 80 && context.includes("afghan")) {
+                                w = 250;
+                                h = 45;
+                                set = 0
+                            }
+
+                            //disposed = undefined, hidden = true, 80, 57
+
+                            //Refugee Section Bar size Setting
+                            if (!isDisposed && context.includes("male") && refugee == 1) {
+                                console.log(`
+                                                                        set ${set}
+                                                                        set2: ${set2}
+                                                                        w ${w}
+                                                                        h ${h}
+                                                                       `)
+
+                                if (w == 250 && set == 1) {
+                                    console.log("INIT")
+                                    w = 190
+                                    h = 45
+                                    set = 0
+                                }
+                                if (set2 == 1) {
+                                    set = 1
+                                }
+
+                            }
+
+                            if (!isDisposed && context.includes("total") && refugee == 1 && set == 1 && set2 == 1) {
+                                console.log(`
+                                                            set ${set}
+                                                            set2: ${set2}
+                                                            w ${w}
+                                                            h ${h}
+                                                        `)
+                                w = 200
+                                h = 45
+                            }
+                             if(!ishidden && context.includes("total") && !isDisposed && i == 0 && refugee == 1 && all == 1){
+                                console.log("INIT2")
+                                
+                             }
+
+                            console.log("Width: ", w)
+                            console.log("Height: ", h)
+                            // Create chart
+                            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                            achart = container.children.push(
+                                am5xy.XYChart.new(root, {
+                                    // panY: false,
+                                    //wheelY: "zoomX",
+                                    //wheelX: "zoomY",
+                                    //layout: root.verticalLayout
+                                    width: am5.percent(w),
+                                    height: am5.percent(h),
+                                    //panX: false,
+                                    //panY: false,
+                                    //centerX: am5.percent(10),
+                                    y: am5.percent(50),
+                                    x: am5.percent(15),
+                                    layout: am5.GridLayout.new(root, {
+                                        maxColumns: 2,
+                                        fixedWidthGrid: true
+                                    })
+                                    //layout: root.verticalLayout
+                                })
+                            );
+
+                            // Create X-Axis
+                            xxAxis = achart.xAxes.push(
+                                am5xy.CategoryAxis.new(root, {
+                                    maxDeviation: 0.2,
+                                    renderer: am5xy.AxisRendererX.new(root, {
+                                        minGridDistance: 10
+                                    }),
+                                    categoryField: "category"
+                                })
+                            );
+                            var xRenderer = xxAxis.get("renderer");
+                            xRenderer.labels.template.setAll({
+                                rotation: -30,
+                                fontSize: 10,
+                                centerY: am5.percent(50)
+                            });
+                            console.log("TOTAL DATA: ", data)
+                            xxAxis.data.setAll(data);
+
+                            // Craete Y-axis
+                            let yAxis = achart.yAxes.push(
+                                am5xy.ValueAxis.new(root, {
+                                    renderer: am5xy.AxisRendererY.new(root, {
+                                    })
+                                })
+                            );
+
+
+                            // Add legend
+                            var legend = achart.children.push(am5.Legend.new(root, {
+
+                                y: am5.percent(0),
+                                x: am5.percent(100),
+                                layout: root.verticalLayout,
+                                //layout: root.horizontalLayout,
+                                //y: am5.percent(0),
+                                //centerY: am5.percent(0),
+                                // height: am5.percent(100),
+                                verticalScrollbar: am5.Scrollbar.new(root, {
+                                    orientation: "vertical"
+                                })
+                            }));
+
+
+                            // Add series
+                            // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+                            function makeSeries(name, fieldName) {
+
+                                sseries = achart.series.push(am5xy.ColumnSeries.new(root, {
+                                    name: name,
+                                    stacked: true,
+                                    xAxis: xxAxis,
+                                    yAxis: yAxis,
+                                    valueYField: fieldName,
+                                    categoryXField: "category"
+                                }));
+
+                                sseries.columns.template.setAll({
+                                    tooltipText: "{name}, {categoryX}: {valueY}",
+                                    tooltipY: am5.percent(10)
+                                });
+                                sseries.data.setAll(data);
+
+                                // Make stuff animate on load
+                                // https://www.amcharts.com/docs/v5/concepts/animations/
+                                //series.appear();
+
+
+                                sseries.bullets.push(function () {
+                                    return am5.Bullet.new(root, {
+                                        sprite: am5.Label.new(root, {
+                                            //text: "{valueY}",
+                                            fill: root.interfaceColors.get("alternativeText"),
+                                            centerY: am5.p50,
+                                            centerX: am5.p50,
+                                            fontSize: 10,
+                                            populateText: true
+                                        })
+                                    });
+                                });
+
+                                legend.data.push(sseries);
+                                //legend.data.setAll(achart.series.values);
+                            }
+                            console.log(`
+                                                        this i: ${i}
+                                                        this refugee: ${refugee}
+                                                        this all: ${all}
+                                                    `)
+
+                            //if i=0 and refugee=1 its refugee
+                            /***
+                             * change series to male female
+                             * when context is male show male series and viseversa
+                             */
+                            if ((i == 0 && refugee == 1 && context) || (i == 1 && refugee == 1 && !context) || (i == 1 && refugee == 1 && context)) {
+                                if (context) {
+                                    if (context.toLowerCase().includes("afghan")) {//checkRefugee.toLowerCase().includes("male")
+                                        makeSeries("Male", "male");
+                                        makeSeries("Female", "female");
+
+                                        subChart.appear()
+                                        line0.appear()
+                                        line1.appear()
+                                    }
+                                }
+                            }
+
+                            //if i = 1 and refugee = 1, its local male/female
+                            if ((i == 1 && refugee == 1 && context.includes("male")) || (i == 0 && refugee == 1 && context.includes("male"))) {
+                                if (context.includes("female")) {
+                                    makeSeries("Female", "female")
+                                }
+                                else {
+                                    makeSeries("Male", "male")
+                                }
+                            }
+
+                            //if i=0 and refugee=0 its pdoi
+                            /***
+                             *
+                             */
+                            //on slice double click i becomes 1
+
+                            if (((i == 0 && refugee == 0) || (i == 1 && refugee == 0)) && !context.includes("total")) {
+                                console.log("In pdoi series")
+                                makeSeries("EDPs", "edp");
+                                makeSeries("LIPs", "lip");
+                                makeSeries("CBT", "cbt");
+                                makeSeries("TVS", "tvs");
+                                makeSeries("BDS", "bds");
+
+
+                            }
+                            i = 1;
+
+                            if (all == 1 && context.includes("total") && refugee == 0) {
+                                console.log("In Total series")
+                                makeSeries("EDPs", "edp");
+                                makeSeries("LIPs", "lip");
+                                makeSeries("CBT", "cbt");
+                                makeSeries("TVS", "tvs");
+                                makeSeries("BDS", "bds");
+                            }
+
+                            if (all == 1 && context.includes("total") && refugee == 1) {
+                                console.log("In Refugee Total series")
+                                makeSeries("Male", "male");
+                                makeSeries("Female", "female");                                
+                            }
+
+                            //function end
+
+                        }
+
+
+                        // ==============================================
+                        // END Column chart
+                        // ==============================================
+
+                        // Create main chart
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                        var chart = container.children.push(
+                            am5percent.PieChart.new(root, {
+                                tooltip: am5.Tooltip.new(root, {}),
+                                radius: am5.percent(140),
+                                // innerRadius: am5.percent(10)
+                                // panY: false,
+                                //wheelY: "zoomX",
+                                //wheelX: "zoomY",
+                                //layout: root.verticalLayout
+                                width: am5.percent(140),
+                                height: am5.percent(30),
+                                //panX: false,
+                                //panY: false,
+
+                                y: am5.percent(10),
+                                x: am5.percent(7),
+                                layout: am5.GridLayout.new(root, {
+                                    maxColumns: 2,
+                                    fixedWidthGrid: true
+                                })
+                                //layout: root.verticalLayout
+                            })
+                        );
+
+                        var series2 = chart.series.push(
+                            am5percent.PieSeries.new(root, {
+                                name: "Total",
+                                valueField: "beneficiaries",
+                                categoryField: "total"
+                            })
+                        );
+
+                        // Configuring slices
+                        series2.slices.template.setAll({
+                            templateField: "sliceSettings"
+                            //stroke: am5.color(0xffffff),
+                            //strokeWidth: 2
+                        })
+
+
+                        console.log("WHAT IS CONTEXT HERE: ", refugee)
+                        if(refugee == 1){
+                            series2.data.setAll([{
+                                total: "Total",
+                                beneficiaries: 60000,
+                                subData: [
+                                    {
+                                        "category": "Male", value: 250,
+                                        sliceSettings: {
+                                            fill: am5.color(0xff235f),
+                                            stroke: am5.color(0xff235f)
+                                        }
+                                    },
+                                    {
+                                        "category": "Female", value: 2500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbab767),
+                                            stroke: am5.color(0xbab767)
+                                        }
+                                    }
+                                ],
+                                breakdown: [{
+                                    "category": "Killa Abdullah",
+                                    "male": 52,
+                                    "female": 45
+
+                                }, {
+                                    "category": "Killa Saifullah",
+                                    "male": 25,
+                                    "female": 45
+
+                                }, {
+                                    "category": "Sherani",
+                                    "male": 32,
+                                    "female": 5
+
+                                }, {
+                                    "category": "Chagai",
+                                    "male": 15,
+                                    "female": 35
+
+                                },
+                                {
+                                    "category": "Nushki",
+                                    "male": 72,
+                                    "female": 13
+
+                                },
+                                {
+                                    "category": "Pishin",
+                                    "male": 32,
+                                    "female": 24
+
+                                },
+                                {
+                                    "category": "Zhob",
+                                    "male": 53,
+                                    "female": 55
+
+                                },
+                                {
+                                    "category": "Mastung",
+                                    "male": 21,
+                                    "female": 65
+
+                                },
+                                {
+                                    "category": "Quetta",
+                                    "male": 5,
+                                    "female": 5
+
+                                }],
+
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            }]);
+
+                        }
+                        else{
+                            series2.data.setAll([{
+                                total: "Total",
+                                beneficiaries: 60000,
+                                subData: [
+                                    {
+                                        "category": "EDPs", value: 250,
+                                        sliceSettings: {
+                                            fill: am5.color(0xff235f),
+                                            stroke: am5.color(0xff235f)
+                                        }
+                                    },
+                                    {
+                                        "category": "LIPs", value: 2500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xbab767),
+                                            stroke: am5.color(0xbab767)
+                                        }
+                                    },
+                                    {
+                                        "category": "CBT", value: 360,
+                                        sliceSettings: {
+                                            fill: am5.color(0xc4a563),
+                                            stroke: am5.color(0xc4a563)
+                                        }
+                                    },
+                                    {
+                                        "category": "TVS", value: 1750,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e681),
+                                            stroke: am5.color(0xd6e681)
+                                        }
+                                    },
+                                    {
+                                        "category": "BDS", value: 4500,
+                                        sliceSettings: {
+                                            fill: am5.color(0xd6e561),
+                                            stroke: am5.color(0xd6e561)
+                                        }
+                                    }
+                                ],
+
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            }]);
+
+                        }
+                       
+                        series2.bullets.push(function () {
+                            return am5.Bullet.new(root, {
+                                sprite: am5.Label.new(root, {
+                                    text: "Total: {beneficiaries}",
+                                    centerX: am5.percent(50),
+                                    centerY: am5.percent(130),
+                                    populateText: true,
+                                    fill: am5.color(0xffffff)
+                                })
+                            });
+                        });
+
+                        //series2.slices.template.setAll({
+                        //    templateField: "sliceSettings"
+                        //});
+
+
+                        series2.labels.template.setAll({
+                            // text: "{beneficiaries}",
+                            //fontSize: 10,
+                            textType: "circular",
+                            //inside: true,
+                            //centerX: am5.percent(90),
+                            radius: 10,
+                            fill: am5.color(0xffffff)
+                        })
+
+                        series2.slices.template.set("toggleKey", "none");
+
+                        series2.events.on("click", function (e) {
+                            console.log(`
+                                SubChartCreated: ${subChartCreated}
+                            `)
+
+                            //dispose it only one time
+                            if (subChartCreated) {
+                                if(subChart){
+                                    subChart.dispose()
+                                    subChartCreate2(150)
+                                    //chart.dispose()
+                                    //mainChartInitailize()
+                                    subChartCreated = 0
+                                }            
+                            }
+
+                            console.log("INNER SLICE: ", e.target)
+
+                            selectSlice(e.target);
+                            if (sseries) {
+                                sseries.columns.template.setAll({
+                                    // fill: e.target.get("fill"), //slice
+                                    //stroke: e.target.get("fill") //slice
+                                });
+                            }
+                            console.log("All: ", all)
+                            //Show complete Data
+                            //Incase of refugee get unique data of refugee first
+
+                            //all = 1
+                            if (all == 0 || all == 1) {
+                                all = 1;
+                                if (achart) {
+                                    achart.dispose()
+                                }
+                                if(refugee == 1){
+                                    columnStart(e.target._dataItems[0].dataContext.breakdown, "total")
+                                }
+                                else{
+                                    columnStart(completeData[0].breakdown, "total")
+                                }
+                            }
+                            else {
+                                all = 0
+                            }
+                            console.log("Data: ", completeData[0].breakdown)//e.target._dataItems[0].dataContext
+
+                        })
+
+                       
+                        var series = chart.series.push(
+                            am5percent.PieSeries.new(root, {
+                                valueField: "value",
+                                categoryField: "category",
+                                alignLabels: false,
+                            })
+                        );
+
+                        //series.labels.template.setAll({
+                        //    textType: "circular",
+                        //    radius: 4
+                        //});
+
+                        series.labels.template.setAll({
+                            text: "{category}[/]: [bold]{value}[/]",
+                            fontSize: 15,
+                            textType: "circular",
+                            textAlign: "center",
+                            oversizedBehavior: "wrap",
+                            inside: true,
+                            centerX: am5.percent(90),
+                            radius: 10,
+                            fill: am5.color(0xffffff)
+                        })
+
+                        series.ticks.template.set("visible", false);
+                        series.slices.template.set("toggleKey", "none");
+
+                        series.slices.template.setAll({
+                            templateField: "sliceSettings"
+                        });
+
+
+                        // add events
+                        series.slices.template.events.on("click", function (e) {
+
+                            console.log("SubChartCreated : ", subChartCreated)
+                            //dispose it only one time
+                            if (subChartCreated) {
+                                console.log("In side")
+                                subChart.dispose()
+                                subChartCreate2(150)
+                                //chart.dispose()
+                                //mainChartInitailize()
+                                subChartCreated = 0
+                            }
+                            
+                            console.log("Slice", e.target.get("fill"))
+                            var dataItem = e.target.dataItem;
+                            var dataContext = dataItem.dataContext;
+                            var context = JSON.stringify(dataContext["category"]);
+                            all = 0
+
+                            selectSlice(e.target);
+                            if (sseries) {
+                                sseries.columns.template.setAll({
+                                    fill: e.target.get("fill"), //slice
+                                    stroke: e.target.get("fill") //slice
+                                });
+
+                            }
+
+                            //refugee = 1, i = undefined, context= ar
+
+                            //first click on slice i = 0, second time i = 1, context
+                            console.log("IIIIII: ", i)
+                            console.log("SECOND CLICK: ", e.target.dataItem.dataContext.breakdown)
+                            console.log("CONTEXT: ", context)
+
+                            if (achart) {
+                                console.log("exist")
+                                achart.dispose()
+                                //send context
+                                set2 = 1
+                                columnStart(e.target.dataItem.dataContext.breakdown, context)
+                            }
+                            else {
+                                console.log("not exist")
+                                //send context
+
+                                columnStart(e.target.dataItem.dataContext.breakdown, context)
+                            }
+                            //if (i == 0) {
+                            //    console.log("Show the bar")
+                            //    columnStart(e.target.dataItem.dataContext.breakdown)
+                            //}
+
+                        });
+
+
+                        // Create sub chart
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
+                        
+                        var SubChart
+                        var subSeries
+                        function subChartCreate2(_subRadius){
+                            if (_subRadius) {
+                                subRadius = _subRadius
+                            }
+                        
+                        subChart = container.children.push(
+                            am5percent.PieChart.new(root, {
+                                radius: am5.percent(subRadius),
+                                tooltip: am5.Tooltip.new(root, {}),
+                                // panY: false,
+                                //wheelY: "zoomX",
+                                //wheelX: "zoomY",
+                                //layout: root.verticalLayout
+                                width: am5.percent(100),
+                                height: am5.percent(100),
+                                //panX: false,
+                                //panY: false,
+                                //centerX: am5.percent(10),
+                                y: am5.percent(-25),
+                                x: am5.percent(60),
+                                //layout: am5.GridLayout.new(root, {
+                                //    maxColumns: 2,
+                                //    fixedWidthGrid: true
+                                //})
+                                //layout: root.verticalLayout
+                            })
+                        );
+
+                        // Create sub series
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Series
+                        subSeries = subChart.series.push(
+                            am5percent.PieSeries.new(root, {
+                                valueField: "value",
+                                categoryField: "category",
+                                alignLabels: false
+                            })
+                        );
+
+                        subSeries.events.on("datavalidated", function (ev) {
+                            console.log("VALIDATING...", ev.target.chart.radius())
+                            var s = ev.target
+                            var c = s.chart
+                            var r = c.radius()
+                            c.root.dom.style.radius = 200;
+                            console.log("subRad: ", subRadius)
+                            subRadius = 200
+                            //var series = ev.target;
+                            //var chart = series.chart;
+                            //var xAxis = chart.xAxes.getIndex(0);
+
+                            //// Calculate how we need to adjust chart height
+                            //var chartHeight = series.data.length * cellSize + xAxis.height() + chart.get("paddingTop", 0) + chart.get("paddingBottom", 0);
+
+                            //// Set it on chart's container
+                            //chart.root.dom.style.height = chartHeight + "px";
+                        });
+
+                        subSeries.labels.template.setAll({
+                            text: "{category}[/]: [bold]{value}[/]",
+                            fontSize: 10,
+                            oversizedBehavior: "wrap",
+                            textAlign: "center",
+                            maxWidth: 90,
+                            textType: "circular",
+                            //inside: true,
+                            //centerX: am5.percent(-40),
+                            radius: 10,
+                            fill: am5.color(0x000000)
+                        })
+
+                        subSeries.slices.template.setAll({
+                            //templateField: "sliceSettings"
+                        });
+
+                        subSeries.data.setAll([
+                            {
+                                category: "A", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xd6e681),
+                                    stroke: am5.color(0xd6e681)
+                                }
+                            },
+                            {
+                                category: "B", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            },
+                            {
+                                category: "C", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xc4ad83),
+                                    stroke: am5.color(0xc4ad83)
+                                }
+                            },
+                            {
+                                category: "D", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xd6e681),
+                                    stroke: am5.color(0xd6e681)
+                                }
+                            },
+                            {
+                                category: "E", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xbabf95),
+                                    stroke: am5.color(0xbabf95)
+                                }
+                            },
+                            {
+                                category: "F", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xc4ad83),
+                                    stroke: am5.color(0xc4ad83)
+                                }
+                            },
+                            {
+                                category: "G", value: 0,
+                                sliceSettings: {
+                                    fill: am5.color(0xd6e681),
+                                    stroke: am5.color(0xd6e681)
+                                }
+                            }
+                        ]);
+
+                        subSeries.slices.template.set("toggleKey", "none");
+
+                        }
+
+                        var initializeSubData = (function () {
+
+                            var executed = false;
+                            console.log("initialize subchart")
+                            return function () {
+                                if (!executed) {
+                                    executed = true;
+                                    subChartCreated = 1
+                                    subChartCreate2(80)
+                                }
+                            }
+                        })();
+                        initializeSubData();
+
+                        var selectedSlice;
+
+
+                        series2.events.on("startAngle", function () {
+                            console.log("updateline2")
+                            //updateLines();
+                        })
+
+                        series.on("startAngle", function () {
+                            updateLines();
+                        });
+
+
+                        container.events.on("boundschanged", function () {
+                            root.events.on("frameended", function () {
+                                updateLines();
+                            })
+                        })
+
+                        function updateLines() {
+                            if (selectedSlice._dataItem && selectedSlice) {
+                                var startAngle = selectedSlice.get("startAngle");
+                                var arc = selectedSlice.get("arc");
+                                var radius = selectedSlice.get("radius");                         
+
+                                var x00 = radius * am5.math.cos(startAngle);
+                                var y00 = radius * am5.math.sin(startAngle);
+
+                                var x10 = radius * am5.math.cos(startAngle + arc);
+                                var y10 = radius * am5.math.sin(startAngle + arc);
+
+                                var subRadius = subSeries.slices.getIndex(0).get("radius");
+                                var x01 = 0;
+                                var y01 = -subRadius;
+
+                                var x11 = 0;
+                                var y11 = subRadius;
+
+                                var point00 = series.toGlobal({ x: x00, y: y00 });
+                                var point10 = series.toGlobal({ x: x10, y: y10 });
+
+                                var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                                var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+                                line0.set("points", [point00, point01]);
+                                line1.set("points", [point10, point11]);
+                            }
+                            else {
+                                //  console.log("INNER update lines")
+                                var startAngle = selectedSlice.get("startAngle");
+                                var arc = selectedSlice.get("arc");
+                                arc = 176.4;
+                                var radius = selectedSlice.get("radius");
+                                radius = 170
+                              
+                                var x00 = radius * am5.math.cos(startAngle);
+                                var y00 = radius * am5.math.sin(startAngle);
+
+                                var x10 = radius * am5.math.cos(startAngle + arc);
+                                var y10 = radius * am5.math.sin(startAngle + arc);
+
+                                var subRadius = subSeries.slices.getIndex(0).get("radius");
+                                var x01 = 0;
+                                var y01 = -subRadius;
+
+                                var x11 = 0;
+                                var y11 = subRadius;
+
+                                var point00 = series2.toGlobal({ x: x00, y: y00 });
+                                var point10 = series2.toGlobal({ x: x10, y: y10 });
+
+                                var point01 = subSeries.toGlobal({ x: x01, y: y01 });
+                                var point11 = subSeries.toGlobal({ x: x11, y: y11 });
+
+
+                                line0.set("points", [point00, point01]);
+                                line1.set("points", [point10, point11]);
+                            }
+
+                        }
+
+                        // lines
+                        var line0 = container.children.push(
+                            am5.Line.new(root, {
+                                position: "absolute",
+                                stroke: root.interfaceColors.get("text"),
+                                strokeDasharray: [2, 2]
+                            })
+                        );
+                        var line1 = container.children.push(
+                            am5.Line.new(root, {
+                                position: "absolute",
+                                stroke: root.interfaceColors.get("text"),
+                                strokeDasharray: [2, 2]
+                            })
+                        );
+
+                        // Set data
+                        // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/#Setting_data
+                        series.data.setAll(
+                            newData
+                        );
+
+
+                        function selectSlice(slice) {
+                            selectedSlice = slice;
+                            console.log("THIS SLICE: ", slice)
+                            var dataItem
+                            var dataContext
+                            var checkRefugee
+
+                            if(!slice._dataItem){
+                                dataItem = slice.dataItems[0];
+                                dataContext = dataItem.dataContext;
+                                checkRefugee = JSON.stringify(dataContext["category"]);
+                           
+                                                    
+                            if (dataContext) {
+                                var i = 0;
+
+                                subSeries.data.each(function (dataObject) {
+                                    var dataObj = dataContext.subData[i];
+                                    if (dataObj) {
+                                        subSeries.data.setIndex(i, dataObj);
+                                        if (!subSeries.dataItems[i].get("visible")) {
+                                            subSeries.dataItems[i].show();
+                                        }
+                                    }
+                                    else {
+                                        subSeries.dataItems[i].hide();
+                                    }
+
+                                    i++;
+                                });
+                            }
+                            }
+                            else{
+                                
+                                dataItem = slice._dataItem
+                                dataContext = dataItem.dataContext
+                                console.log("NOw SLICE: ", dataContext)
+                                checkRefugee = JSON.stringify(dataContext["category"]);
+                                console.log("SECOND CONTEXT DATA: ", dataContext)
+                                if (dataContext) {
+                                    var i = 0;
+                                    subSeries.data.each(function (dataObject) {
+                                        var dataObj = dataContext.subData[i];
+                                        console.log("1")
+                                        if (dataObj) {
+                                            console.log("2")
+                                            subSeries.data.setIndex(i, dataObj);
+                                            if (!subSeries.dataItems[i].get("visible")) {
+                                                console.log("3")
+                                                subSeries.dataItems[i].show();
+                                            }
+                                        }
+                                        else {
+                                            console.log("4")
+                                            subSeries.dataItems[i].hide();
+                                        }
+
+                                        i++;
+                                    });
+                                }
+                            
+
+                                var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
+                                var firstAngle = series.dataItems[0].get("slice").get("startAngle");
+
+                                console.log("REFUGEE: ", checkRefugee)
+                                console.log("R: ", refugee)
+                                if(checkRefugee){
+                                    if (!(refugee == 1 && (checkRefugee.toLowerCase().includes("male") || checkRefugee.toLowerCase().includes("female")))) {
+                                        console.log("OK")
+                                        refugee == 0;
+                                        series.animate({
+                                            key: "startAngle",
+                                            to: firstAngle - middleAngle,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        series.animate({
+                                            key: "endAngle",
+                                            to: firstAngle - middleAngle + 360,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                    }
+
+                                    else {
+                                        console.log("IN THE ELSE")
+                                        series.animate({
+                                            key: "startAngle",
+                                            to: firstAngle - middleAngle,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        series.animate({
+                                            key: "endAngle",
+                                            to: firstAngle - middleAngle + 360,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        /***
+                                            * hide subchart, lines
+                                            * dispose the barchart and call columnStart with data
+                                            * make series according to context(male, female)
+                                            */
+                                        console.log("NEW DATA: ", slice._dataItem.dataContext.breakdown)
+                                        console.log("SelectedSlice 3: ", selectedSlice)
+                                        subChart.hide()
+                                        line0.hide()
+                                        line1.hide()
+                                        if (!achart) {
+                                            if (!checkRefugee) {
+                                                columnStart(completeData[0].breakdown, "total")
+                                            }
+                                            else {
+                                                columnStart(slice._dataItem.dataContext.breakdown, checkRefugee)
+                                            }
+                                        }
+                                        else {
+                                            achart.dispose()
+                                            console.log("DISPOSED")
+                                            if (!checkRefugee) {
+                                                columnStart(completeData[0].breakdown, "total", 1)
+                                            }
+                                            else {
+                                                columnStart(slice._dataItem.dataContext.breakdown, checkRefugee, 1)
+                                            }
+                                        }
+                                        //selectedSlice = null
+                                    }
+
+                                }
+
+                            
+                            }
+                        }
+
+                        container.appear(1000, 10);
+
+                        series2.events.on("datavalidated", function () {
+                            console.log("THIS SLICE INNER", series2.slices.getIndex(0))
+                            selectSlice(series2.slices.getIndex(0));
+                        })
+
+                        series.events.on("datavalidated", function () {
+                            selectSlice(series.slices.getIndex(0));
+                        });
+
+                    }); // end am5.ready()
+                }
+               
+            </script>
+
+
+            <!-- HTML -->
+            <div id="chartdiv"></div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

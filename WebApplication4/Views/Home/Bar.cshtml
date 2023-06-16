@@ -1,4 +1,115 @@
-﻿<!-- Styles -->
+﻿ function selectSlice(slice) {
+                                   
+                                    selectedSlice = slice;
+                                    console.log("Slice Select: ", slice)
+                                    var dataItem
+                                    var dataContext
+                                    if (!slice._dataItem) {
+                                        dataItem = slice._dataItems[0];
+                                        dataContext = dataItem.dataContext;
+                                        console.log("FIRST CONTEXT DATA: ", dataContext)
+                                        if (dataContext) {
+                                            var i = 0;
+                                            subSeries.data.each(function (dataObject) {
+                                                var dataObj = dataContext.subData[i];
+                                                if (dataObj) {
+                                                    subSeries.data.setIndex(i, dataObj);
+                                                    if (!subSeries.dataItems[i].get("visible")) {
+                                                        subSeries.dataItems[i].show();
+                                                    }
+                                                }
+                                                else {
+                                                    subSeries.dataItems[i].hide();
+                                                }
+
+                                                i++;
+                                            });
+                                        }
+                                        
+                                    }
+                                    else{                                        
+                                        dataItem = slice._dataItem
+                                        dataContext = dataItem.dataContext
+                                        console.log("SECOND CONTEXT DATA: ", dataContext)
+                                        if (dataContext) {
+                                            var i = 0;
+                                            subSeries.data.each(function (dataObject) {
+                                                var dataObj = dataContext.subData[i];
+                                                console.log("1")
+                                                if (dataObj) {
+                                                    console.log("2")
+                                                    subSeries.data.setIndex(i, dataObj);
+                                                    if (!subSeries.dataItems[i].get("visible")) {
+                                                        console.log("3")
+                                                        subSeries.dataItems[i].show();
+                                                    }
+                                                }
+                                                else {
+                                                    console.log("4")
+                                                    subSeries.dataItems[i].hide();
+                                                }
+
+                                                i++;
+                                            });
+                                        }
+
+                                        var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
+                                        var firstAngle = series.dataItems[0].get("slice").get("startAngle");
+
+                                        series.animate({
+                                            key: "startAngle",
+                                            to: firstAngle - middleAngle,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                        series.animate({
+                                            key: "endAngle",
+                                            to: firstAngle - middleAngle + 360,
+                                            duration: 1000,
+                                            easing: am5.ease.out(am5.ease.cubic)
+                                        });
+                                    }
+
+                                    console.log("CONTEXT DATA: ", dataContext)
+
+                                   
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Styles -->
 <style>
     #chartdiv {
         width: 100%;
