@@ -20,6 +20,7 @@
 
 <!-- Chart code -->
 <script>
+    var allLegends
     am5.ready(function () {
 
         // Create root element
@@ -59,7 +60,8 @@
             "category": "Killa Abdullah",
             "male": 52,
             "female": 45,
-            "refugee": 13,
+            "refugee male": 13,
+            "refugee female": 13,
             "total": 110
 
 
@@ -67,21 +69,24 @@
             "category": "Killa Saifullah",
             "male": 25,
             "female": 45,
-            "refugee": 15,
+            "refugee male": 15,
+            "refugee female": 15,
             "total": 85
 
         }, {
             "category": "Sherani",
             "male": 32,
             "female": 5,
-            "refugee": 13,
+            "refugee male": 13,
+            "refugee female": 13,
             "total": 50
 
         }, {
             "category": "Chagai",
             "male": 15,
             "female": 35,
-            "refugee": 15,
+            "refugee male": 15,
+            "refugee female": 15,
             "total": 65
 
         },
@@ -89,7 +94,8 @@
             "category": "Nushki",
             "male": 72,
             "female": 13,
-            "refugee": 25,
+            "refugee male": 25,
+            "refugee female": 25,
             "total": 110
 
         },
@@ -97,7 +103,8 @@
             "category": "Pishin",
             "male": 32,
             "female": 24,
-            "refugee": 34,
+            "refugee male": 34,
+            "refugee female": 34,
             "total": 90
 
         },
@@ -105,7 +112,8 @@
             "category": "Zhob",
             "male": 53,
             "female": 55,
-            "refugee": 22,
+            "refugee male": 22,
+            "refugee female": 22,
             "total": 130
 
         },
@@ -113,7 +121,8 @@
             "category": "Mastung",
             "male": 21,
             "female": 65,
-            "refugee": 44,
+            "refugee male": 44,
+            "refugee female": 44,
             "total": 130
 
         },
@@ -121,7 +130,8 @@
             "category": "Quetta",
             "male": 5,
             "female": 5,
-            "refugee": 9,
+            "refugee male": 9,
+            "refugee female": 9,
             "total": 19
 
         }]
@@ -177,11 +187,31 @@
                 //legendRangeLabelText: "Series: {name}"
             }));
 
-            series.columns.template.setAll({
-                tooltipText: "{name}, {categoryX}:{valueY}",
-                width: am5.percent(90),
-                tooltipY: am5.percent(10)
-            });
+            if (name.includes("Host Community")){
+                console.log("Host Community")
+                series.columns.template.setAll({
+                    tooltipText: "Female, {categoryY}:{valueX}",
+                    width: am5.percent(90),
+                    tooltipY: am5.percent(10)
+                });
+            }
+            else if (name.includes("Refugees")) {
+                console.log("Refugees")
+                series.columns.template.setAll({
+                    tooltipText: "Refugee Female, {categoryY}:{valueX}",
+                    width: am5.percent(90),
+                    tooltipY: am5.percent(10)
+                });
+            }
+            else{
+                series.columns.template.setAll({
+                    tooltipText: "{name}, {categoryY}:{valueX}",
+                    width: am5.percent(90),
+                    tooltipY: am5.percent(10)
+                });
+            }
+
+           
             series.data.setAll(data);
 
             // Make stuff animate on load
@@ -201,16 +231,10 @@
                 });
             });
 
-            //series.columns.template.adapters.add("fill", function (fill, target) {
-            //    return chart.get("colors").getIndex(series.columns.indexOf(target));
-            //});
-
-            //series.columns.template.adapters.add("stroke", function (stroke, target) {
-            //    return chart.get("colors").getIndex(series.columns.indexOf(target));
-            //});
+        
 
             legend.itemContainers.template.events.on("click", function (item) {
-                                
+                
                 console.log("item", item.target.uid) 
                 // item: 100, 122, 144, 166
                 // series: 85, 107, 129, 151 
@@ -236,7 +260,7 @@
                     //series1.show()
                     
                     series3.hide()
-                    //series4.hide()                   
+                    series4.hide()                   
                 }
 
                 if (item.target.uid == 122){
@@ -255,10 +279,43 @@
                     //series1.show()
 
                     series3.hide()
-                    //series4.hide()
+                    series4.hide()
                 }
 
                 if (item.target.uid == 144) {
+                    if (series3.get("visible")) {
+                        console.log("Visible")
+                        //series1.hide();
+                        series4.hide();
+                    }
+                    else {
+                        console.log("Hidden", series3.isHidden())
+                        if (series3.isHidden()) {
+                            // series1.show();
+                        }
+                        series4.show()
+                    }
+                    //series1.show()
+
+                    series1.hide()
+                    series2.hide()
+                }
+
+                if (item.target.uid == 166) {
+                    if (series4.get("visible")) {
+                        console.log("Visible")
+                        //series1.hide();
+                        series3.hide();
+                    }
+                    else {
+                        console.log("Hidden", series4.isHidden())
+                        if (series4.isHidden()) {
+                            // series1.show();
+                        }
+                        series3.show()
+                    }
+                    //series1.show()
+
                     series1.hide()
                     series2.hide()
                 }
@@ -266,7 +323,14 @@
             });
 
             legend.data.push(series);
-            
+
+
+            allLegends = legend.allChildren()
+            console.log(" All LEGEND: ", allLegends)
+            allLegends[0].hide()
+            if (allLegends[2]){
+                allLegends[2].hide()
+            }
            
             if (hidden) {
                 series.hide();
@@ -277,8 +341,9 @@
         }
 
         makeSeries("Male", "male", true, true);
-        makeSeries("Female", "female", true, true)
-        makeSeries("Refugee", "refugee", true, true)
+        makeSeries("Host Community", "female", true, true)
+        makeSeries("Refugee Male", "refugee male", true, true)
+        makeSeries("Refugees", "refugee female", true, true)
         makeSeries("Total", "total", false, false)
 
         //makeSeries("Europe", "europe", false);
@@ -297,4 +362,55 @@
 </script>
 
 <!-- HTML -->
-<div id="chartdiv"></div>
+<div>
+    <div class="row">
+        <div class="col col-8">
+            <div id="chartdiv"></div>
+        </div>
+        <div class="col col-4">
+            <div class="table-responsive-sm">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="height:20px; width:20px; border-radius:5px; background-color:#a367dc"></div>
+                               
+                            </td>
+                            <td>Total</td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height:20px; width:20px; border-radius:5px; background-color:#67b7dc"></div>
+                            </td>
+                            <td>Host Male</td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height:20px; width:20px; border-radius:5px; background-color:#6794dc"></div>
+                            </td>
+                            <td>Host Female</td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height:20px; width:20px; border-radius:5px; background-color:#6771dc"></div>
+                            </td>
+                            <td>Refugee Male</td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height:20px; width:20px; border-radius:5px; background-color:#866fdd"></div>
+                            </td>
+                            <td>Refugee Female</td>
+
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
