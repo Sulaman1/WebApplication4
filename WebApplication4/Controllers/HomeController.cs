@@ -20,6 +20,16 @@ namespace WebApplication4.Controllers
             return View();
         }
 
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public IActionResult Combine()
+        {
+            return View();  
+        }
+
         //[Authorize(Roles ="Member")]
         public IActionResult Privacy()
         {

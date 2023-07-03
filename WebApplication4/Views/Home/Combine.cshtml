@@ -1,0 +1,300 @@
+﻿@*@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+<!-- Chart code -->
+<script>
+    am5.ready(function () {
+
+        // Create root element
+        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+        var root = am5.Root.new("chartdiv");
+
+
+        // Set themes
+        // https://www.amcharts.com/docs/v5/concepts/themes/
+        root.setThemes([
+            am5themes_Animated.new(root)
+        ]);
+
+      
+
+
+        // Create chart
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/
+        var chart = root.container.children.push(am5xy.XYChart.new(root, {
+            panX: false,
+            panY: false,
+            wheelX: "panX",
+            wheelY: "zoomX",
+            layout: root.verticalLayout
+            
+        }));
+        //chart.get("colors").set("colors", [
+        //    am5.color(0x095256),
+        //    am5.color(0x087f8c),
+        //    am5.color(0x5aaa95),
+        //    am5.color(0x86a873),
+        //    am5.color(0xbb9f06)
+        //]);
+     
+
+        var data = [{
+            "category": "Killa Abdullah",
+            "male": 52,
+            "female": 45,
+            "refugee": 13,
+            "total": 110
+
+
+        }, {
+            "category": "Killa Saifullah",
+            "male": 25,
+            "female": 45,
+            "refugee": 15,
+            "total": 85
+
+        }, {
+            "category": "Sherani",
+            "male": 32,
+            "female": 5,
+            "refugee": 13,
+            "total": 50
+
+        }, {
+            "category": "Chagai",
+            "male": 15,
+            "female": 35,
+            "refugee": 15,
+            "total": 65
+
+        },
+        {
+            "category": "Nushki",
+            "male": 72,
+            "female": 13,
+            "refugee": 25,
+            "total": 110
+
+        },
+        {
+            "category": "Pishin",
+            "male": 32,
+            "female": 24,
+            "refugee": 34,
+            "total": 90
+
+        },
+        {
+            "category": "Zhob",
+            "male": 53,
+            "female": 55,
+            "refugee": 22,
+            "total": 130
+
+        },
+        {
+            "category": "Mastung",
+            "male": 21,
+            "female": 65,
+            "refugee": 44,
+            "total": 130
+
+        },
+        {
+            "category": "Quetta",
+            "male": 5,
+            "female": 5,
+            "refugee": 9,
+            "total": 19
+
+        }]
+
+
+        // Create axes
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+        var yRenderer = am5xy.AxisRendererY.new(root, {
+            cellStartLocation: 0.1,
+            cellEndLocation: 0.9
+        });
+
+        var yAxis = chart.yAxes.push(am5xy.CategoryAxis.new(root, {
+            categoryField: "category",
+            renderer: yRenderer,
+            tooltip: am5.Tooltip.new(root, {})
+        }));
+
+        yRenderer.grid.template.setAll({
+            location: 1
+        })
+
+        yAxis.data.setAll(data);
+
+        var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+            min: 0,
+            renderer: am5xy.AxisRendererX.new(root, {
+                strokeOpacity: 0.1
+            })
+        }));
+
+        // Add legend
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+        var legend = chart.children.push(am5.Legend.new(root, {
+            centerX: am5.p50,
+            x: am5.p50
+        }));
+
+       
+
+        // Add series
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+        function makeSeries(name, fieldName, stacked, hidden) {
+            var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+                stacked: stacked,
+                name: name,
+                xAxis: xAxis,
+                yAxis: yAxis,
+                valueXField: fieldName,
+                categoryYField: "category",
+                clickTarget: "none"
+                //legendLabelText: "Series: {name}",
+                //legendRangeLabelText: "Series: {name}"
+            }));
+
+            series.columns.template.setAll({
+                tooltipText: "{name}, {categoryX}:{valueY}",
+                width: am5.percent(90),
+                tooltipY: am5.percent(10)
+            });
+            series.data.setAll(data);
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+           // series.appear();            
+
+            series.bullets.push(function () {
+                return am5.Bullet.new(root, {
+                    locationY: 0.5,
+                    sprite: am5.Label.new(root, {
+                        text: "{valueX}",
+                        fill: root.interfaceColors.get("alternativeText"),
+                        centerY: am5.percent(50),
+                        centerX: am5.percent(50),
+                        populateText: true
+                    })
+                });
+            });
+
+            //series.columns.template.adapters.add("fill", function (fill, target) {
+            //    return chart.get("colors").getIndex(series.columns.indexOf(target));
+            //});
+
+            //series.columns.template.adapters.add("stroke", function (stroke, target) {
+            //    return chart.get("colors").getIndex(series.columns.indexOf(target));
+            //});
+
+            legend.itemContainers.template.events.on("click", function (item) {
+                                
+                console.log("item", item.target.uid) 
+                // item: 100, 122, 144, 166
+                // series: 85, 107, 129, 151 
+                var series1 = chart.series.getIndex(0);
+                var series2 = chart.series.getIndex(1);
+                var series3 = chart.series.getIndex(2);
+                var series4 = chart.series.getIndex(3);
+                              
+                
+                if (item.target.uid == 100) {
+                    if (series1.get("visible")) {
+                        console.log("Visible")
+                        //series1.hide();
+                        series2.hide();
+                    }
+                    else {
+                        console.log("Hidden", series1.isHidden())
+                        if (series1.isHidden()){
+                           // series1.show();
+                        }
+                        series2.show()
+                    }
+                    //series1.show()
+                    
+                    series3.hide()
+                    //series4.hide()                   
+                }
+
+                if (item.target.uid == 122){
+                    if (series2.get("visible")) {
+                        console.log("Visible")
+                        //series1.hide();
+                        series1.hide();
+                    }
+                    else {
+                        console.log("Hidden", series2.isHidden())
+                        if (series2.isHidden()) {
+                            // series1.show();
+                        }
+                        series1.show()
+                    }
+                    //series1.show()
+
+                    series3.hide()
+                    //series4.hide()
+                }
+
+                if (item.target.uid == 144) {
+                    series1.hide()
+                    series2.hide()
+                }
+                
+            });
+
+            legend.data.push(series);
+            
+           
+            if (hidden) {
+                series.hide();
+            }
+            else {
+                series.appear();
+            }
+        }
+
+        makeSeries("Male", "male", true, true);
+        makeSeries("Female", "female", true, true)
+        makeSeries("Refugee", "refugee", true, true)
+        makeSeries("Total", "total", false, false)
+
+        //makeSeries("Europe", "europe", false);
+        //makeSeries("North America", "namerica", true);
+        //makeSeries("Asia", "asia", false);
+        //makeSeries("Latin America", "lamerica", true);
+        //makeSeries("Middle East", "meast", true);
+        //makeSeries("Africa", "africa", true);
+
+
+        // Make stuff animate on load
+        // https://www.amcharts.com/docs/v5/concepts/animations/
+        chart.appear(1000, 100);
+
+    }); // end am5.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>
