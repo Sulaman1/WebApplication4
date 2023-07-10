@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebApplication4.Models;
 
 namespace WebApplication4.Data
 {
@@ -9,5 +10,9 @@ namespace WebApplication4.Data
             : base(options)
         {
         }
+        public DbSet<LIPAssetTransfer> LIPAssetTransfer { get; set; }
+        public DbSet<ErrorViewModel> ErrorViewModels { get; set; }
+
+        
     }
 }

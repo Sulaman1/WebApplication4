@@ -1,117 +1,6 @@
-﻿ function selectSlice(slice) {
-                                   
-                                    selectedSlice = slice;
-                                    console.log("Slice Select: ", slice)
-                                    var dataItem
-                                    var dataContext
-                                    if (!slice._dataItem) {
-                                        dataItem = slice._dataItems[0];
-                                        dataContext = dataItem.dataContext;
-                                        console.log("FIRST CONTEXT DATA: ", dataContext)
-                                        if (dataContext) {
-                                            var i = 0;
-                                            subSeries.data.each(function (dataObject) {
-                                                var dataObj = dataContext.subData[i];
-                                                if (dataObj) {
-                                                    subSeries.data.setIndex(i, dataObj);
-                                                    if (!subSeries.dataItems[i].get("visible")) {
-                                                        subSeries.dataItems[i].show();
-                                                    }
-                                                }
-                                                else {
-                                                    subSeries.dataItems[i].hide();
-                                                }
-
-                                                i++;
-                                            });
-                                        }
-                                        
-                                    }
-                                    else{                                        
-                                        dataItem = slice._dataItem
-                                        dataContext = dataItem.dataContext
-                                        console.log("SECOND CONTEXT DATA: ", dataContext)
-                                        if (dataContext) {
-                                            var i = 0;
-                                            subSeries.data.each(function (dataObject) {
-                                                var dataObj = dataContext.subData[i];
-                                                console.log("1")
-                                                if (dataObj) {
-                                                    console.log("2")
-                                                    subSeries.data.setIndex(i, dataObj);
-                                                    if (!subSeries.dataItems[i].get("visible")) {
-                                                        console.log("3")
-                                                        subSeries.dataItems[i].show();
-                                                    }
-                                                }
-                                                else {
-                                                    console.log("4")
-                                                    subSeries.dataItems[i].hide();
-                                                }
-
-                                                i++;
-                                            });
-                                        }
-
-                                        var middleAngle = slice.get("startAngle") + slice.get("arc") / 2;
-                                        var firstAngle = series.dataItems[0].get("slice").get("startAngle");
-
-                                        series.animate({
-                                            key: "startAngle",
-                                            to: firstAngle - middleAngle,
-                                            duration: 1000,
-                                            easing: am5.ease.out(am5.ease.cubic)
-                                        });
-                                        series.animate({
-                                            key: "endAngle",
-                                            to: firstAngle - middleAngle + 360,
-                                            duration: 1000,
-                                            easing: am5.ease.out(am5.ease.cubic)
-                                        });
-                                    }
-
-                                    console.log("CONTEXT DATA: ", dataContext)
-
-                                   
-                                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Styles -->
+﻿<!-- Styles -->
 <style>
-    #chartdiv {
+    #solidguage {
         width: 100%;
         height: 500px;
     }
@@ -120,6 +9,7 @@
 <!-- Resources -->
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
 <!-- Chart code -->
@@ -128,8 +18,7 @@
 
         // Create root element
         // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("chartdiv");
-
+        var root = am5.Root.new("solidguage");
 
         // Set themes
         // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -137,132 +26,152 @@
             am5themes_Animated.new(root)
         ]);
 
-
         // Create chart
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/
-        var chart = root.container.children.push(am5xy.XYChart.new(root, {
+        // https://www.amcharts.com/docs/v5/charts/radar-chart/
+        var chart = root.container.children.push(am5radar.RadarChart.new(root, {
             panX: false,
             panY: false,
             wheelX: "panX",
             wheelY: "zoomX",
-            layout: root.verticalLayout
+            innerRadius: am5.percent(20),
+            startAngle: -90,
+            endAngle: 180
         }));
 
-        // Add scrollbar
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-        chart.set("scrollbarX", am5.Scrollbar.new(root, {
-            orientation: "horizontal"
-        }));
 
+        // Data
         var data = [{
-            "year": "2021",
-            "europe": 2.5,
-            "namerica": 2.5,
-            "asia": 2.1,
-            "lamerica": 1,
-            "meast": 0.8,
-            "africa": 0.4
+            category: "Research",
+            value: 80,
+            full: 100,
+            columnSettings: {
+                fill: chart.get("colors").getIndex(0)
+            }
         }, {
-            "year": "2022",
-            "europe": 2.6,
-            "namerica": 2.7,
-            "asia": 2.2,
-            "lamerica": 0.5,
-            "meast": 0.4,
-            "africa": 0.3
+            category: "Marketing",
+            value: 35,
+            full: 100,
+            columnSettings: {
+                fill: chart.get("colors").getIndex(1)
+            }
         }, {
-            "year": "2023",
-            "europe": 2.8,
-            "namerica": 2.9,
-            "asia": 2.4,
-            "lamerica": 0.3,
-            "meast": 0.9,
-            "africa": 0.5
-        }]
+            category: "Distribution",
+            value: 92,
+            full: 100,
+            columnSettings: {
+                fill: chart.get("colors").getIndex(2)
+            }
+        }, {
+            category: "Human Resources",
+            value: 68,
+            full: 100,
+            columnSettings: {
+                fill: chart.get("colors").getIndex(3)
+            }
+        }];
 
+        // Add cursor
+        // https://www.amcharts.com/docs/v5/charts/radar-chart/#Cursor
+        var cursor = chart.set("cursor", am5radar.RadarCursor.new(root, {
+            behavior: "zoomX"
+        }));
 
-        // Create axes
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-        var xRenderer = am5xy.AxisRendererX.new(root, {});
-        var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
-            categoryField: "year",
+        cursor.lineY.set("visible", false);
+
+        // Create axes and their renderers
+        // https://www.amcharts.com/docs/v5/charts/radar-chart/#Adding_axes
+        var xRenderer = am5radar.AxisRendererCircular.new(root, {
+            //minGridDistance: 50
+        });
+
+        xRenderer.labels.template.setAll({
+            radius: 10
+        });
+
+        xRenderer.grid.template.setAll({
+            forceHidden: true
+        });
+
+        var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
             renderer: xRenderer,
+            min: 0,
+            max: 100,
+            strictMinMax: true,
+            numberFormat: "#'%'",
             tooltip: am5.Tooltip.new(root, {})
         }));
 
-        xRenderer.grid.template.setAll({
-            location: 1
-        })
 
-        xAxis.data.setAll(data);
+        var yRenderer = am5radar.AxisRendererRadial.new(root, {
+            minGridDistance: 20
+        });
 
-        var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-            min: 0,
-            renderer: am5xy.AxisRendererY.new(root, {
-                strokeOpacity: 0.1
-            })
+        yRenderer.labels.template.setAll({
+            centerX: am5.p100,
+            fontWeight: "500",
+            fontSize: 18,
+            templateField: "columnSettings"
+        });
+
+        yRenderer.grid.template.setAll({
+            forceHidden: true
+        });
+
+        var yAxis = chart.yAxes.push(am5xy.CategoryAxis.new(root, {
+            categoryField: "category",
+            renderer: yRenderer
         }));
 
+        yAxis.data.setAll(data);
 
-        // Add legend
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-        var legend = chart.children.push(am5.Legend.new(root, {
-            centerX: am5.p50,
-            x: am5.p50
+
+        // Create series
+        // https://www.amcharts.com/docs/v5/charts/radar-chart/#Adding_series
+        var series1 = chart.series.push(am5radar.RadarColumnSeries.new(root, {
+            xAxis: xAxis,
+            yAxis: yAxis,
+            clustered: false,
+            valueXField: "full",
+            categoryYField: "category",
+            fill: root.interfaceColors.get("alternativeBackground")
         }));
 
+        series1.columns.template.setAll({
+            width: am5.p100,
+            fillOpacity: 0.08,
+            strokeOpacity: 0,
+            cornerRadius: 20
+        });
 
-        // Add series
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-        function makeSeries(name, fieldName) {
-            var series = chart.series.push(am5xy.ColumnSeries.new(root, {
-                name: name,
-                stacked: true,
-                xAxis: xAxis,
-                yAxis: yAxis,
-                valueYField: fieldName,
-                categoryXField: "year"
-            }));
-
-            series.columns.template.setAll({
-                tooltipText: "{name}, {categoryX}: {valueY}",
-                tooltipY: am5.percent(10)
-            });
-            series.data.setAll(data);
-
-            // Make stuff animate on load
-            // https://www.amcharts.com/docs/v5/concepts/animations/
-            series.appear();
-
-            series.bullets.push(function () {
-                return am5.Bullet.new(root, {
-                    sprite: am5.Label.new(root, {
-                        text: "{valueY}",
-                        fill: root.interfaceColors.get("alternativeText"),
-                        centerY: am5.p50,
-                        centerX: am5.p50,
-                        populateText: true
-                    })
-                });
-            });
-
-            legend.data.push(series);
-        }
-
-        makeSeries("Europe", "europe");
-        makeSeries("North America", "namerica");
-        makeSeries("Asia", "asia");
-        makeSeries("Latin America", "lamerica");
-        makeSeries("Middle East", "meast");
-        makeSeries("Africa", "africa");
+        series1.data.setAll(data);
 
 
-        // Make stuff animate on load
-        // https://www.amcharts.com/docs/v5/concepts/animations/
+        var series2 = chart.series.push(am5radar.RadarColumnSeries.new(root, {
+            xAxis: xAxis,
+            yAxis: yAxis,
+            clustered: false,
+            valueXField: "value",
+            categoryYField: "category"
+        }));
+
+        series2.columns.template.setAll({
+            width: am5.p100,
+            strokeOpacity: 0,
+            tooltipText: "{category}: {valueX}%",
+            cornerRadius: 20,
+            templateField: "columnSettings"
+        });
+
+        series2.data.setAll(data);
+
+        // Animate chart and series in
+        // https://www.amcharts.com/docs/v5/concepts/animations/#Initial_animation
+        series1.appear(1000);
+        series2.appear(1000);
         chart.appear(1000, 100);
 
     }); // end am5.ready()
 </script>
 
 <!-- HTML -->
-<div id="chartdiv"></div>
+<div id="solidguage"></div>
