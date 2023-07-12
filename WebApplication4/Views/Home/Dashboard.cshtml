@@ -239,14 +239,60 @@
 
 
     chart1.events.on("click", (event) => {
-    var activeRoot = "";
-    var rootArray = [];
+                var activeRoot = "";
+                var rootArray = [];
    
 
 
                 console.log("Clicked", event.target.series._values.at(0))
 
                 document.getElementById("title").innerHTML = "Livelihood Investment Plan"
+
+                var x = document.getElementById("liptable");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                }
+
+                var y = document.getElementById("bsftable");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "none") {
+                    a.style.display = "block";
+                }
+
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "block") {
+                    b.style.display = "none";
+                }
+
+                var xx = document.getElementById("chartdiv");
+                if (xx.style.display === "none") {
+                    xx.style.display = "block";
+                }
+
+                var yy = document.getElementById("chartdiv2");
+                if (yy.style.display === "block") {
+                    yy.style.display = "none";
+                }
+
+                var z1 = document.getElementById("chartdivbsf1");
+                if (z1.style.display === "block") {
+                    z1.style.display = "none";
+                }
+                var z2 = document.getElementById("chartdivbsf2");
+                if (z2.style.display === "block") {
+                    z2.style.display = "none";
+                }
+
+                if (root6) {
+                    root6.dispose()
+                }
+                if (root11) {
+                    root11.dispose()
+                }
 
                 var s = event.target.series._values.at(2);
                 s.slices.template.setAll({
@@ -405,7 +451,7 @@
 
                     }]
 
-                root6.dispose();
+                //root6.dispose();
                 rerender(data) 
             });
 
@@ -635,13 +681,176 @@
                     layout: root2.verticalLayout
                 })
             );
-           
+
+            var databsf = [{
+                "category": "Killa Abdullah",
+                "government": 2,
+                "private": 18                
+
+            }, {
+                "category": "Killa Saifullah",
+                "government": 25,
+                "private": 45                
+            }, {
+                "category": "Sherani",
+                "government": 32,
+                "private": 5                
+            }, {
+                "category": "Chagai",
+                "government": 15,
+                "private": 35                
+            },
+            {
+                "category": "Nushki",
+                "government": 72,
+                "private": 13                
+            },
+            {
+                "category": "Pishin",
+                "government": 32,
+                "private": 24                
+            },
+            {
+                "category": "Zhob",
+                "government": 53,
+                "private": 55                
+            },
+            {
+                "category": "Mastung",
+                "government": 21,
+                "private": 65                
+            },
+            {
+                "category": "Quetta",
+                "government": 5,
+                "private": 5                
+            }]
+            var databsfbar2 = [{
+                "category": "Killa Abdullah",
+                "newls": 2,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+
+            }, {
+                "category": "Killa Saifullah",
+                "newls": 25,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            }, {
+                "category": "Sherani",
+                "newls": 32,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            }, {
+                "category": "Chagai",
+                "newls": 15,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            },
+            {
+                "category": "Nushki",
+                "newls": 72,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            },
+            {
+                "category": "Pishin",
+                "newls": 32,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            },
+            {
+                "category": "Zhob",
+                "newls": 53,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            },
+            {
+                "category": "Mastung",
+                "newls": 21,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            },
+            {
+                "category": "Quetta",
+                "newls": 5,
+                "rehabls": 12,
+                "bothls": 35,
+                "newf": 23,
+                "rehabf": 13,
+                "bothf": 32
+            }]
+
 
             chart2.events.on("click", (event) => {
                 var activeRoot = "";
                 var rootArray = [];
 
-                    document.getElementById("title").innerHTML = "Business Support Facility"
+                document.getElementById("title").innerHTML = "Business Support Facility"
+
+                var xx = document.getElementById("chartdiv");
+                if (xx.style.display === "block") {
+                    xx.style.display = "none";
+                }
+
+                var yy = document.getElementById("chartdiv2");
+                if (yy.style.display === "none") {
+                    yy.style.display = "block";
+                }
+
+
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "block") {
+                    a.style.display = "none";
+                }
+
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "none") {
+                    b.style.display = "block";
+                }
+
+                var x = document.getElementById("liptable");
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                }
+
+                var y = document.getElementById("bsftable");
+                if (y.style.display === "none") {
+                    y.style.display = "block";
+                }
+
+                var z1 = document.getElementById("chartdivbsf1");
+                if (z1.style.display === "none") {
+                    z1.style.display = "block";
+                }
+                var z2 = document.getElementById("chartdivbsf2");
+                if (z2.style.display === "none") {
+                    z2.style.display = "block";
+                }
 
                 console.log("Clicked", event.target._root.dom.id)
                 
@@ -717,87 +926,74 @@
                 //if(count2 == 0){
                  
                 var data = [{
-                        "category": "Killa Abdullah",
-                        "male": 22,
-                        "female": 45,
-                        "refugeemale": 13,
-                        "refugeefemale": 13,
-                        "total": 110
-
-
-                    }, {
                         "category": "Killa Saifullah",
-                        "male": 25,
-                        "female": 45,
-                        "refugeemale": 15,
-                        "refugeefemale": 15,
-                        "total": 85
+                        "livestock": 0,
+                        "forest": 1
 
                     }, {
-                        "category": "Sherani",
-                        "male": 32,
-                        "female": 5,
-                        "refugeemale": 13,
-                        "refugeefemale": 13,
-                        "total": 50
-
-                    }, {
-                        "category": "Chagai",
-                        "male": 15,
-                        "female": 35,
-                        "refugeemale": 15,
-                        "refugeefemale": 15,
-                        "total": 65
-
-                    },
-                    {
                         "category": "Nushki",
-                        "male": 72,
-                        "female": 13,
-                        "refugeemale": 25,
-                        "refugeefemale": 25,
-                        "total": 110
-
+                        "livestock": 3,
+                        "forest": 1
                     },
                     {
                         "category": "Pishin",
-                        "male": 32,
-                        "female": 24,
-                        "refugeemale": 34,
-                        "refugeefemale": 34,
-                        "total": 90
-
+                        "livestock": 3,
+                        "forest": 0
                     },
                     {
                         "category": "Zhob",
-                        "male": 53,
-                        "female": 55,
-                        "refugeemale": 22,
-                        "refugeefemale": 22,
-                        "total": 130
-
+                        "livestock": 2,
+                        "forest": 1
                     },
                     {
                         "category": "Mastung",
-                        "male": 21,
-                        "female": 65,
-                        "refugeemale": 44,
-                        "refugeefemale": 44,
-                        "total": 130
-
-                    },
-                    {
-                        "category": "Quetta",
-                        "male": 5,
-                        "female": 5,
-                        "refugeemale": 9,
-                        "refugeefemale": 9,
-                        "total": 19
-
+                        "livestock": 2,
+                        "forest": 0
                     }]
+                var databsf2 =  [{
+                    "sector": "Forest",
+                    "male": 0,
+                    "female": 1
 
-                root6.dispose();
-                rerender(data) //root6 activated
+                }, {
+                    "sector": "Mines",
+                    "male": 3,
+                    "female": 1
+                },
+                {
+                    "sector": "Industry",
+                    "male": 3,
+                    "female": 0
+                },
+                {
+                    "sector": "Tourism",
+                    "male": 2,
+                    "forest": 1
+                },
+                {
+                    "sector": "Agriculture",
+                    "male": 2,
+                    "forest": 0
+                }, {
+                    "sector": "Livestock",
+                    "male": 2,
+                    "female": 0
+                }]
+                if(root6){
+                    root6.dispose()
+                }
+                if(root12){
+                    root12.dispose()
+                }
+                if(root13){
+                    root13.dispose()
+                }
+                
+                renderBSF(databsf)
+                renderbsf1(data)
+                renderbsf2(databsf2)
+                //root6.dispose();
+                //rerender(data) //root6 activated
 
             });
 
@@ -888,34 +1084,7 @@
 
             });
 
-            //series0.bullets.push(function () {
-            //    return am5.Bullet.new(root2, {
-            //        sprite: am5.Label.new(root2, {
-            //            //text: "LIPs",
-            //            centerX: am5.percent(50),
-            //            centerY: am5.percent(130),
-            //            populateText: true,
-            //            //fill: am5.color(0xffffff)
-            //        })
-            //    });
-            //});
-
-
-
-            //series0.labels.template.setAll({
-            //text: "BSF {value}%",
-            //fontSize: 20,
-            //textType: "circular",
-            //textAlign: "center",
-            ////oversizedBehavior: "wrap",
-            //inside: false,
-            ////centerX: am5.percent(-90),
-            //centerY: am5.percent(250),
-            ////x: am5.percent(90),
-            //radius: -150,
-            ////fill: am5.color(0xffffff)
-            //});
-
+         
 
             // Set data
             // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart2/#Setting_data
@@ -980,8 +1149,6 @@
             series1.ticks.template.setAll({
                 forceHidden: true
             });
-
-
 
             series1.animate({
                 key: "startAngle",
@@ -1071,7 +1238,54 @@
                 var activeRoot = "";
                 var rootArray = [];
 
-                    document.getElementById("title").innerHTML = "Community Based Trainnings"
+                document.getElementById("title").innerHTML = "Community Based Trainnings"
+
+                var x = document.getElementById("liptable");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                }
+
+                var y = document.getElementById("bsftable");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "none") {
+                    a.style.display = "block";
+                }
+
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "block") {
+                    b.style.display = "none";
+                }
+
+
+                var xx = document.getElementById("chartdiv");
+                if (xx.style.display === "none") {
+                    xx.style.display = "block";
+                }
+
+                var yy = document.getElementById("chartdiv2");
+                if (yy.style.display === "block") {
+                    yy.style.display = "none";
+                }
+
+                var z1 = document.getElementById("chartdivbsf1");
+                if (z1.style.display === "block") {
+                    z1.style.display = "none";
+                }
+                var z2 = document.getElementById("chartdivbsf2");
+                if (z2.style.display === "block") {
+                    z2.style.display = "none";
+                }
+
+                if (root6) {
+                    root6.dispose()
+                }
+                if (root11) {
+                    root11.dispose()
+                }
                 
 
                 console.log("Clicked", event.target._root.dom.id)
@@ -1230,8 +1444,8 @@
 
                     }]
 
-                root6.dispose();
-                rerender(data) //root6 activated
+                //root6.dispose();
+                rerender(data, 0, "cbt") //root6 activated
                
             });
 
@@ -1501,7 +1715,55 @@
 
   
 
-                    document.getElementById("title").innerHTML = "Enterprise Business Plan"
+                document.getElementById("title").innerHTML = "Enterprise Business Plan"
+
+                var x = document.getElementById("liptable");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                }
+
+                var y = document.getElementById("bsftable");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "none") {
+                    a.style.display = "block";
+                }
+
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "block") {
+                    b.style.display = "none";
+                }
+
+
+
+                var xx = document.getElementById("chartdiv");
+                if (xx.style.display === "none") {
+                    xx.style.display = "block";
+                }
+
+                var yy = document.getElementById("chartdiv2");
+                if (yy.style.display === "block") {
+                    yy.style.display = "none";
+                }
+
+                var z1 = document.getElementById("chartdivbsf1");
+                if (z1.style.display === "block") {
+                    z1.style.display = "none";
+                }
+                var z2 = document.getElementById("chartdivbsf2");
+                if (z2.style.display === "block") {
+                    z2.style.display = "none";
+                }
+
+                if (root6) {
+                    root6.dispose()
+                }
+                if (root11) {
+                    root11.dispose()
+                }
               
                 
 
@@ -1664,7 +1926,7 @@
 
                     }]
 
-                root6.dispose();
+                //root6.dispose();
                 rerender(data) //root6 activated
 
                 //    count3 = 1
@@ -2004,7 +2266,55 @@
                 
 
 
-                    document.getElementById("title").innerHTML = "Technical And Vocational Trainings"
+                document.getElementById("title").innerHTML = "Technical And Vocational Trainings"
+
+                var x = document.getElementById("liptable");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                }
+
+                var y = document.getElementById("bsftable");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "none") {
+                    a.style.display = "block";
+                }
+
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "block") {
+                    b.style.display = "none";
+                }
+
+
+
+                var xx = document.getElementById("chartdiv");
+                if (xx.style.display === "none") {
+                    xx.style.display = "block";
+                }
+
+                var yy = document.getElementById("chartdiv2");
+                if (yy.style.display === "block") {
+                    yy.style.display = "none";
+                }
+
+                var z1 = document.getElementById("chartdivbsf1");
+                if (z1.style.display === "block") {
+                    z1.style.display = "none";
+                }
+                var z2 = document.getElementById("chartdivbsf2");
+                if (z2.style.display === "block") {
+                    z2.style.display = "none";
+                }
+
+                if (root6) {
+                    root6.dispose()
+                }
+                if (root11) {
+                    root11.dispose()
+                }
                
 
                 count1 = 0;
@@ -2163,7 +2473,7 @@
 
                     }]
 
-                root6.dispose();
+                //root6.dispose();
                 rerender(data) //root6 activated
 
                 //    count3 = 1
@@ -2495,14 +2805,61 @@
     })();
     initializeData()
 
-    function rerender(data, button){
+    function rerender(data, button, whichChart){
         var newData = data
         console.log("Data: ", data)
         console.log("Button: ", button)
+        console.log("WhichChart: ", whichChart)
 
         if(button == 1){
             document.getElementById("title").innerHTML = "Total Beneficieries"
-            root6.dispose()
+
+            var x = document.getElementById("liptable");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            }
+
+            var y = document.getElementById("bsftable");
+            if (y.style.display === "block") {
+                y.style.display = "none";
+            }
+            var a = document.getElementById("labeltablelip");
+            if (a.style.display === "none") {
+                a.style.display = "block";
+            }
+
+            var b = document.getElementById("labeltablebsf");
+            if (b.style.display === "block") {
+                b.style.display = "none";
+            }
+
+            var xx = document.getElementById("chartdiv");
+            if (xx.style.display === "none") {
+                xx.style.display = "block";
+            }
+
+            var yy = document.getElementById("chartdiv2");
+            if (yy.style.display === "block") {
+                yy.style.display = "none";
+            }
+
+            var z1 = document.getElementById("chartdivbsf1");
+            if (z1.style.display === "block") {
+                z1.style.display = "none";
+            }
+            var z2 = document.getElementById("chartdivbsf2");
+            if (z2.style.display === "block") {
+                z2.style.display = "none";
+            }
+
+
+
+            if(root6){
+                root6.dispose()
+            }
+            if(root11){
+                root11.dispose()
+            }
         }
       
         am5.ready(function () {
@@ -2585,18 +2942,18 @@
                     //legendRangeLabelText: "Series: {name}"
                 }));
 
-                if (name.includes("Host Community")) {
-                    console.log("Host Community")
+                if (name.includes("CI")) {
+                    console.log("CI")
                     series.columns.template.setAll({
                         tooltipText: "Female, {categoryY}:{valueX}",
                         width: am5.percent(90),
                         tooltipY: am5.percent(10)
                     });
                 }
-                else if (name.includes("Refugees")) {
-                    console.log("Refugees")
+                else if (name.includes("CIG")) {
+                    console.log("CIG")
                     series.columns.template.setAll({
-                        tooltipText: "Refugee Female, {categoryY}:{valueX}",
+                        tooltipText: "Female, {categoryY}:{valueX}",
                         width: am5.percent(90),
                         tooltipY: am5.percent(10)
                     });
@@ -2646,15 +3003,15 @@
                     var series4 = chart6.series.getIndex(3);
 
                     var listInit = [100, 567, 1034, 1501, 1968, 336, 395, 1005]
-                    var boundsInit = [122.75]
+                    var boundsInit = [122.75] //122.75
                     var listTB = [122, 589, 1056, 1523, 1990, 358, 417, 1027]
-                    var boundsTB = [207.3203125]//184.94775390625
+                    var boundsTB = [207.3203125, 102.1640625]//102.1640625
                     var listLIP = [144, 611, 1078, 1545, 2012, 380, 439, 1049]
-                    var boundsLIP = [184.8203125]
+                    var boundsLIP = [184.8203125]//122.75
                     var listCBT = [166, 633, 1100, 1567, 2034, 402, 461, 1071]
-                    var boundsCBT = [152.4765625]
+                    var boundsCBT = [152.4765625, 113.140625]//113.140625
                     var listEBP = [188, 655, 1122, 1589, 2056, 424, 483, 1093]
-                    var boundsEBP = [121.6328125]
+                    var boundsEBP = [121.6328125, 121.6328125]//121.6328125
 
                     
 
@@ -2758,12 +3115,36 @@
                 }
             }
 
-            makeSeries("Male", "male", true, true);
-            makeSeries("Host Community", "female", true, true)
-            makeSeries("Refugee Male", "refugeemale", true, false)
-            makeSeries("Refugees", "refugeefemale", true, false)
-            makeSeries("Total", "total", false, false)
+            if(whichChart == "cbt"){
+                makeSeries("Male", "male", true, true);
+                makeSeries("CI", "female", true, true);
+                makeSeries("Male", "refugeemale", true, false);
+                makeSeries("CIG", "refugeefemale", true, false);
+                makeSeries("Total", "total", false, false);
 
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "block") {
+                    a.style.display = "none";
+                }
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "block") {
+                    b.style.display = "none";
+                }
+                var c = document.getElementById("labeltablecbt");
+                if (c.style.display === "none") {
+                    c.style.display = "block";
+                }
+
+                
+
+            }
+            else{
+                makeSeries("Male", "male", true, true);
+                makeSeries("Host Community", "female", true, true)
+                makeSeries("Refugee Male", "refugeemale", true, false)
+                makeSeries("Refugees", "refugeefemale", true, false)
+                makeSeries("Total", "total", false, false)
+            }
             //makeSeries("Europe", "europe", false);
             //makeSeries("North America", "namerica", true);
             //makeSeries("Asia", "asia", false);
@@ -2871,6 +3252,1031 @@
 
 
 </script>
+
+
+@*<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Index</a>*@
+<!-- Chart code -->
+<script>
+    var allLegends
+    var root11
+
+    var jobj = [
+    @{
+        foreach (var m in TBData)
+        {
+            <text>{
+                    'category': '@m.category',
+                    'male': @m.male,
+                    'female': @m.female,
+                    'refugeemale': @m.refugeemale,
+                    'refugeefemale': @m.refugeefemale,
+                    'total': @m.total
+                            }, </text>
+        }
+    }
+            ];
+
+    function renderBSF(data, button) {
+        var newData = data
+        console.log("Data: ", data)
+        console.log("Button: ", button)
+
+        if (button == 1) {
+            document.getElementById("title").innerHTML = "Total Beneficieries"
+            root6.dispose()
+        }
+        //root6.dispose()
+        am5.ready(function () {
+
+            // Create root6 element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            root11 = am5.Root.new("chartdiv2");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root11.setThemes([
+                am5themes_Animated.new(root11)
+            ]);
+
+            // Create chart6
+            // https://www.amcharts.com/docs/v5/charts/xy-chart6/
+            var chart11 = root11.container.children.push(am5xy.XYChart.new(root11, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root11.verticalLayout
+
+            }));
+            chart11.get("colors").set("colors", [
+                am5.color(0x095256),
+                am5.color(0x087f8c),
+                am5.color(0x5aaa95),
+                am5.color(0x86a000),
+                am5.color(0xbb9f06)
+            ]);
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart11/axes/
+            var yRenderer = am5xy.AxisRendererY.new(root11, {
+                cellStartLocation: 0.1,
+                cellEndLocation: 0.9
+            });
+
+            var yAxis = chart11.yAxes.push(am5xy.CategoryAxis.new(root11, {
+                categoryField: "category",
+                renderer: yRenderer,
+                tooltip: am5.Tooltip.new(root11, {})
+            }));
+
+            yRenderer.grid.template.setAll({
+                location: 1
+            })
+
+            yAxis.data.setAll(data);
+
+            var xAxis = chart11.xAxes.push(am5xy.ValueAxis.new(root11, {
+                min: 0,
+                renderer: am5xy.AxisRendererX.new(root11, {
+                    strokeOpacity: 0.1
+                })
+            }));
+
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart11/legend-xy-series/
+            var legend = chart11.children.push(am5.Legend.new(root11, {
+                centerX: am5.p50,
+                x: am5.p50
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart11/series/
+            function makeSeries(name, fieldName, stacked, hidden) {
+                var series = chart11.series.push(am5xy.ColumnSeries.new(root11, {
+                    stacked: stacked,
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueXField: fieldName,
+                    categoryYField: "category",
+                    clickTarget: "none"
+                    //legendLabelText: "Series: {name}",
+                    //legendRangeLabelText: "Series: {name}"
+                }));
+
+                if (name.includes("Host Community")) {
+                    console.log("Host Community")
+                    series.columns.template.setAll({
+                        tooltipText: "Female, {categoryY}:{valueX}",
+                        width: am5.percent(90),
+                        tooltipY: am5.percent(10)
+                    });
+                }
+                else if (name.includes("Refugees")) {
+                    console.log("Refugees")
+                    series.columns.template.setAll({
+                        tooltipText: "Refugee Female, {categoryY}:{valueX}",
+                        width: am5.percent(90),
+                        tooltipY: am5.percent(10)
+                    });
+                }
+                else {
+                    series.columns.template.setAll({
+                        tooltipText: "{name}, {categoryY}:{valueX}",
+                        width: am5.percent(90),
+                        tooltipY: am5.percent(10)
+                    });
+                }
+
+
+                series.data.setAll(newData);
+
+                // Make stuff animate on load
+                // https://www.amcharts.com/docs/v5/concepts/animations/
+                // series.appear();
+
+                series.bullets.push(function () {
+                    return am5.Bullet.new(root11, {
+                        locationY: 0.5,
+                        sprite: am5.Label.new(root11, {
+                            text: "{valueX}",
+                            fill: root11.interfaceColors.get("alternativeText"),
+                            centerY: am5.percent(50),
+                            centerX: am5.percent(50),
+                            populateText: true
+                        })
+                    });
+                });
+
+
+
+                legend.itemContainers.template.events.on("click", function (item) {
+
+                    console.log("item", item.target)
+                    var right = item.target._localBounds.right
+
+                    console.log("right: ", right)
+                    console.log("Includes: ", item.target.uid)
+                    // item: 100, 122, 144, 166
+                    // series: 85, 107, 129, 151
+                    var series1 = chart11.series.getIndex(0);
+                    var series2 = chart11.series.getIndex(1);
+                    var series3 = chart11.series.getIndex(2);
+                    var series4 = chart11.series.getIndex(3);
+
+                    var listInit = [100, 567, 1034, 1501, 1968, 336, 395, 1005]
+                    var boundsInit = [122.75]
+                    var listTB = [122, 589, 1056, 1523, 1990, 358, 417, 1027]
+                    var boundsTB = [207.3203125]//184.94775390625
+                    var listLIP = [144, 611, 1078, 1545, 2012, 380, 439, 1049]
+                    var boundsLIP = [184.8203125]
+                    var listCBT = [166, 633, 1100, 1567, 2034, 402, 461, 1071]
+                    var boundsCBT = [152.4765625]
+                    var listEBP = [188, 655, 1122, 1589, 2056, 424, 483, 1093]
+                    var boundsEBP = [121.6328125]
+
+
+
+                    //if (/*listInit.includes(item.target.uid) ||*/ boundsInit.includes(right)) {
+                    //    console.log("init")
+                    //    if (series1.get("visible")) {
+                    //        console.log("Visible")
+                    //        //series1.hide();
+                    //        series2.hide();
+                    //    }
+                    //    else {
+                    //        console.log("Hidden", series1.isHidden())
+                    //        if (series1.isHidden()) {
+                    //            // series1.show();
+                    //        }
+                    //        series2.show()
+                    //    }
+                    //    //series1.show()
+
+                    //    series3.hide()
+                    //    series4.hide()
+                    //}
+
+                    //if (/*listTB.includes(item.target.uid) || */boundsTB.includes(right)) {
+                    //    console.log("TB")
+                    //    if (series2.get("visible")) {
+                    //        console.log("Visible")
+                    //        //series1.hide();
+                    //        series1.hide();
+                    //    }
+                    //    else {
+                    //        console.log("Hidden", series2.isHidden())
+                    //        if (series2.isHidden()) {
+                    //            // series1.show();
+                    //        }
+                    //        series1.show()
+                    //    }
+                    //    //series1.show()
+
+                    //    series3.hide()
+                    //    series4.hide()
+                    //}
+
+                    //if (/*listLIP.includes(item.target.uid) || */boundsLIP.includes(right)) {
+                    //    console.log("LIP")
+                    //    if (series3.get("visible")) {
+                    //        console.log("Visible")
+                    //        //series1.hide();
+                    //        series4.hide();
+                    //    }
+                    //    else {
+                    //        console.log("Hidden", series3.isHidden())
+                    //        if (series3.isHidden()) {
+                    //            // series1.show();
+                    //        }
+                    //        series4.show()
+                    //    }
+                    //    //series1.show()
+
+                    //    series1.hide()
+                    //    series2.hide()
+                    //}
+
+                    //if (/*listCBT.includes(item.target.uid) ||*/ boundsCBT.includes(right)) {
+                    //    console.log("CBT")
+                    //    if (series4.get("visible")) {
+                    //        console.log("Visible")
+                    //        //series1.hide();
+                    //        series3.hide();
+                    //    }
+                    //    else {
+                    //        console.log("Hidden", series4.isHidden())
+                    //        if (series4.isHidden()) {
+                    //            // series1.show();
+                    //        }
+                    //        series3.show()
+                    //    }
+                    //    //series1.show()
+
+                    //    series1.hide()
+                    //    series2.hide()
+                    //}
+
+                });
+
+                legend.data.push(series);
+
+
+                //allLegends = legend.allChildren()
+                //console.log(" All LEGEND: ", allLegends)
+                //allLegends[0].hide()
+                //if (allLegends[2]) {
+                //    allLegends[2].hide()
+                //}
+
+                if (hidden) {
+                    series.hide();
+                }
+                else {
+                    series.appear();
+                }
+            }
+
+            makeSeries("Government", "government", false, false);
+            makeSeries("Private", "private", false, false)
+            //makeSeries("Refugee Male", "refugeemale", true, false)
+            //makeSeries("Refugees", "refugeefemale", true, false)
+            //makeSeries("Total", "total", false, false)
+
+            //makeSeries("Europe", "europe", false);
+            //makeSeries("North America", "namerica", true);
+            //makeSeries("Asia", "asia", false);
+            //makeSeries("Latin America", "lamerica", true);
+            //makeSeries("Middle East", "meast", true);
+            //makeSeries("Africa", "africa", true);
+
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart11.appear(1000, 100);
+
+        }); // end am5.ready()
+
+
+    }
+
+    function clicked(e) {
+        console.log("Clicked", e)
+
+        data = [{
+            "category": "Killa Abdullah",
+            "male": 22,
+            "female": 45,
+            "refugeemale": 13,
+            "refugeefemale": 13,
+            "total": 110
+
+
+        }, {
+            "category": "Killa Saifullah",
+            "male": 25,
+            "female": 45,
+            "refugeemale": 15,
+            "refugeefemale": 15,
+            "total": 85
+
+        }, {
+            "category": "Sherani",
+            "male": 32,
+            "female": 5,
+            "refugeemale": 13,
+            "refugeefemale": 13,
+            "total": 50
+
+        }, {
+            "category": "Chagai",
+            "male": 15,
+            "female": 35,
+            "refugeemale": 15,
+            "refugeefemale": 15,
+            "total": 65
+
+        },
+        {
+            "category": "Nushki",
+            "male": 72,
+            "female": 13,
+            "refugeemale": 25,
+            "refugeefemale": 25,
+            "total": 110
+
+        },
+        {
+            "category": "Pishin",
+            "male": 32,
+            "female": 24,
+            "refugeemale": 34,
+            "refugeefemale": 34,
+            "total": 90
+
+        },
+        {
+            "category": "Zhob",
+            "male": 53,
+            "female": 55,
+            "refugeemale": 22,
+            "refugeefemale": 22,
+            "total": 130
+
+        },
+        {
+            "category": "Mastung",
+            "male": 21,
+            "female": 65,
+            "refugeemale": 44,
+            "refugeefemale": 44,
+            "total": 130
+
+        },
+        {
+            "category": "Quetta",
+            "male": 5,
+            "female": 5,
+            "refugeemale": 9,
+            "refugeefemale": 9,
+            "total": 19
+
+        }]
+
+        root.dispose();
+        rerender(data)
+        //columnStart(barData)
+    }
+
+
+</script>
+
+
+@*<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Index</a>*@
+<!-- Chart code -->
+<script>
+    var allLegends
+    var root12
+
+    var jobj = [
+    @{
+        foreach (var m in TBData)
+        {
+            <text>{
+                    'category': '@m.category',
+                    'male': @m.male,
+                    'female': @m.female,
+                    'refugeemale': @m.refugeemale,
+                    'refugeefemale': @m.refugeefemale,
+                    'total': @m.total
+                            }, </text>
+        }
+    }
+            ];
+
+    //console.log("JOBJ: ", jobj)
+    //console.log("OBJ: ", data)
+
+    function renderbsf1(data, button) {
+        var newData = data
+        console.log("Data BSF: ", data)
+        console.log("Button: ", button)
+
+        am5.ready(function () {
+
+            // Create root6 element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            root12 = am5.Root.new("chartdivbsf1");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root12.setThemes([
+                am5themes_Animated.new(root12)
+            ]);
+
+            // Create chart6
+            // https://www.amcharts.com/docs/v5/charts/xy-chart6/
+            var chart12 = root12.container.children.push(am5xy.XYChart.new(root12, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root12.verticalLayout
+
+            }));
+            chart12.get("colors").set("colors", [
+                am5.color(0x095256),
+                am5.color(0x087f8c),
+                am5.color(0x5aaa95),
+                am5.color(0x86a000),
+                am5.color(0xbb9f06)
+            ]);
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart12/axes/
+            var yRenderer = am5xy.AxisRendererY.new(root12, {
+                cellStartLocation: 0.1,
+                cellEndLocation: 0.9
+            });
+
+            var yAxis = chart12.yAxes.push(am5xy.CategoryAxis.new(root12, {
+                categoryField: "category",
+                renderer: yRenderer,
+                tooltip: am5.Tooltip.new(root12, {})
+            }));
+
+            yRenderer.grid.template.setAll({
+                location: 1
+            })
+
+            yAxis.data.setAll(newData);
+
+            var xAxis = chart12.xAxes.push(am5xy.ValueAxis.new(root12, {
+                min: 0,
+                renderer: am5xy.AxisRendererX.new(root12, {
+                    strokeOpacity: 0.1
+                })
+            }));
+
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart12/legend-xy-series/
+            var legend = chart12.children.push(am5.Legend.new(root12, {
+                centerX: am5.p50,
+                x: am5.p50
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart12/series/
+            function makeSeries(name, fieldName, stacked, hidden) {
+                var series = chart12.series.push(am5xy.ColumnSeries.new(root12, {
+                    stacked: stacked,
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueXField: fieldName,
+                    categoryYField: "category"
+                    //clickTarget: "none"
+                    //legendLabelText: "Series: {name}",
+                    //legendRangeLabelText: "Series: {name}"
+                }));
+
+                series.columns.template.setAll({
+                    tooltipText: "{name}, {categoryY}:{valueX}",
+                    width: am5.percent(90),
+                    tooltipY: am5.percent(10)
+                });
+
+                //if (name.includes("Host Community")) {
+                //    console.log("Host Community")
+                //    series.columns.template.setAll({
+                //        tooltipText: "Female, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+                //else if (name.includes("Refugees")) {
+                //    console.log("Refugees")
+                //    series.columns.template.setAll({
+                //        tooltipText: "Refugee Female, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+                //else {
+                //    series.columns.template.setAll({
+                //        tooltipText: "{name}, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+
+
+                series.data.setAll(newData);
+
+                // Make stuff animate on load
+                // https://www.amcharts.com/docs/v5/concepts/animations/
+                // series.appear();
+
+                series.bullets.push(function () {
+                    return am5.Bullet.new(root12, {
+                        locationY: 0.5,
+                        sprite: am5.Label.new(root12, {
+                            text: "{valueX}",
+                            fill: root12.interfaceColors.get("alternativeText"),
+                            centerY: am5.percent(50),
+                            centerX: am5.percent(50),
+                            populateText: true
+                        })
+                    });
+                });
+
+
+
+                //legend.itemContainers.template.events.on("click", function (item) {
+
+                //    console.log("item", item.target)
+                //    var right = item.target._localBounds.right
+
+                //    console.log("right: ", right)
+                //    console.log("Includes: ", item.target.uid)
+                //    // item: 100, 122, 144, 166
+                //    // series: 85, 107, 129, 151
+                //    var series1 = chart12.series.getIndex(0);
+                //    var series2 = chart12.series.getIndex(1);
+                //    var series3 = chart12.series.getIndex(2);
+                //    var series4 = chart12.series.getIndex(3);
+
+                //    var listInit = [100, 567, 1034, 1501, 1968, 336, 395, 1005]
+                //    var boundsInit = [122.75]
+                //    var listTB = [122, 589, 1056, 1523, 1990, 358, 417, 1027]
+                //    var boundsTB = [207.3203125]//184.94775390625
+                //    var listLIP = [144, 611, 1078, 1545, 2012, 380, 439, 1049]
+                //    var boundsLIP = [184.8203125]
+                //    var listCBT = [166, 633, 1100, 1567, 2034, 402, 461, 1071]
+                //    var boundsCBT = [152.4765625]
+                //    var listEBP = [188, 655, 1122, 1589, 2056, 424, 483, 1093]
+                //    var boundsEBP = [121.6328125]
+
+
+
+                //    if (/*listInit.includes(item.target.uid) ||*/ boundsInit.includes(right)) {
+                //        console.log("init")
+                //        if (series1.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series2.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series1.isHidden())
+                //            if (series1.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series2.show()
+                //        }
+                //        //series1.show()
+
+                //        series3.hide()
+                //        series4.hide()
+                //    }
+
+                //    if (/*listTB.includes(item.target.uid) || */boundsTB.includes(right)) {
+                //        console.log("TB")
+                //        if (series2.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series1.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series2.isHidden())
+                //            if (series2.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series1.show()
+                //        }
+                //        //series1.show()
+
+                //        series3.hide()
+                //        series4.hide()
+                //    }
+
+                //    if (/*listLIP.includes(item.target.uid) || */boundsLIP.includes(right)) {
+                //        console.log("LIP")
+                //        if (series3.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series4.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series3.isHidden())
+                //            if (series3.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series4.show()
+                //        }
+                //        //series1.show()
+
+                //        series1.hide()
+                //        series2.hide()
+                //    }
+
+                //    if (/*listCBT.includes(item.target.uid) ||*/ boundsCBT.includes(right)) {
+                //        console.log("CBT")
+                //        if (series4.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series3.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series4.isHidden())
+                //            if (series4.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series3.show()
+                //        }
+                //        //series1.show()
+
+                //        series1.hide()
+                //        series2.hide()
+                //    }
+
+                //});
+
+                legend.data.push(series);
+
+
+                //allLegends = legend.allChildren()
+                //console.log(" All LEGEND: ", allLegends)
+                //allLegends[0].hide()
+                //if (allLegends[2]) {
+                //    allLegends[2].hide()
+                //}
+
+                if (hidden) {
+                    series.hide();
+                }
+                else {
+                    series.appear();
+                }
+            }
+
+            makeSeries("Livestock", "livestock", false, false);
+            makeSeries("Forest", "forest", false, false)
+
+            //makeSeries("New", "newls", true, true);
+            //makeSeries("Rehab", "rehabls", true, true)
+            //makeSeries("Both", "bothls", true, false)
+            //makeSeries("New", "newf", true, true);
+            //makeSeries("Rehab", "rehabf", true, true)
+            //makeSeries("Both", "bothf", true, false)
+
+            //makeSeries("Europe", "europe", false);
+            //makeSeries("North America", "namerica", true);
+            //makeSeries("Asia", "asia", false);
+            //makeSeries("Latin America", "lamerica", true);
+            //makeSeries("Middle East", "meast", true);
+            //makeSeries("Africa", "africa", true);
+
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart12.appear(1000, 100);
+
+        }); // end am5.ready()
+
+
+    }
+
+</script>
+
+
+@*<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Index</a>*@
+<!-- Chart code -->
+<script>
+    var allLegends
+    var root13
+
+    var jobj = [
+    @{
+        foreach (var m in TBData)
+        {
+            <text>{
+                    'category': '@m.category',
+                    'male': @m.male,
+                    'female': @m.female,
+                    'refugeemale': @m.refugeemale,
+                    'refugeefemale': @m.refugeefemale,
+                    'total': @m.total
+                                        }, </text>
+        }
+    }
+                ];
+
+    //console.log("JOBJ: ", jobj)
+    //console.log("OBJ: ", data)
+
+    function renderbsf2(data, button) {
+        var newData = data
+        console.log("Data BSF: ", data)
+        console.log("Button: ", button)
+
+        am5.ready(function () {
+
+            // Create root6 element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            root13 = am5.Root.new("chartdivbsf2");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root13.setThemes([
+                am5themes_Animated.new(root13)
+            ]);
+
+            // Create chart6
+            // https://www.amcharts.com/docs/v5/charts/xy-chart6/
+            var chart13 = root13.container.children.push(am5xy.XYChart.new(root13, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root13.verticalLayout
+
+            }));
+            chart13.get("colors").set("colors", [
+                am5.color(0x095256),
+                am5.color(0x087f8c),
+                am5.color(0x5aaa95),
+                am5.color(0x86a000),
+                am5.color(0xbb9f06)
+            ]);
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart13/axes/
+            var yRenderer = am5xy.AxisRendererY.new(root13, {
+                cellStartLocation: 0.1,
+                cellEndLocation: 0.9
+            });
+
+            var yAxis = chart13.yAxes.push(am5xy.CategoryAxis.new(root13, {
+                categoryField: "sector",
+                renderer: yRenderer,
+                tooltip: am5.Tooltip.new(root13, {})
+            }));
+
+            yRenderer.grid.template.setAll({
+                location: 1
+            })
+
+            yAxis.data.setAll(newData);
+
+            var xAxis = chart13.xAxes.push(am5xy.ValueAxis.new(root13, {
+                min: 0,
+                renderer: am5xy.AxisRendererX.new(root13, {
+                    strokeOpacity: 0.1
+                })
+            }));
+
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart13/legend-xy-series/
+            var legend = chart13.children.push(am5.Legend.new(root13, {
+                centerX: am5.p50,
+                x: am5.p50
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart13/series/
+            function makeSeries(name, fieldName, stacked, hidden) {
+                var series = chart13.series.push(am5xy.ColumnSeries.new(root13, {
+                    stacked: stacked,
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueXField: fieldName,
+                    categoryYField: "sector"
+                    //clickTarget: "none"
+                    //legendLabelText: "Series: {name}",
+                    //legendRangeLabelText: "Series: {name}"
+                }));
+
+                series.columns.template.setAll({
+                    tooltipText: "{name}, {categoryY}:{valueX}",
+                    width: am5.percent(90),
+                    tooltipY: am5.percent(10)
+                });
+
+                //if (name.includes("Host Community")) {
+                //    console.log("Host Community")
+                //    series.columns.template.setAll({
+                //        tooltipText: "Female, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+                //else if (name.includes("Refugees")) {
+                //    console.log("Refugees")
+                //    series.columns.template.setAll({
+                //        tooltipText: "Refugee Female, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+                //else {
+                //    series.columns.template.setAll({
+                //        tooltipText: "{name}, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+
+
+                series.data.setAll(newData);
+
+                // Make stuff animate on load
+                // https://www.amcharts.com/docs/v5/concepts/animations/
+                // series.appear();
+
+                series.bullets.push(function () {
+                    return am5.Bullet.new(root13, {
+                        locationY: 0.5,
+                        sprite: am5.Label.new(root13, {
+                            text: "{valueX}",
+                            fill: root13.interfaceColors.get("alternativeText"),
+                            centerY: am5.percent(50),
+                            centerX: am5.percent(50),
+                            populateText: true
+                        })
+                    });
+                });
+
+
+
+                //legend.itemContainers.template.events.on("click", function (item) {
+
+                //    console.log("item", item.target)
+                //    var right = item.target._localBounds.right
+
+                //    console.log("right: ", right)
+                //    console.log("Includes: ", item.target.uid)
+                //    // item: 100, 122, 144, 166
+                //    // series: 85, 107, 129, 151
+                //    var series1 = chart13.series.getIndex(0);
+                //    var series2 = chart13.series.getIndex(1);
+                //    var series3 = chart13.series.getIndex(2);
+                //    var series4 = chart13.series.getIndex(3);
+
+                //    var listInit = [100, 567, 1034, 1501, 1968, 336, 395, 1005]
+                //    var boundsInit = [122.75]
+                //    var listTB = [122, 589, 1056, 1523, 1990, 358, 417, 1027]
+                //    var boundsTB = [207.3203125]//184.94775390625
+                //    var listLIP = [144, 611, 1078, 1545, 2012, 380, 439, 1049]
+                //    var boundsLIP = [184.8203125]
+                //    var listCBT = [166, 633, 1100, 1567, 2034, 402, 461, 1071]
+                //    var boundsCBT = [152.4765625]
+                //    var listEBP = [188, 655, 1122, 1589, 2056, 424, 483, 1093]
+                //    var boundsEBP = [121.6328125]
+
+
+
+                //    if (/*listInit.includes(item.target.uid) ||*/ boundsInit.includes(right)) {
+                //        console.log("init")
+                //        if (series1.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series2.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series1.isHidden())
+                //            if (series1.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series2.show()
+                //        }
+                //        //series1.show()
+
+                //        series3.hide()
+                //        series4.hide()
+                //    }
+
+                //    if (/*listTB.includes(item.target.uid) || */boundsTB.includes(right)) {
+                //        console.log("TB")
+                //        if (series2.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series1.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series2.isHidden())
+                //            if (series2.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series1.show()
+                //        }
+                //        //series1.show()
+
+                //        series3.hide()
+                //        series4.hide()
+                //    }
+
+                //    if (/*listLIP.includes(item.target.uid) || */boundsLIP.includes(right)) {
+                //        console.log("LIP")
+                //        if (series3.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series4.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series3.isHidden())
+                //            if (series3.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series4.show()
+                //        }
+                //        //series1.show()
+
+                //        series1.hide()
+                //        series2.hide()
+                //    }
+
+                //    if (/*listCBT.includes(item.target.uid) ||*/ boundsCBT.includes(right)) {
+                //        console.log("CBT")
+                //        if (series4.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series3.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series4.isHidden())
+                //            if (series4.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series3.show()
+                //        }
+                //        //series1.show()
+
+                //        series1.hide()
+                //        series2.hide()
+                //    }
+
+                //});
+
+                legend.data.push(series);
+
+
+                //allLegends = legend.allChildren()
+                //console.log(" All LEGEND: ", allLegends)
+                //allLegends[0].hide()
+                //if (allLegends[2]) {
+                //    allLegends[2].hide()
+                //}
+
+                if (hidden) {
+                    series.hide();
+                }
+                else {
+                    series.appear();
+                }
+            }
+
+            makeSeries("Male", "male", false, false);
+            makeSeries("Female", "female", false, false)
+
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart13.appear(1000, 100);
+
+        }); // end am5.ready()
+
+
+    }
+
+</script>
+
 
 <!-- Chart code -->
 <script>
@@ -3183,7 +4589,7 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="table-responsive-sm">
-                        <table class="table">
+                        <table class="table" id="labeltablelip" style="display:block">
                             <thead>
                                 <tr>
                                     <th colspan="10">
@@ -3217,6 +4623,62 @@
                             </tbody>
 
                         </table>
+                        <table class="table" id="labeltablebsf" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th colspan="10">
+                                        <p style="font-size:20px; font-weight:500; color:#6794DC">Color Labels</p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div style="height:10px; width:30px; border-radius:2px; margin-top:30%; background-color:#a367dc"></div>
+                                    </td>
+                                    <td style="font-size:15px">Government</td>
+                                    <td>
+                                        <div style="height:10px; width:30px; border-radius:2px; margin-top:30%; background-color:#67b7dc"></div>
+                                    </td>
+                                    <td>Private</td>                                   
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <table class="table" id="labeltablecbt" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th colspan="10">
+                                        <p style="font-size:20px; font-weight:500; color:#6794DC">Color Labels</p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div style="height:10px; width:30px; border-radius:2px; margin-top:30%; background-color:#a367dc"></div>
+                                    </td>
+                                    <td style="font-size:15px">Total</td>
+                                    <td>
+                                        <div style="height:10px; width:30px; border-radius:2px; margin-top:30%; background-color:#67b7dc"></div>
+                                    </td>
+                                    <td>CI Male</td>
+                                    <td>
+                                        <div style="height:10px; width:30px; border-radius:2px; margin-top:30%; background-color:#6794dc"></div>
+                                    </td>
+                                    <td>CI Female</td>
+                                    <td>
+                                        <div style="height:10px; width:30px; border-radius:2px; margin-top:30%; background-color:#6771dc"></div>
+                                    </td>
+                                    <td>CIG Male</td>
+                                    <td>
+                                        <div style="height:10px; width:30px; border-radius:2px; margin-top:30%; background-color:#866fdd"></div>
+                                    </td>
+                                    <td>CIG Female</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
                     </div>
                 </div>
             </div>
@@ -3232,24 +4694,26 @@
                         </div>
                     </div>*@
 
-                    <table class="table table-bordered table-striped" style="width:100%">
+                    <table id="liptable" class="table table-bordered table-striped" style="width:100%; display:block">
                     <thead>
-                        <th>
-                            District
-                        </th>
-                        <th>
-                            Male
-                        </th>
-                        <th>
-                            Female
-                        </th>
-                        <th>
-                            Refugees
-                        </th>
-                       
-                        <th>
-                            Total
-                        </th>
+                        <tr>
+                            <th>
+                                District
+                            </th>
+                            <th>
+                                Male
+                            </th>
+                            <th>
+                                Female
+                            </th>
+                            <th>
+                                Refugees
+                            </th>
+
+                            <th>
+                                Total
+                            </th>
+                        </tr>                        
                     </thead>
                     <tbody>  
                     @foreach(var obj in TBData)
@@ -3278,11 +4742,54 @@
                     }
                     </tbody>
                 </table>
+                   
+                    <table id="bsftable" class="table table-bordered table-striped" style="width:100%; display:none">
+                        <thead>
+                            <tr>
+                                <th>
+                                    District
+                                </th>
+                                <th>
+                                    Government
+                                </th>
+                                <th>
+                                    Private
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in TBData)
+                            {
+                                <tr>
+                                    <td width="50%">
+                                        @obj.category
+                                    </td>
+                                    <td width="50%">
+                                        @obj.male
+                                    </td>
+                                    <td width="50%">
+                                        @obj.female
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
                 </div>
                
-                <div class="col-lg-8" id="chartdiv"></div>
+                <div class="col-lg-8" id="chartdiv" style="display:block"></div>
+                <div class="col-lg-8" id="chartdiv2" style="display:none; height:500px"></div>
                 
+            </div>
+
+            <div class="row">                            
+                <div class="col-lg-6" style="border-right: 2px solid black">                  
+                    <div id="chartdivbsf1" style="display:none; height:500px"></div>
+                </div>
+
+                <div class="col-lg-6" style="border-right: 2px solid black">
+                    <div id="chartdivbsf2" style="display:none; height:500px"></div>
+                </div>                
             </div>
 
         </div>
