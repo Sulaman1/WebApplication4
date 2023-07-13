@@ -13,7 +13,7 @@
     var JData = ViewBag.JsonData;
     var data = JsonConvert.SerializeObject(JData);
 
-    var SelectedChart = "Total Beneficieries";
+    var SelectedChart = "Total Beneficiaries";
    
 
     //List<BarData> obj2 = JsonConvert.DeserializeObject<List<BarData>>(data);
@@ -229,20 +229,18 @@
     // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
     // start and end angle must be set both for chart and series
     var chart1 = root1.container.children.push(
-    am5percent.PieChart.new(root1, {
-    width: am5.percent(110),
-    height: am5.percent(100),
-    x: am5.percent(-10),
-    layout: root1.verticalLayout
-    })
+        am5percent.PieChart.new(root1, {
+            width: am5.percent(110),
+            height: am5.percent(100),
+            x: am5.percent(-10),
+            layout: root1.verticalLayout
+        })
     );
-
+            
 
     chart1.events.on("click", (event) => {
                 var activeRoot = "";
                 var rootArray = [];
-   
-
 
                 console.log("Clicked", event.target.series._values.at(0))
 
@@ -258,6 +256,11 @@
                     y.style.display = "none";
                 }
 
+                var y1 = document.getElementById("cbttable");
+                if (y1.style.display === "block") {
+                    y1.style.display = "none";
+                }
+
                 var a = document.getElementById("labeltablelip");
                 if (a.style.display === "none") {
                     a.style.display = "block";
@@ -266,6 +269,10 @@
                 var b = document.getElementById("labeltablebsf");
                 if (b.style.display === "block") {
                     b.style.display = "none";
+                }
+                var b1 = document.getElementById("labeltablecbt");
+                if (b1.style.display === "block") {
+                    b1.style.display = "none";
                 }
 
                 var xx = document.getElementById("chartdiv");
@@ -286,6 +293,21 @@
                 if (z2.style.display === "block") {
                     z2.style.display = "none";
                 }
+
+                var z3 = document.getElementById("chartdivtvt1");
+                if (z3.style.display === "block") {
+                    z3.style.display = "none";
+                }
+                var z4 = document.getElementById("chartdivtvt2");
+                if (z4.style.display === "block") {
+                    z4.style.display = "none";
+                }
+
+                var zz3 = document.getElementById("cbtChartDiv2");
+                if (zz3.style.display === "block") {
+                    zz3.style.display = "none";
+                }
+                
 
                 if (root6) {
                     root6.dispose()
@@ -452,7 +474,7 @@
                     }]
 
                 //root6.dispose();
-                rerender(data) 
+                rerender(data, 0, "lip") 
             });
 
 
@@ -633,7 +655,6 @@
             seriesList.push(series3);
 
         });
-
 
     }
   
@@ -833,6 +854,11 @@
                     b.style.display = "block";
                 }
 
+                var b1 = document.getElementById("labeltablecbt");
+                if (b1.style.display === "block") {
+                    b1.style.display = "none";
+                }
+
                 var x = document.getElementById("liptable");
                 if (x.style.display === "block") {
                     x.style.display = "none";
@@ -842,6 +868,11 @@
                 if (y.style.display === "none") {
                     y.style.display = "block";
                 }
+                    
+                var y1 = document.getElementById("cbttable");
+                if (y1.style.display === "block") {
+                    y1.style.display = "none";
+                }
 
                 var z1 = document.getElementById("chartdivbsf1");
                 if (z1.style.display === "none") {
@@ -850,6 +881,20 @@
                 var z2 = document.getElementById("chartdivbsf2");
                 if (z2.style.display === "none") {
                     z2.style.display = "block";
+                }
+                var z3 = document.getElementById("chartdivtvt1");
+                if (z3.style.display === "block") {
+                    z3.style.display = "none";
+                }
+                var z4 = document.getElementById("chartdivtvt2");
+                if (z4.style.display === "block") {
+                    z4.style.display = "none";
+                }
+
+
+                var zz3 = document.getElementById("cbtChartDiv2");
+                if (zz3.style.display === "block") {
+                    zz3.style.display = "none";
                 }
 
                 console.log("Clicked", event.target._root.dom.id)
@@ -925,6 +970,60 @@
 
                 //if(count2 == 0){
                  
+                if(root6){
+                    root6.dispose()
+                }
+                if(root12){
+                    root12.dispose()
+                }
+                if(root13){
+                    root13.dispose()
+                }
+
+                var databsf = [{
+                    "category": "Killa Abdullah",
+                    "government": 2,
+                    "private": 18
+
+                }, {
+                    "category": "Killa Saifullah",
+                    "government": 25,
+                    "private": 45
+                }, {
+                    "category": "Sherani",
+                    "government": 32,
+                    "private": 5
+                }, {
+                    "category": "Chagai",
+                    "government": 15,
+                    "private": 35
+                },
+                {
+                    "category": "Nushki",
+                    "government": 72,
+                    "private": 13
+                },
+                {
+                    "category": "Pishin",
+                    "government": 32,
+                    "private": 24
+                },
+                {
+                    "category": "Zhob",
+                    "government": 53,
+                    "private": 55
+                },
+                {
+                    "category": "Mastung",
+                    "government": 21,
+                    "private": 65
+                },
+                {
+                    "category": "Quetta",
+                    "government": 5,
+                    "private": 5
+                }]
+
                 var data = [{
                         "category": "Killa Saifullah",
                         "livestock": 0,
@@ -979,15 +1078,7 @@
                     "male": 2,
                     "female": 0
                 }]
-                if(root6){
-                    root6.dispose()
-                }
-                if(root12){
-                    root12.dispose()
-                }
-                if(root13){
-                    root13.dispose()
-                }
+                
                 
                 renderBSF(databsf)
                 renderbsf1(data)
@@ -1238,9 +1329,9 @@
                 var activeRoot = "";
                 var rootArray = [];
 
-                document.getElementById("title").innerHTML = "Community Based Trainnings"
+                document.getElementById("title").innerHTML = "CI/CIGs"
 
-                var x = document.getElementById("liptable");
+                var x = document.getElementById("cbttable");
                 if (x.style.display === "none") {
                     x.style.display = "block";
                 }
@@ -1250,14 +1341,24 @@
                     y.style.display = "none";
                 }
 
+                var y1 = document.getElementById("liptable");
+                if (y1.style.display === "block") {
+                    y1.style.display = "none";
+                }
+
                 var a = document.getElementById("labeltablelip");
-                if (a.style.display === "none") {
-                    a.style.display = "block";
+                if (a.style.display === "block") {
+                    a.style.display = "none";
                 }
 
                 var b = document.getElementById("labeltablebsf");
                 if (b.style.display === "block") {
                     b.style.display = "none";
+                }
+
+                var c = document.getElementById("labeltablecbt");
+                if (c.style.display === "none") {
+                    c.style.display = "block";
                 }
 
 
@@ -1278,6 +1379,19 @@
                 var z2 = document.getElementById("chartdivbsf2");
                 if (z2.style.display === "block") {
                     z2.style.display = "none";
+                }
+                var z3 = document.getElementById("chartdivtvt1");
+                if (z3.style.display === "block") {
+                    z3.style.display = "none";
+                }
+                var z4 = document.getElementById("chartdivtvt2");
+                if (z4.style.display === "block") {
+                    z4.style.display = "none";
+                }
+
+                var zz3 = document.getElementById("cbtChartDiv2");
+                if (zz3.style.display === "none") {
+                    zz3.style.display = "block";
                 }
 
                 if (root6) {
@@ -1446,7 +1560,7 @@
 
                 //root6.dispose();
                 rerender(data, 0, "cbt") //root6 activated
-               
+                rerendercbt(data)
             });
 
 
@@ -1463,7 +1577,7 @@
 
             series3.data.setAll([
                 {
-                    category: "CBT",
+                    category: "CI/CIGs",
                     value: 30
                 }
             ]);
@@ -1475,7 +1589,7 @@
             })
 
             series3.labels.template.setAll({
-                text: "CBT {value}%",
+                text: "CI/CIGs {value}%",
                 fontSize: 18,
                 opacity: 1,
                 //textType: "circular",
@@ -1485,7 +1599,7 @@
                 //centerX: am5.percent(250),
                 centerY: am5.percent(150),
                 //x: am5.percent(90),
-                radius: -70,
+                radius: -90,
                 fill: am5.color(0x000000)
             });
 
@@ -1534,35 +1648,7 @@
                 textType: "circular",
                 radius: 30,
 
-            });
-
-            //series0.bullets.push(function () {
-            //    return am5.Bullet.new(root3, {
-            //        sprite: am5.Label.new(root3, {
-            //            //text: "LIPs",
-            //            centerX: am5.percent(50),
-            //            centerY: am5.percent(130),
-            //            populateText: true,
-            //            //fill: am5.color(0xffffff)
-            //        })
-            //    });
-            //});
-
-
-
-            //series0.labels.template.setAll({
-            //text: "CBT {value}%",
-            //fontSize: 20,
-            //textType: "circular",
-            //textAlign: "center",
-            ////oversizedBehavior: "wrap",
-            //inside: false,
-            ////centerX: am5.percent(-90),
-            //centerY: am5.percent(-110),
-            ////x: am5.percent(90),
-            //radius: -150,
-            ////fill: am5.color(0xffffff)
-            //});
+            });         
 
 
             // Set data
@@ -1664,9 +1750,608 @@
 
 </script>
 
+
 <!-- Chart code -->
 <script>
 
+    var initializeData = (function () {
+
+        var executed = false;
+        console.log("one time")
+        return function () {
+            if (!executed) {
+                executed = true;
+                activateRoot5()
+            }
+        };
+    })();
+    initializeData()
+
+    function activateRoot5() {
+        am5.ready(function () {
+
+            // Create root5 element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root5 = am5.Root.new("chartdivPerEBP2");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root5.setThemes([
+                am5themes_Animated.new(root5)
+            ]);
+
+            // Create chart5
+            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/
+            // start and end angle must be set both for chart5 and series
+            var chart5 = root5.container.children.push(
+                am5percent.PieChart.new(root5, {
+                    width: am5.percent(110),
+                    height: am5.percent(100),
+                    x: am5.percent(-5),
+                    layout: root5.verticalLayout
+                })
+            );
+
+           
+            var datatvt1 = [{
+                "category": "Mobile Repairing",
+                "male": 0,
+                "female": 1
+
+            }, {
+                "category": "Motor Bike Engine Tuning",
+                "male": 3,
+                "female": 1
+            },
+            {
+                "category": "Motor Winding",
+                "male": 3,
+                "female": 0
+            },
+            {
+                "category": "Solar Panel",
+                "male": 2,
+                "female": 1
+            },
+            {
+                "category": "Tailring",
+                "male": 2,
+                "female": 0
+            }]
+            var datatvt2 = [{
+                "category": "Mobile Repairing",
+                "male": 0,
+                "female": 1
+
+            }, {
+                "category": "Motor Bike Engine Tuning",
+                "male": 3,
+                "female": 1
+            },
+            {
+                "category": "Motor Winding",
+                "male": 3,
+                "female": 0
+            },
+            {
+                "category": "Solar Panel",
+                "male": 2,
+                "female": 1
+            },
+            {
+                "category": "Tailring",
+                "male": 2,
+                "female": 0
+            }]
+           
+            rendertvt1(datatvt1)
+            rendertvt2(datatvt2)
+
+
+
+            chart5.events.on("click", (event) => {
+                var activeRoot = "";
+                var rootArray = [];
+
+                console.log("Clicked>>>", event.target._root.dom.id)
+
+
+                document.getElementById("title").innerHTML = "Technical And Vocational Trainings"
+
+                var x = document.getElementById("liptable");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                }
+
+                var y = document.getElementById("bsftable");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+
+                var y1 = document.getElementById("cbttable");
+                if (y1.style.display === "block") {
+                    y1.style.display = "none";
+                }
+
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "none") {
+                    a.style.display = "block";
+                }
+
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "block") {
+                    b.style.display = "none";
+                }
+                var c = document.getElementById("labeltablecbt");
+                if (c.style.display === "block") {
+                    c.style.display = "none";
+                }
+
+                var xx = document.getElementById("chartdiv");
+                if (xx.style.display === "none") {
+                    xx.style.display = "block";
+                }
+
+                var yy = document.getElementById("chartdiv2");
+                if (yy.style.display === "block") {
+                    yy.style.display = "none";
+                }
+
+                var z1 = document.getElementById("chartdivbsf1");
+                if (z1.style.display === "block") {
+                    z1.style.display = "none";
+                }
+                var z2 = document.getElementById("chartdivbsf2");
+                if (z2.style.display === "block") {
+                    z2.style.display = "none";
+                }
+                var z3 = document.getElementById("chartdivtvt1");
+                if (z3.style.display === "none") {
+                    z3.style.display = "block";
+                }
+                var z4 = document.getElementById("chartdivtvt2");
+                if (z4.style.display === "none") {
+                    z4.style.display = "block";
+                }
+
+                var zz3 = document.getElementById("cbtChartDiv2");
+                if (zz3.style.display === "block") {
+                    zz3.style.display = "none";
+                }
+
+                if (root6) {
+                    root6.dispose()
+                }
+                if (root11) {
+                    root11.dispose()
+                }
+
+
+                count1 = 0;
+                count2 = 0;
+
+                console.log(`
+                                    count1: ${count1}
+                                    count2:  ${count2}
+                                    count3:  ${count3}
+                                `)
+
+                //First Chart
+                seriesList[0].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+                seriesList[1].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+
+                //Second Chart
+                seriesList[3].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+                seriesList[4].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+
+                //Third Chart
+                seriesList[6].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+                seriesList[7].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+
+                //Fourth Chart
+                seriesList[9].slices.template.setAll({
+                    fill: am5.color(0x87ad20),
+                    stroke: am5.color(0x87ad20)
+                })
+                seriesList[10].slices.template.setAll({
+                    fill: am5.color(0x87ad20),
+                    stroke: am5.color(0x87ad20)
+                })
+
+                //Fifth Chart
+                seriesList[12].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+                seriesList[13].slices.template.setAll({
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
+                })
+                
+
+                seriesList[9].animate({
+                    key: "startAngle",
+                    to: 180,
+                    loops: 1,
+                    duration: 2000,
+                    easing: am5.ease.yoyo(am5.ease.cubic)
+                });
+                seriesList[10].animate({
+                    key: "startAngle",
+                    to: 180,
+                    loops: 1,
+                    duration: 2000,
+                    easing: am5.ease.yoyo(am5.ease.cubic)
+                });
+
+
+                //if (count3 == 0) {
+
+                var data = [{
+                    "category": "Killa Abdullah",
+                    "male": 22,
+                    "female": 45,
+                    "refugeemale": 13,
+                    "refugeefemale": 13,
+                    "total": 110
+
+
+                }, {
+                    "category": "Killa Saifullah",
+                    "male": 25,
+                    "female": 45,
+                    "refugeemale": 15,
+                    "refugeefemale": 15,
+                    "total": 85
+
+                }, {
+                    "category": "Sherani",
+                    "male": 32,
+                    "female": 5,
+                    "refugeemale": 13,
+                    "refugeefemale": 13,
+                    "total": 50
+
+                }, {
+                    "category": "Chagai",
+                    "male": 15,
+                    "female": 35,
+                    "refugeemale": 15,
+                    "refugeefemale": 15,
+                    "total": 65
+
+                },
+                {
+                    "category": "Nushki",
+                    "male": 72,
+                    "female": 13,
+                    "refugeemale": 25,
+                    "refugeefemale": 25,
+                    "total": 110
+
+                },
+                {
+                    "category": "Pishin",
+                    "male": 32,
+                    "female": 24,
+                    "refugeemale": 34,
+                    "refugeefemale": 34,
+                    "total": 90
+
+                },
+                {
+                    "category": "Zhob",
+                    "male": 53,
+                    "female": 55,
+                    "refugeemale": 22,
+                    "refugeefemale": 22,
+                    "total": 130
+
+                },
+                {
+                    "category": "Mastung",
+                    "male": 21,
+                    "female": 65,
+                    "refugeemale": 44,
+                    "refugeefemale": 44,
+                    "total": 130
+
+                },
+                {
+                    "category": "Quetta",
+                    "male": 5,
+                    "female": 5,
+                    "refugeemale": 9,
+                    "refugeefemale": 9,
+                    "total": 19
+
+                }]
+
+                //root6.dispose();
+                rerender(data, 0, "tvt") //root6 activated
+
+                //    count3 = 1
+
+                //    am5.array.each(am5.registry.rootElements, function (root) {
+
+                //        console.log("ROOT: ", root.dom.id)
+                //        if (root.dom.id == "solidguage" || root.dom.id == "chartdiv") {
+                //            console.log("yes")
+                //        }
+                //        else {
+                //            rootArray.push(root)
+                //        }
+                //    });
+
+                //    console.log("ARRAY: ", rootArray)
+                //    console.log(`
+                //                        1:  ${rootArray[0].isDisposed()}
+                //                        2:  ${rootArray[1].isDisposed()}
+                //                        3:  ${rootArray[2].isDisposed()}
+                //                        4:  ${rootArray[3].isDisposed()}
+                //                        5:  ${rootArray[4].isDisposed()}
+                //                    `)
+
+                //    rootArray[0].dispose()
+                //    rootArray[1].dispose()
+                //    //rootArray[2].dispose()
+                //    rootArray[3].dispose()
+                //    rootArray[4].dispose()
+
+
+                //    activateRoot1()
+                //    activateRoot2()
+                //    //activateRoot3()
+                //    activateRoot4()
+                //    activateRoot5()
+
+                //    //rootArray = []
+
+                //    am5.array.each(am5.registry.rootElements, function (root) {
+
+                //        console.log("ROOT: ", root.dom.id)
+                //        if (root.dom.id == "solidguage" || root.dom.id == "chartdiv") {
+                //            console.log("yes")
+                //        }
+                //        else {
+                //            rootArray.push(root)
+                //        }
+                //    });
+
+                //    console.log(`
+                //            1:  ${rootArray[0].isDisposed()}
+                //            2:  ${rootArray[1].isDisposed()}
+                //            3:  ${rootArray[2].isDisposed()}
+                //            4:  ${rootArray[3].isDisposed()}
+                //            5:  ${rootArray[4].isDisposed()}
+                //        `)
+
+                //    // Configuring slices
+                //    series0.slices.template.setAll({
+                //        fill: am5.color(0xff300f),
+                //        stroke: am5.color(0xff300f)
+                //    })
+                //    series1.slices.template.setAll({
+                //        fill: am5.color(0xff300f),
+                //        stroke: am5.color(0xff300f)
+                //    })
+                //}
+
+            });
+
+
+            // Create series
+            var series3 = chart5.series.push(
+                am5percent.PieSeries.new(root5, {
+                    valueField: "value",
+                    categoryField: "category",
+                    //alignLabels: true,
+                    //radius: am5.percent(100),
+                    //innerRadius: am5.percent(50)
+                })
+            );
+
+
+            series3.data.setAll([
+                {
+                    category: "TVT",
+                    value: 90
+                }
+            ]);
+
+            // Configuring slices
+            series3.slices.template.setAll({
+                fill: am5.color(0xffffff),
+                stroke: am5.color(0xffffff)
+            })
+
+            series3.labels.template.setAll({
+                text: "TVT {value}%",
+                fontSize: 18,
+                opacity: 1,
+                //textType: "circular",
+                //textAlign: "center",
+                //oversizedBehavior: "wrap",
+                inside: false,
+                //centerX: am5.percent(250),
+                centerY: am5.percent(150),
+                //x: am5.percent(90),
+                radius: -70,
+                fill: am5.color(0x000000)
+            });
+
+            // Disabling labels and ticks
+            //series.labels.template.set("visible", false);
+            series3.ticks.template.set("visible", false);
+            series3.slices.template.set("toggleKey", "none");
+
+            // Create series
+            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Series
+            // start and end angle must be set both for chart5 and series
+            var series0 = chart5.series.push(
+                am5percent.PieSeries.new(root5, {
+                    valueField: "value",
+                    categoryField: "category",
+                    alignLabels: true,
+                    radius: am5.percent(100),
+                    innerRadius: am5.percent(50)
+                })
+            );
+
+            series0.states.create("hidden", {
+                startAngle: 180,
+                endAngle: 180
+            });
+
+            series0.slices.template.setAll({
+                fillOpacity: 0.5,
+                strokeOpacity: 0,
+                templateField: "settings"
+            });
+
+            series0.slices.template.states.create("hover", { scale: 1 });
+            series0.slices.template.states.create("active", { shiftRadius: 0 });
+
+            series0.labels.template.setAll({
+                templateField: "settings"
+            });
+
+            series0.ticks.template.setAll({
+                //templateField: "settings"
+                forceHidden: true
+            });
+
+            series0.labels.template.setAll({
+                textType: "circular",
+                radius: 30,
+
+            });
+
+
+            series0.animate({
+                key: "startAngle",
+                to: 180,
+                loops: 1,
+                duration: 2000,
+                easing: am5.ease.yoyo(am5.ease.cubic)
+            });
+
+            // Set data
+            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Setting_data
+            series0.data.setAll([
+                {
+                    category: "Done",
+                    value: 90,
+                    //settings: { fill: am5.color(0x540099) }
+                },
+                {
+                    category: "Unused",
+                    value: 10,
+                    //settings: { fill: am5.color(0x540099) }
+                    settings: { forceHidden: true }
+                }
+            ]);
+
+
+
+            // Create series
+            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Series
+            // start and end angle must be set both for chart5 and series
+            var series1 = chart5.series.push(
+                am5percent.PieSeries.new(root5, {
+                    radius: am5.percent(65),
+                    innerRadius: am5.percent(85),
+                    valueField: "value",
+                    categoryField: "category",
+                    alignLabels: false
+                })
+            );
+
+            series1.states.create("hidden", {
+                startAngle: 180,
+                endAngle: 180
+            });
+
+            series1.slices.template.setAll({
+                templateField: "sliceSettings",
+                strokeOpacity: 0
+            });
+
+            series1.labels.template.setAll({
+                textType: "circular",
+                fill: am5.color(0xffffff),
+            });
+
+            series1.labels.template.adapters.add("radius", function (radius, target) {
+                var dataItem = target.dataItem;
+                var slice = dataItem.get("slice");
+                return -(slice.get("radius") - slice.get("innerRadius")) / 2 - 10;
+            });
+
+            series1.slices.template.states.create("hover", { scale: 1 });
+            series1.slices.template.states.create("active", { shiftRadius: 0 });
+
+            series1.ticks.template.setAll({
+                forceHidden: true
+            });
+
+
+            series1.animate({
+                key: "startAngle",
+                to: 180,
+                loops: 1,
+                duration: 2000,
+                easing: am5.ease.yoyo(am5.ease.cubic)
+            });
+
+            // Set data
+            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Setting_data
+            series1.data.setAll([{
+                category: "Done",
+                value: 90,
+                //sliceSettings: { fill: am5.color(0x540099) }
+            },
+            //{
+            //    category: "Second",
+            //    value: 30
+            //},
+            {
+                category: "Remaining",
+                value: 10,
+                //sliceSettings: { fill: am5.color(0xdedede) }
+                sliceSettings: { fill: am5.color(0xe6b3e6) }
+            }]);
+
+            seriesList.push(series0)
+            seriesList.push(series1)
+            seriesList.push(series3)
+
+        }); // end am5.ready()
+
+    }
+</script>
+
+
+<!-- Chart code -->
+<script>
 
     var initializeData = (function () {
 
@@ -1715,7 +2400,7 @@
 
   
 
-                document.getElementById("title").innerHTML = "Enterprise Business Plan"
+                document.getElementById("title").innerHTML = "Enterprise Development Program"
 
                 var x = document.getElementById("liptable");
                 if (x.style.display === "none") {
@@ -1725,6 +2410,11 @@
                 var y = document.getElementById("bsftable");
                 if (y.style.display === "block") {
                     y.style.display = "none";
+                }
+                
+                var y1 = document.getElementById("cbttable");
+                if (y1.style.display === "block") {
+                    y1.style.display = "none";
                 }
 
                 var a = document.getElementById("labeltablelip");
@@ -1736,8 +2426,10 @@
                 if (b.style.display === "block") {
                     b.style.display = "none";
                 }
-
-
+                var c = document.getElementById("labeltablecbt");
+                if (c.style.display === "block") {
+                    c.style.display = "none";
+                }
 
                 var xx = document.getElementById("chartdiv");
                 if (xx.style.display === "none") {
@@ -1756,6 +2448,19 @@
                 var z2 = document.getElementById("chartdivbsf2");
                 if (z2.style.display === "block") {
                     z2.style.display = "none";
+                }
+                var z3 = document.getElementById("chartdivtvt1");
+                if (z3.style.display === "block") {
+                    z3.style.display = "none";
+                }
+                var z4 = document.getElementById("chartdivtvt2");
+                if (z4.style.display === "block") {
+                    z4.style.display = "none";
+                }
+
+                var zz3 = document.getElementById("cbtChartDiv2");
+                if (zz3.style.display === "block") {
+                    zz3.style.display = "none";
                 }
 
                 if (root6) {
@@ -1776,7 +2481,9 @@
                             count1: ${count1}
                             count2:  ${count2}
                             count3:  ${count3}
+                           
                         `)
+                console.log("Series: ", seriesList)
 
                 //First Chart
                 seriesList[0].slices.template.setAll({
@@ -1810,38 +2517,38 @@
 
                 //Fourth Chart
                 seriesList[9].slices.template.setAll({
-                    fill: am5.color(0x87ad20),
-                    stroke: am5.color(0x87ad20)
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
                 })
                 seriesList[10].slices.template.setAll({
-                    fill: am5.color(0x87ad20),
-                    stroke: am5.color(0x87ad20)
+                    fill: am5.color(0x67B7DC),
+                    stroke: am5.color(0x67B7DC)
                 })
-
-                seriesList[9].animate({
-                    key: "startAngle",
-                    to: 180,
-                    loops: 1,
-                    duration: 2000,
-                    easing: am5.ease.yoyo(am5.ease.cubic)
-                });
-                seriesList[10].animate({
-                    key: "startAngle",
-                    to: 180,
-                    loops: 1,
-                    duration: 2000,
-                    easing: am5.ease.yoyo(am5.ease.cubic)
-                });
 
                 //Fifth Chart
                 seriesList[12].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
+                    fill: am5.color(0x87ad20),
+                    stroke: am5.color(0x87ad20)
                 })
                 seriesList[13].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
+                    fill: am5.color(0x87ad20),
+                    stroke: am5.color(0x87ad20)
                 })
+
+                seriesList[12].animate({
+                    key: "startAngle",
+                    to: 180,
+                    loops: 1,
+                    duration: 2000,
+                    easing: am5.ease.yoyo(am5.ease.cubic)
+                });
+                seriesList[13].animate({
+                    key: "startAngle",
+                    to: 180,
+                    loops: 1,
+                    duration: 2000,
+                    easing: am5.ease.yoyo(am5.ease.cubic)
+                });
 
 
                 //if (count3 == 0) {
@@ -1927,7 +2634,7 @@
                     }]
 
                 //root6.dispose();
-                rerender(data) //root6 activated
+                rerender(data, 0, "edp") //root6 activated
 
                 //    count3 = 1
 
@@ -2013,7 +2720,7 @@
 
             series3.data.setAll([
                 {
-                    category: "EBP",
+                    category: "EDP",
                     value: 19
                 }
             ]);
@@ -2025,7 +2732,7 @@
             })
 
             series3.labels.template.setAll({
-                text: "EBP {value}%",
+                text: "EDP {value}%",
                 fontSize: 18,
                 opacity: 1,
                 //textType: "circular",
@@ -2215,558 +2922,6 @@
 
 </script>
 
-<!-- Chart code -->
-<script>
-
-    var initializeData = (function () {
-
-        var executed = false;
-        console.log("one time")
-        return function () {
-            if (!executed) {
-                executed = true;
-                activateRoot5()
-            }
-        };
-    })();
-    initializeData()
-
-    function activateRoot5(){
-        am5.ready(function () {
-
-            // Create root5 element
-            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-            var root5 = am5.Root.new("chartdivPerEBP2");
-
-            // Set themes
-            // https://www.amcharts.com/docs/v5/concepts/themes/
-            root5.setThemes([
-                am5themes_Animated.new(root5)
-            ]);
-
-            // Create chart5
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/
-            // start and end angle must be set both for chart5 and series
-            var chart5 = root5.container.children.push(
-                am5percent.PieChart.new(root5, {
-                    width: am5.percent(110),
-                    height: am5.percent(100),
-                    x: am5.percent(-5),
-                    layout: root5.verticalLayout
-                })
-            );
-
-
-
-            chart5.events.on("click", (event) => {
-                var activeRoot = "";
-                var rootArray = [];
-                
-                console.log("Clicked>>>", event.target._root.dom.id)
-                
-
-
-                document.getElementById("title").innerHTML = "Technical And Vocational Trainings"
-
-                var x = document.getElementById("liptable");
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                }
-
-                var y = document.getElementById("bsftable");
-                if (y.style.display === "block") {
-                    y.style.display = "none";
-                }
-
-                var a = document.getElementById("labeltablelip");
-                if (a.style.display === "none") {
-                    a.style.display = "block";
-                }
-
-                var b = document.getElementById("labeltablebsf");
-                if (b.style.display === "block") {
-                    b.style.display = "none";
-                }
-
-
-
-                var xx = document.getElementById("chartdiv");
-                if (xx.style.display === "none") {
-                    xx.style.display = "block";
-                }
-
-                var yy = document.getElementById("chartdiv2");
-                if (yy.style.display === "block") {
-                    yy.style.display = "none";
-                }
-
-                var z1 = document.getElementById("chartdivbsf1");
-                if (z1.style.display === "block") {
-                    z1.style.display = "none";
-                }
-                var z2 = document.getElementById("chartdivbsf2");
-                if (z2.style.display === "block") {
-                    z2.style.display = "none";
-                }
-
-                if (root6) {
-                    root6.dispose()
-                }
-                if (root11) {
-                    root11.dispose()
-                }
-               
-
-                count1 = 0;
-                count2 = 0;
-
-                console.log(`
-                                count1: ${count1}
-                                count2:  ${count2}
-                                count3:  ${count3}
-                            `)
-
-                //First Chart
-                seriesList[0].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-                seriesList[1].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-
-                //Second Chart
-                seriesList[3].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-                seriesList[4].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-
-                //Third Chart
-                seriesList[6].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-                seriesList[7].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-
-                //Fourth Chart
-                seriesList[9].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-                seriesList[10].slices.template.setAll({
-                    fill: am5.color(0x67B7DC),
-                    stroke: am5.color(0x67B7DC)
-                })
-
-                //Fifth Chart
-                seriesList[12].slices.template.setAll({
-                    fill: am5.color(0x87ad20),
-                    stroke: am5.color(0x87ad20)
-                })
-                seriesList[13].slices.template.setAll({
-                    fill: am5.color(0x87ad20),
-                    stroke: am5.color(0x87ad20)
-                })
-                seriesList[12].animate({
-                    key: "startAngle",
-                    to: 180,
-                    loops: 1,
-                    duration: 2000,
-                    easing: am5.ease.yoyo(am5.ease.cubic)
-                });
-                seriesList[13].animate({
-                    key: "startAngle",
-                    to: 180,
-                    loops: 1,
-                    duration: 2000,
-                    easing: am5.ease.yoyo(am5.ease.cubic)
-                });
-
-
-                //if (count3 == 0) {
-
-                var data = [{
-                        "category": "Killa Abdullah",
-                        "male": 22,
-                        "female": 45,
-                        "refugeemale": 13,
-                        "refugeefemale": 13,
-                        "total": 110
-
-
-                    }, {
-                        "category": "Killa Saifullah",
-                        "male": 25,
-                        "female": 45,
-                        "refugeemale": 15,
-                        "refugeefemale": 15,
-                        "total": 85
-
-                    }, {
-                        "category": "Sherani",
-                        "male": 32,
-                        "female": 5,
-                        "refugeemale": 13,
-                        "refugeefemale": 13,
-                        "total": 50
-
-                    }, {
-                        "category": "Chagai",
-                        "male": 15,
-                        "female": 35,
-                        "refugeemale": 15,
-                        "refugeefemale": 15,
-                        "total": 65
-
-                    },
-                    {
-                        "category": "Nushki",
-                        "male": 72,
-                        "female": 13,
-                        "refugeemale": 25,
-                        "refugeefemale": 25,
-                        "total": 110
-
-                    },
-                    {
-                        "category": "Pishin",
-                        "male": 32,
-                        "female": 24,
-                        "refugeemale": 34,
-                        "refugeefemale": 34,
-                        "total": 90
-
-                    },
-                    {
-                        "category": "Zhob",
-                        "male": 53,
-                        "female": 55,
-                        "refugeemale": 22,
-                        "refugeefemale": 22,
-                        "total": 130
-
-                    },
-                    {
-                        "category": "Mastung",
-                        "male": 21,
-                        "female": 65,
-                        "refugeemale": 44,
-                        "refugeefemale": 44,
-                        "total": 130
-
-                    },
-                    {
-                        "category": "Quetta",
-                        "male": 5,
-                        "female": 5,
-                        "refugeemale": 9,
-                        "refugeefemale": 9,
-                        "total": 19
-
-                    }]
-
-                //root6.dispose();
-                rerender(data) //root6 activated
-
-                //    count3 = 1
-
-                //    am5.array.each(am5.registry.rootElements, function (root) {
-
-                //        console.log("ROOT: ", root.dom.id)
-                //        if (root.dom.id == "solidguage" || root.dom.id == "chartdiv") {
-                //            console.log("yes")
-                //        }
-                //        else {
-                //            rootArray.push(root)
-                //        }
-                //    });
-
-                //    console.log("ARRAY: ", rootArray)
-                //    console.log(`
-                //                        1:  ${rootArray[0].isDisposed()}
-                //                        2:  ${rootArray[1].isDisposed()}
-                //                        3:  ${rootArray[2].isDisposed()}
-                //                        4:  ${rootArray[3].isDisposed()}
-                //                        5:  ${rootArray[4].isDisposed()}
-                //                    `)
-
-                //    rootArray[0].dispose()
-                //    rootArray[1].dispose()
-                //    //rootArray[2].dispose()
-                //    rootArray[3].dispose()
-                //    rootArray[4].dispose()
-
-
-                //    activateRoot1()
-                //    activateRoot2()
-                //    //activateRoot3()
-                //    activateRoot4()
-                //    activateRoot5()
-
-                //    //rootArray = []
-
-                //    am5.array.each(am5.registry.rootElements, function (root) {
-
-                //        console.log("ROOT: ", root.dom.id)
-                //        if (root.dom.id == "solidguage" || root.dom.id == "chartdiv") {
-                //            console.log("yes")
-                //        }
-                //        else {
-                //            rootArray.push(root)
-                //        }
-                //    });
-
-                //    console.log(`
-                //            1:  ${rootArray[0].isDisposed()}
-                //            2:  ${rootArray[1].isDisposed()}
-                //            3:  ${rootArray[2].isDisposed()}
-                //            4:  ${rootArray[3].isDisposed()}
-                //            5:  ${rootArray[4].isDisposed()}
-                //        `)
-
-                //    // Configuring slices
-                //    series0.slices.template.setAll({
-                //        fill: am5.color(0xff300f),
-                //        stroke: am5.color(0xff300f)
-                //    })
-                //    series1.slices.template.setAll({
-                //        fill: am5.color(0xff300f),
-                //        stroke: am5.color(0xff300f)
-                //    })
-                //}
-
-            });
-
-
-            // Create series
-            var series3 = chart5.series.push(
-                am5percent.PieSeries.new(root5, {
-                    valueField: "value",
-                    categoryField: "category",
-                    //alignLabels: true,
-                    //radius: am5.percent(100),
-                    //innerRadius: am5.percent(50)
-                })
-            );
-
-
-            series3.data.setAll([
-                {
-                    category: "TVT",
-                    value: 90
-                }
-            ]);
-
-            // Configuring slices
-            series3.slices.template.setAll({
-                fill: am5.color(0xffffff),
-                stroke: am5.color(0xffffff)
-            })
-
-            series3.labels.template.setAll({
-                text: "TVT {value}%",
-                fontSize: 18,
-                opacity: 1,
-                //textType: "circular",
-                //textAlign: "center",
-                //oversizedBehavior: "wrap",
-                inside: false,
-                //centerX: am5.percent(250),
-                centerY: am5.percent(150),
-                //x: am5.percent(90),
-                radius: -70,
-                fill: am5.color(0x000000)
-            });
-
-            // Disabling labels and ticks
-            //series.labels.template.set("visible", false);
-            series3.ticks.template.set("visible", false);
-            series3.slices.template.set("toggleKey", "none");
-
-            // Create series
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Series
-            // start and end angle must be set both for chart5 and series
-            var series0 = chart5.series.push(
-                am5percent.PieSeries.new(root5, {
-                    valueField: "value",
-                    categoryField: "category",
-                    alignLabels: true,
-                    radius: am5.percent(100),
-                    innerRadius: am5.percent(50)
-                })
-            );
-
-            series0.states.create("hidden", {
-                startAngle: 180,
-                endAngle: 180
-            });
-
-            series0.slices.template.setAll({
-                fillOpacity: 0.5,
-                strokeOpacity: 0,
-                templateField: "settings"
-            });
-
-            series0.slices.template.states.create("hover", { scale: 1 });
-            series0.slices.template.states.create("active", { shiftRadius: 0 });
-
-            series0.labels.template.setAll({
-                templateField: "settings"
-            });
-
-            series0.ticks.template.setAll({
-                //templateField: "settings"
-                forceHidden: true
-            });
-
-            series0.labels.template.setAll({
-                textType: "circular",
-                radius: 30,
-
-            });
-
-
-            series0.animate({
-                key: "startAngle",
-                to: 180,
-                loops: 1,
-                duration: 2000,
-                easing: am5.ease.yoyo(am5.ease.cubic)
-            });
-
-
-            //series0.bullets.push(function () {
-            //    return am5.Bullet.new(root5, {
-            //        sprite: am5.Label.new(root5, {
-            //            //text: "LIPs",
-            //            centerX: am5.percent(50),
-            //            centerY: am5.percent(130),
-            //            populateText: true,
-            //            //fill: am5.color(0xffffff)
-            //        })
-            //    });
-            //});
-
-
-
-            //series0.labels.template.setAll({
-            //text: "TVT {value}%",
-            //fontSize: 20,
-            //textType: "circular",
-            //textAlign: "center",
-            ////oversizedBehavior: "wrap",
-            //inside: false,
-            ////centerX: am5.percent(90),
-            //centerY: am5.percent(320),
-            ////x: am5.percent(0),
-            //radius: -150,
-            ////fill: am5.color(0xffffff)
-            //});
-
-
-            // Set data
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Setting_data
-            series0.data.setAll([
-                {
-                    category: "Done",
-                    value: 90,
-                    //settings: { fill: am5.color(0x540099) }
-                },
-                {
-                    category: "Unused",
-                    value: 10,
-                    //settings: { fill: am5.color(0x540099) }
-                    settings: { forceHidden: true }
-                }
-            ]);
-
-
-
-            // Create series
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Series
-            // start and end angle must be set both for chart5 and series
-            var series1 = chart5.series.push(
-                am5percent.PieSeries.new(root5, {
-                    radius: am5.percent(65),
-                    innerRadius: am5.percent(85),
-                    valueField: "value",
-                    categoryField: "category",
-                    alignLabels: false
-                })
-            );
-
-            series1.states.create("hidden", {
-                startAngle: 180,
-                endAngle: 180
-            });
-
-            series1.slices.template.setAll({
-                templateField: "sliceSettings",
-                strokeOpacity: 0
-            });
-
-            series1.labels.template.setAll({
-                textType: "circular",
-                fill: am5.color(0xffffff),
-            });
-
-            series1.labels.template.adapters.add("radius", function (radius, target) {
-                var dataItem = target.dataItem;
-                var slice = dataItem.get("slice");
-                return -(slice.get("radius") - slice.get("innerRadius")) / 2 - 10;
-            });
-
-            series1.slices.template.states.create("hover", { scale: 1 });
-            series1.slices.template.states.create("active", { shiftRadius: 0 });
-
-            series1.ticks.template.setAll({
-                forceHidden: true
-            });
-
-
-            series1.animate({
-                key: "startAngle",
-                to: 180,
-                loops: 1,
-                duration: 2000,
-                easing: am5.ease.yoyo(am5.ease.cubic)
-            });
-
-            // Set data
-            // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart5/#Setting_data
-            series1.data.setAll([{
-                category: "Done",
-                value: 90,
-                //sliceSettings: { fill: am5.color(0x540099) }
-            },
-            //{
-            //    category: "Second",
-            //    value: 30
-            //},
-            {
-                category: "Remaining",
-                value: 10,
-                //sliceSettings: { fill: am5.color(0xdedede) }
-                sliceSettings: { fill: am5.color(0xe6b3e6) }
-            }]);
-
-            seriesList.push(series0)
-            seriesList.push(series1)
-            seriesList.push(series3)
-
-        }); // end am5.ready()
-
-    }
-</script>
-
 
 @*<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Index</a>*@
 <!-- Chart code -->
@@ -2789,9 +2944,7 @@
         }
         ];
 
-        //console.log("JOBJ: ", jobj)
-        //console.log("OBJ: ", data)
-
+       
     var initializeData = (function () {
 
         var executed = false;
@@ -2807,12 +2960,27 @@
 
     function rerender(data, button, whichChart){
         var newData = data
+        var chartTitle = "Total Beneficiaries"
+        if(whichChart == "cbt"){
+            chartTitle = "Total Number Of (CI/CIGs)"
+        }
+        if (whichChart == "lip") {
+            chartTitle = "Livelihood Investment Plan"
+        } 
+        if (whichChart == "tvt") {
+            chartTitle = "Technical Vocational Trainings"
+        }
+        if (whichChart == "edp") {
+            chartTitle = "Enterprise Development Program"
+        }
         console.log("Data: ", data)
         console.log("Button: ", button)
         console.log("WhichChart: ", whichChart)
+        console.log("title: ", chartTitle)
 
         if(button == 1){
-            document.getElementById("title").innerHTML = "Total Beneficieries"
+            document.getElementById("title").innerHTML = "Total Beneficiaries"
+            chartTitle = "Total Beneficiaries"
 
             var x = document.getElementById("liptable");
             if (x.style.display === "none") {
@@ -2823,6 +2991,12 @@
             if (y.style.display === "block") {
                 y.style.display = "none";
             }
+
+            var y1 = document.getElementById("cbttable");
+            if (y1.style.display === "block") {
+                y1.style.display = "none";
+            }
+
             var a = document.getElementById("labeltablelip");
             if (a.style.display === "none") {
                 a.style.display = "block";
@@ -2831,6 +3005,10 @@
             var b = document.getElementById("labeltablebsf");
             if (b.style.display === "block") {
                 b.style.display = "none";
+            }
+            var b1 = document.getElementById("labeltablecbt");
+            if (b1.style.display === "block") {
+                b1.style.display = "none";
             }
 
             var xx = document.getElementById("chartdiv");
@@ -2851,7 +3029,20 @@
             if (z2.style.display === "block") {
                 z2.style.display = "none";
             }
+            var z3 = document.getElementById("chartdivtvt1");
+            if (z3.style.display === "block") {
+                z3.style.display = "none";
+            }
+            var z4 = document.getElementById("chartdivtvt2");
+            if (z4.style.display === "block") {
+                z4.style.display = "none";
+            }
+            
 
+            var zz3 = document.getElementById("cbtChartDiv2");
+            if (zz3.style.display === "block") {
+                zz3.style.display = "none";
+            }
 
 
             if(root6){
@@ -2891,6 +3082,19 @@
                 am5.color(0x86a000),
                 am5.color(0xbb9f06)
             ]);
+
+            chart6.children.unshift(am5.Label.new(root6, {
+                text: chartTitle,
+                fontSize: 22,
+                fontWeight: "500",
+                fill: chart6.get("colors").getIndex(1),
+                textAlign: "center",
+                //x: am5.percent(50),
+                //y: am5.percent(0),
+                centerX: am5.percent(-5),
+                paddingTop: -20,
+                //paddingBottom: 30
+            }));
           
 
             // Create axes
@@ -3250,7 +3454,6 @@
         //columnStart(barData)
     }
 
-
 </script>
 
 
@@ -3282,7 +3485,7 @@
         console.log("Button: ", button)
 
         if (button == 1) {
-            document.getElementById("title").innerHTML = "Total Beneficieries"
+            document.getElementById("title").innerHTML = "Total Beneficiaries"
             root6.dispose()
         }
         //root6.dispose()
@@ -3315,6 +3518,20 @@
                 am5.color(0x86a000),
                 am5.color(0xbb9f06)
             ]);
+
+            chart11.children.unshift(am5.Label.new(root11, {
+                text: "BSF (Government & Private)",
+                fontSize: 22,
+                fontWeight: "500",
+                fill: chart11.get("colors").getIndex(1),
+                textAlign: "center",
+                //x: am5.percent(50),
+                //y: am5.percent(0),
+                centerX: am5.percent(-5),
+                paddingTop: -20,
+                //paddingBottom: 30
+            }));
+
 
 
             // Create axes
@@ -3411,7 +3628,6 @@
                 });
 
 
-
                 legend.itemContainers.template.events.on("click", function (item) {
 
                     console.log("item", item.target)
@@ -3436,100 +3652,11 @@
                     var boundsCBT = [152.4765625]
                     var listEBP = [188, 655, 1122, 1589, 2056, 424, 483, 1093]
                     var boundsEBP = [121.6328125]
-
-
-
-                    //if (/*listInit.includes(item.target.uid) ||*/ boundsInit.includes(right)) {
-                    //    console.log("init")
-                    //    if (series1.get("visible")) {
-                    //        console.log("Visible")
-                    //        //series1.hide();
-                    //        series2.hide();
-                    //    }
-                    //    else {
-                    //        console.log("Hidden", series1.isHidden())
-                    //        if (series1.isHidden()) {
-                    //            // series1.show();
-                    //        }
-                    //        series2.show()
-                    //    }
-                    //    //series1.show()
-
-                    //    series3.hide()
-                    //    series4.hide()
-                    //}
-
-                    //if (/*listTB.includes(item.target.uid) || */boundsTB.includes(right)) {
-                    //    console.log("TB")
-                    //    if (series2.get("visible")) {
-                    //        console.log("Visible")
-                    //        //series1.hide();
-                    //        series1.hide();
-                    //    }
-                    //    else {
-                    //        console.log("Hidden", series2.isHidden())
-                    //        if (series2.isHidden()) {
-                    //            // series1.show();
-                    //        }
-                    //        series1.show()
-                    //    }
-                    //    //series1.show()
-
-                    //    series3.hide()
-                    //    series4.hide()
-                    //}
-
-                    //if (/*listLIP.includes(item.target.uid) || */boundsLIP.includes(right)) {
-                    //    console.log("LIP")
-                    //    if (series3.get("visible")) {
-                    //        console.log("Visible")
-                    //        //series1.hide();
-                    //        series4.hide();
-                    //    }
-                    //    else {
-                    //        console.log("Hidden", series3.isHidden())
-                    //        if (series3.isHidden()) {
-                    //            // series1.show();
-                    //        }
-                    //        series4.show()
-                    //    }
-                    //    //series1.show()
-
-                    //    series1.hide()
-                    //    series2.hide()
-                    //}
-
-                    //if (/*listCBT.includes(item.target.uid) ||*/ boundsCBT.includes(right)) {
-                    //    console.log("CBT")
-                    //    if (series4.get("visible")) {
-                    //        console.log("Visible")
-                    //        //series1.hide();
-                    //        series3.hide();
-                    //    }
-                    //    else {
-                    //        console.log("Hidden", series4.isHidden())
-                    //        if (series4.isHidden()) {
-                    //            // series1.show();
-                    //        }
-                    //        series3.show()
-                    //    }
-                    //    //series1.show()
-
-                    //    series1.hide()
-                    //    series2.hide()
-                    //}
-
+                 
                 });
 
                 legend.data.push(series);
-
-
-                //allLegends = legend.allChildren()
-                //console.log(" All LEGEND: ", allLegends)
-                //allLegends[0].hide()
-                //if (allLegends[2]) {
-                //    allLegends[2].hide()
-                //}
+               
 
                 if (hidden) {
                     series.hide();
@@ -3540,17 +3667,7 @@
             }
 
             makeSeries("Government", "government", false, false);
-            makeSeries("Private", "private", false, false)
-            //makeSeries("Refugee Male", "refugeemale", true, false)
-            //makeSeries("Refugees", "refugeefemale", true, false)
-            //makeSeries("Total", "total", false, false)
-
-            //makeSeries("Europe", "europe", false);
-            //makeSeries("North America", "namerica", true);
-            //makeSeries("Asia", "asia", false);
-            //makeSeries("Latin America", "lamerica", true);
-            //makeSeries("Middle East", "meast", true);
-            //makeSeries("Africa", "africa", true);
+            makeSeries("Private", "private", false, false);          
 
 
             // Make stuff animate on load
@@ -3654,7 +3771,12 @@
 </script>
 
 
-@*<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Index</a>*@
+
+@*          BSF
+    SECOND ROW TWO CHART
+*@
+
+
 <!-- Chart code -->
 <script>
     var allLegends
@@ -3713,6 +3835,18 @@
                 am5.color(0x86a000),
                 am5.color(0xbb9f06)
             ]);
+
+            chart12.children.unshift(am5.Label.new(root12, {
+                text: "Business Support Facility (Government)",
+                fontSize: 18,
+                fontWeight: "500",
+                fill: chart12.get("colors").getIndex(1),
+                textAlign: "center",
+                //x: am5.percent(50),
+                centerX: am5.percent(-5),
+                paddingTop: 0,
+                paddingBottom: 30
+            }));
 
 
             // Create axes
@@ -3972,8 +4106,6 @@
 
 </script>
 
-
-@*<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Index</a>*@
 <!-- Chart code -->
 <script>
     var allLegends
@@ -4033,6 +4165,17 @@
                 am5.color(0xbb9f06)
             ]);
 
+            chart13.children.unshift(am5.Label.new(root13, {
+                text: "Business Support Facility (Private)",
+                fontSize: 18,
+                fontWeight: "500",
+                fill: chart13.get("colors").getIndex(1),
+                textAlign: "center",
+                //x: am5.percent(50),
+                centerX: am5.percent(-5),
+                paddingTop: 0,
+                paddingBottom: 30
+            }));
 
             // Create axes
             // https://www.amcharts.com/docs/v5/charts/xy-chart13/axes/
@@ -4271,12 +4414,1007 @@
             chart13.appear(1000, 100);
 
         }); // end am5.ready()
+    }
+
+</script>
+
+
+@*          BSF
+    SECOND ROW TWO CHARTS END.........
+*@
+
+
+
+@*          TVT
+    SECOND ROW TWO CHART
+*@
+
+
+<!-- Chart code -->
+<script>
+    var allLegends
+    var root15
+
+    var jobj = [
+    @{
+        foreach (var m in TBData)
+        {
+            <text>{
+                    'category': '@m.category',
+                    'male': @m.male,
+                    'female': @m.female,
+                    'refugeemale': @m.refugeemale,
+                    'refugeefemale': @m.refugeefemale,
+                    'total': @m.total
+                                        }, </text>
+        }
+    }
+                ];
+
+
+    function rendertvt1(data, button) {
+        var newData = data
+        console.log("Data TVT: ", data)
+        console.log("Button: ", button)
+
+        am5.ready(function () {
+
+            // Create root6 element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            root15 = am5.Root.new("chartdivtvt1");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root15.setThemes([
+                am5themes_Animated.new(root15)
+            ]);
+
+            // Create chart6
+            // https://www.amcharts.com/docs/v5/charts/xy-chart6/
+            var chart15 = root15.container.children.push(am5xy.XYChart.new(root15, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root15.verticalLayout
+
+            }));
+            chart15.get("colors").set("colors", [
+                am5.color(0x095256),
+                am5.color(0x087f8c),
+                am5.color(0x5aaa95),
+                am5.color(0x86a000),
+                am5.color(0xbb9f06)
+            ]);
+
+            chart15.children.unshift(am5.Label.new(root15, {
+                text: "Technical And Vocational Trainings (Refugees)",
+                fontSize: 18,
+                fontWeight: "500",
+                fill: chart15.get("colors").getIndex(1),
+                textAlign: "center",
+                //x: am5.percent(10),
+                centerX: am5.percent(-5),
+                paddingTop: 0,
+                paddingBottom: 30
+            }));
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart15/axes/
+            var yRenderer = am5xy.AxisRendererY.new(root15, {
+                cellStartLocation: 0.1,
+                cellEndLocation: 0.9
+            });
+
+            var yAxis = chart15.yAxes.push(am5xy.CategoryAxis.new(root15, {
+                categoryField: "category",
+                renderer: yRenderer,
+                tooltip: am5.Tooltip.new(root15, {})
+            }));
+
+            yRenderer.grid.template.setAll({
+                location: 1
+            })
+
+            yAxis.data.setAll(newData);
+
+            var xAxis = chart15.xAxes.push(am5xy.ValueAxis.new(root15, {
+                min: 0,
+                renderer: am5xy.AxisRendererX.new(root15, {
+                    strokeOpacity: 0.1
+                })
+            }));
+
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart15/legend-xy-series/
+            var legend = chart15.children.push(am5.Legend.new(root15, {
+                centerX: am5.p50,
+                x: am5.p50
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart15/series/
+            function makeSeries(name, fieldName, stacked, hidden) {
+                var series = chart15.series.push(am5xy.ColumnSeries.new(root15, {
+                    stacked: stacked,
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueXField: fieldName,
+                    categoryYField: "category"                   
+                }));
+
+                series.columns.template.setAll({
+                    tooltipText: "{name}, {categoryY}:{valueX}",
+                    width: am5.percent(90),
+                    tooltipY: am5.percent(10)
+                });
+
+              
+                series.data.setAll(newData);
+
+                // Make stuff animate on load
+                // https://www.amcharts.com/docs/v5/concepts/animations/
+                // series.appear();
+
+                series.bullets.push(function () {
+                    return am5.Bullet.new(root15, {
+                        locationY: 0.5,
+                        sprite: am5.Label.new(root15, {
+                            text: "{valueX}",
+                            fill: root15.interfaceColors.get("alternativeText"),
+                            centerY: am5.percent(50),
+                            centerX: am5.percent(50),
+                            populateText: true
+                        })
+                    });
+                });
+
+                legend.data.push(series);
+
+
+                if (hidden) {
+                    series.hide();
+                }
+                else {
+                    series.appear();
+                }
+            }
+
+            makeSeries("Male", "male", false, false);
+            makeSeries("Female", "female", false, false)
+         
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart15.appear(1000, 100);
+
+        }); // end am5.ready()
 
 
     }
 
 </script>
 
+<!-- Chart code -->
+<script>
+    var allLegends
+    var root16
+
+    var jobj = [
+    @{
+        foreach (var m in TBData)
+        {
+            <text>{
+                    'category': '@m.category',
+                    'male': @m.male,
+                    'female': @m.female,
+                    'refugeemale': @m.refugeemale,
+                    'refugeefemale': @m.refugeefemale,
+                    'total': @m.total
+                                                    }, </text>
+        }
+    }
+                    ];
+
+    //console.log("JOBJ: ", jobj)
+    //console.log("OBJ: ", data)
+
+    function rendertvt2(data, button) {
+        var newData = data
+        console.log("Data BSF: ", data)
+        console.log("Button: ", button)
+
+        am5.ready(function () {
+
+            // Create root6 element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            root16 = am5.Root.new("chartdivtvt2");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root16.setThemes([
+                am5themes_Animated.new(root16)
+            ]);
+
+            // Create chart6
+            // https://www.amcharts.com/docs/v5/charts/xy-chart6/
+            var chart16 = root16.container.children.push(am5xy.XYChart.new(root16, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root16.verticalLayout
+
+            }));
+            chart16.get("colors").set("colors", [
+                am5.color(0x095256),
+                am5.color(0x087f8c),
+                am5.color(0x5aaa95),
+                am5.color(0x86a000),
+                am5.color(0xbb9f06)
+            ]);
+
+
+            chart16.children.unshift(am5.Label.new(root16, {
+                text: "Technical And Vocational Trainings (Host)",
+                fontSize: 18,
+                fontWeight: "500",
+                fill: chart16.get("colors").getIndex(1),
+                textAlign: "center",
+                //x: am5.percent(50),
+                centerX: am5.percent(-5),
+                paddingTop: 0,
+                paddingBottom: 30
+            }));
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart16/axes/
+            var yRenderer = am5xy.AxisRendererY.new(root16, {
+                cellStartLocation: 0.1,
+                cellEndLocation: 0.9
+            });
+
+            var yAxis = chart16.yAxes.push(am5xy.CategoryAxis.new(root16, {
+                categoryField: "category",
+                renderer: yRenderer,
+                tooltip: am5.Tooltip.new(root16, {})
+            }));
+
+            yRenderer.grid.template.setAll({
+                location: 1
+            })
+
+            yAxis.data.setAll(newData);
+
+            var xAxis = chart16.xAxes.push(am5xy.ValueAxis.new(root16, {
+                min: 0,
+                renderer: am5xy.AxisRendererX.new(root16, {
+                    strokeOpacity: 0.1
+                })
+            }));
+
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart16/legend-xy-series/
+            var legend = chart16.children.push(am5.Legend.new(root16, {
+                centerX: am5.p50,
+                x: am5.p50
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart16/series/
+            function makeSeries(name, fieldName, stacked, hidden) {
+                var series = chart16.series.push(am5xy.ColumnSeries.new(root16, {
+                    stacked: stacked,
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueXField: fieldName,
+                    categoryYField: "category"
+                    //clickTarget: "none"
+                    //legendLabelText: "Series: {name}",
+                    //legendRangeLabelText: "Series: {name}"
+                }));
+
+                series.columns.template.setAll({
+                    tooltipText: "{name}, {categoryY}:{valueX}",
+                    width: am5.percent(90),
+                    tooltipY: am5.percent(10)
+                });
+
+                //if (name.includes("Host Community")) {
+                //    console.log("Host Community")
+                //    series.columns.template.setAll({
+                //        tooltipText: "Female, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+                //else if (name.includes("Refugees")) {
+                //    console.log("Refugees")
+                //    series.columns.template.setAll({
+                //        tooltipText: "Refugee Female, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+                //else {
+                //    series.columns.template.setAll({
+                //        tooltipText: "{name}, {categoryY}:{valueX}",
+                //        width: am5.percent(90),
+                //        tooltipY: am5.percent(10)
+                //    });
+                //}
+
+
+                series.data.setAll(newData);
+
+                // Make stuff animate on load
+                // https://www.amcharts.com/docs/v5/concepts/animations/
+                // series.appear();
+
+                series.bullets.push(function () {
+                    return am5.Bullet.new(root16, {
+                        locationY: 0.5,
+                        sprite: am5.Label.new(root16, {
+                            text: "{valueX}",
+                            fill: root16.interfaceColors.get("alternativeText"),
+                            centerY: am5.percent(50),
+                            centerX: am5.percent(50),
+                            populateText: true
+                        })
+                    });
+                });
+
+
+
+                //legend.itemContainers.template.events.on("click", function (item) {
+
+                //    console.log("item", item.target)
+                //    var right = item.target._localBounds.right
+
+                //    console.log("right: ", right)
+                //    console.log("Includes: ", item.target.uid)
+                //    // item: 100, 122, 144, 166
+                //    // series: 85, 107, 129, 151
+                //    var series1 = chart16.series.getIndex(0);
+                //    var series2 = chart16.series.getIndex(1);
+                //    var series3 = chart16.series.getIndex(2);
+                //    var series4 = chart16.series.getIndex(3);
+
+                //    var listInit = [100, 567, 1034, 1501, 1968, 336, 395, 1005]
+                //    var boundsInit = [122.75]
+                //    var listTB = [122, 589, 1056, 1523, 1990, 358, 417, 1027]
+                //    var boundsTB = [207.3203125]//184.94775390625
+                //    var listLIP = [144, 611, 1078, 1545, 2012, 380, 439, 1049]
+                //    var boundsLIP = [184.8203125]
+                //    var listCBT = [166, 633, 1100, 1567, 2034, 402, 461, 1071]
+                //    var boundsCBT = [152.4765625]
+                //    var listEBP = [188, 655, 1122, 1589, 2056, 424, 483, 1093]
+                //    var boundsEBP = [121.6328125]
+
+
+
+                //    if (/*listInit.includes(item.target.uid) ||*/ boundsInit.includes(right)) {
+                //        console.log("init")
+                //        if (series1.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series2.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series1.isHidden())
+                //            if (series1.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series2.show()
+                //        }
+                //        //series1.show()
+
+                //        series3.hide()
+                //        series4.hide()
+                //    }
+
+                //    if (/*listTB.includes(item.target.uid) || */boundsTB.includes(right)) {
+                //        console.log("TB")
+                //        if (series2.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series1.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series2.isHidden())
+                //            if (series2.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series1.show()
+                //        }
+                //        //series1.show()
+
+                //        series3.hide()
+                //        series4.hide()
+                //    }
+
+                //    if (/*listLIP.includes(item.target.uid) || */boundsLIP.includes(right)) {
+                //        console.log("LIP")
+                //        if (series3.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series4.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series3.isHidden())
+                //            if (series3.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series4.show()
+                //        }
+                //        //series1.show()
+
+                //        series1.hide()
+                //        series2.hide()
+                //    }
+
+                //    if (/*listCBT.includes(item.target.uid) ||*/ boundsCBT.includes(right)) {
+                //        console.log("CBT")
+                //        if (series4.get("visible")) {
+                //            console.log("Visible")
+                //            //series1.hide();
+                //            series3.hide();
+                //        }
+                //        else {
+                //            console.log("Hidden", series4.isHidden())
+                //            if (series4.isHidden()) {
+                //                // series1.show();
+                //            }
+                //            series3.show()
+                //        }
+                //        //series1.show()
+
+                //        series1.hide()
+                //        series2.hide()
+                //    }
+
+                //});
+
+                legend.data.push(series);
+
+
+                //allLegends = legend.allChildren()
+                //console.log(" All LEGEND: ", allLegends)
+                //allLegends[0].hide()
+                //if (allLegends[2]) {
+                //    allLegends[2].hide()
+                //}
+
+                if (hidden) {
+                    series.hide();
+                }
+                else {
+                    series.appear();
+                }
+            }
+
+            makeSeries("Male", "male", false, false);
+            makeSeries("Female", "female", false, false)
+
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart16.appear(1000, 100);
+
+        }); // end am5.ready()
+    }
+
+</script>
+
+
+@*          TVT
+    SECOND ROW TWO CHARTS END.........
+*@
+
+
+
+@*          CBT
+    CBT MAIN CHART CI/CIGs
+*@
+
+
+<!-- Chart code -->
+<script>
+    var allLegends
+    var root14
+    var data = [{
+        "category": "Killa Abdullah",
+        "male": 22,
+        "female": 45,
+        "refugeemale": 13,
+        "refugeefemale": 13,
+        "total": 110
+
+
+    }, {
+        "category": "Killa Saifullah",
+        "male": 25,
+        "female": 45,
+        "refugeemale": 15,
+        "refugeefemale": 15,
+        "total": 85
+
+    }, {
+        "category": "Sherani",
+        "male": 32,
+        "female": 5,
+        "refugeemale": 13,
+        "refugeefemale": 13,
+        "total": 50
+
+    }, {
+        "category": "Chagai",
+        "male": 15,
+        "female": 35,
+        "refugeemale": 15,
+        "refugeefemale": 15,
+        "total": 65
+
+    },
+    {
+        "category": "Nushki",
+        "male": 72,
+        "female": 13,
+        "refugeemale": 25,
+        "refugeefemale": 25,
+        "total": 110
+
+    },
+    {
+        "category": "Pishin",
+        "male": 32,
+        "female": 24,
+        "refugeemale": 34,
+        "refugeefemale": 34,
+        "total": 90
+
+    },
+    {
+        "category": "Zhob",
+        "male": 53,
+        "female": 55,
+        "refugeemale": 22,
+        "refugeefemale": 22,
+        "total": 130
+
+    },
+    {
+        "category": "Mastung",
+        "male": 21,
+        "female": 65,
+        "refugeemale": 44,
+        "refugeefemale": 44,
+        "total": 130
+
+    },
+    {
+        "category": "Quetta",
+        "male": 5,
+        "female": 5,
+        "refugeemale": 9,
+        "refugeefemale": 9,
+        "total": 19
+
+    }]
+
+
+    var jobj = [
+    @{
+        foreach (var m in TBData)
+        {
+            <text>{
+                    'category': '@m.category',
+                    'male': @m.male,
+                    'female': @m.female,
+                    'refugeemale': @m.refugeemale,
+                    'refugeefemale': @m.refugeefemale,
+                    'total': @m.total
+                            }, </text>
+        }
+    }
+            ];
+
+
+    function rerendercbt(data, button, whichChart) {
+        var newData = data
+        console.log("Data: ", data)
+        console.log("Button: ", button)
+        console.log("WhichChart: ", whichChart)
+
+        if (button == 1) {
+            document.getElementById("title").innerHTML = "Total Beneficiaries"
+
+            var x = document.getElementById("liptable");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            }
+
+            var y = document.getElementById("bsftable");
+            if (y.style.display === "block") {
+                y.style.display = "none";
+            }
+
+            var y1 = document.getElementById("cbttable");
+            if (y1.style.display === "block") {
+                y1.style.display = "none";
+            }
+
+            var a = document.getElementById("labeltablelip");
+            if (a.style.display === "none") {
+                a.style.display = "block";
+            }
+
+            var b = document.getElementById("labeltablebsf");
+            if (b.style.display === "block") {
+                b.style.display = "none";
+            }
+            var b1 = document.getElementById("labeltablecbt");
+            if (b1.style.display === "block") {
+                b1.style.display = "none";
+            }
+
+            var xx = document.getElementById("chartdiv");
+            if (xx.style.display === "none") {
+                xx.style.display = "block";
+            }
+
+            var yy = document.getElementById("chartdiv2");
+            if (yy.style.display === "block") {
+                yy.style.display = "none";
+            }
+
+            var z1 = document.getElementById("chartdivbsf1");
+            if (z1.style.display === "block") {
+                z1.style.display = "none";
+            }
+            var z2 = document.getElementById("chartdivbsf2");
+            if (z2.style.display === "block") {
+                z2.style.display = "none";
+            }
+
+
+
+            if (root6) {
+                root6.dispose()
+            }
+            if (root11) {
+                root11.dispose()
+            }
+        }
+
+        am5.ready(function () {
+
+            // Create root6 element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            root14 = am5.Root.new("chartdivcbt2");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root14.setThemes([
+                am5themes_Animated.new(root14)
+            ]);
+
+            // Create chart6
+            // https://www.amcharts.com/docs/v5/charts/xy-chart6/
+            var chart14 = root14.container.children.push(am5xy.XYChart.new(root14, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root14.verticalLayout
+
+            }));
+            chart14.get("colors").set("colors", [
+                am5.color(0x095256),
+                am5.color(0x087f8c),
+                am5.color(0x5aaa95),
+                am5.color(0x86a000),
+                am5.color(0xbb9f06)
+            ]);
+
+            chart14.children.unshift(am5.Label.new(root14, {
+                text: "Total Beneficiaries (CI/CIGs)",
+                fontSize: 20,
+                fontWeight: "500",
+                fill: chart14.get("colors").getIndex(1),
+                textAlign: "center",
+                //x: am5.percent(50),
+                centerX: am5.percent(-5),
+                paddingTop: 0,
+                paddingBottom: 30
+            }));
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart14/axes/
+            var yRenderer = am5xy.AxisRendererY.new(root14, {
+                cellStartLocation: 0.1,
+                cellEndLocation: 0.9
+            });
+
+            var yAxis = chart14.yAxes.push(am5xy.CategoryAxis.new(root14, {
+                categoryField: "category",
+                renderer: yRenderer,
+                tooltip: am5.Tooltip.new(root14, {})
+            }));
+
+            yRenderer.grid.template.setAll({
+                location: 1
+            })
+
+            yAxis.data.setAll(newData);
+
+            var xAxis = chart14.xAxes.push(am5xy.ValueAxis.new(root14, {
+                min: 0,
+                renderer: am5xy.AxisRendererX.new(root14, {
+                    strokeOpacity: 0.1
+                })
+            }));
+
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart14/legend-xy-series/
+            var legend = chart14.children.push(am5.Legend.new(root14, {
+                centerX: am5.p50,
+                x: am5.p50
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart14/series/
+            function makeSeries(name, fieldName, stacked, hidden) {
+                var series = chart14.series.push(am5xy.ColumnSeries.new(root14, {
+                    stacked: stacked,
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueXField: fieldName,
+                    categoryYField: "category",
+                    clickTarget: "none"
+                    //legendLabelText: "Series: {name}",
+                    //legendRangeLabelText: "Series: {name}"
+                }));
+
+                if (name.includes("CI")) {
+                    console.log("CI")
+                    series.columns.template.setAll({
+                        tooltipText: "Female, {categoryY}:{valueX}",
+                        width: am5.percent(90),
+                        tooltipY: am5.percent(10)
+                    });
+                }
+                else if (name.includes("CIG")) {
+                    console.log("CIG")
+                    series.columns.template.setAll({
+                        tooltipText: "Female, {categoryY}:{valueX}",
+                        width: am5.percent(90),
+                        tooltipY: am5.percent(10)
+                    });
+                }
+                else {
+                    series.columns.template.setAll({
+                        tooltipText: "{name}, {categoryY}:{valueX}",
+                        width: am5.percent(90),
+                        tooltipY: am5.percent(10)
+                    });
+                }
+
+
+                series.data.setAll(newData);
+
+                // Make stuff animate on load
+                // https://www.amcharts.com/docs/v5/concepts/animations/
+                // series.appear();
+
+                series.bullets.push(function () {
+                    return am5.Bullet.new(root14, {
+                        locationY: 0.5,
+                        sprite: am5.Label.new(root14, {
+                            text: "{valueX}",
+                            fill: root14.interfaceColors.get("alternativeText"),
+                            centerY: am5.percent(50),
+                            centerX: am5.percent(50),
+                            populateText: true
+                        })
+                    });
+                });
+
+
+
+                legend.itemContainers.template.events.on("click", function (item) {
+
+                    console.log("item", item.target)
+                    var right = item.target._localBounds.right
+
+                    console.log("right: ", right)
+                    console.log("Includes: ", item.target.uid)
+                    // item: 100, 122, 144, 166
+                    // series: 85, 107, 129, 151
+                    var series1 = chart14.series.getIndex(0);
+                    var series2 = chart14.series.getIndex(1);
+                    var series3 = chart14.series.getIndex(2);
+                    var series4 = chart14.series.getIndex(3);
+
+                    var listInit = [100, 567, 1034, 1501, 1968, 336, 395, 1005]
+                    var boundsInit = [122.75] //122.75
+                    var listTB = [122, 589, 1056, 1523, 1990, 358, 417, 1027]
+                    var boundsTB = [207.3203125, 102.1640625]//102.1640625
+                    var listLIP = [144, 611, 1078, 1545, 2012, 380, 439, 1049]
+                    var boundsLIP = [184.8203125]//122.75
+                    var listCBT = [166, 633, 1100, 1567, 2034, 402, 461, 1071]
+                    var boundsCBT = [152.4765625, 113.140625]//113.140625
+                    var listEBP = [188, 655, 1122, 1589, 2056, 424, 483, 1093]
+                    var boundsEBP = [121.6328125, 121.6328125]//121.6328125
+
+
+
+                    if (/*listInit.includes(item.target.uid) ||*/ boundsInit.includes(right)) {
+                        console.log("init")
+                        if (series1.get("visible")) {
+                            console.log("Visible")
+                            //series1.hide();
+                            series2.hide();
+                        }
+                        else {
+                            console.log("Hidden", series1.isHidden())
+                            if (series1.isHidden()) {
+                                // series1.show();
+                            }
+                            series2.show()
+                        }
+                        //series1.show()
+
+                        series3.hide()
+                        series4.hide()
+                    }
+
+                    if (/*listTB.includes(item.target.uid) || */boundsTB.includes(right)) {
+                        console.log("TB")
+                        if (series2.get("visible")) {
+                            console.log("Visible")
+                            //series1.hide();
+                            series1.hide();
+                        }
+                        else {
+                            console.log("Hidden", series2.isHidden())
+                            if (series2.isHidden()) {
+                                // series1.show();
+                            }
+                            series1.show()
+                        }
+                        //series1.show()
+
+                        series3.hide()
+                        series4.hide()
+                    }
+
+                    if (/*listLIP.includes(item.target.uid) || */boundsLIP.includes(right)) {
+                        console.log("LIP")
+                        if (series3.get("visible")) {
+                            console.log("Visible")
+                            //series1.hide();
+                            series4.hide();
+                        }
+                        else {
+                            console.log("Hidden", series3.isHidden())
+                            if (series3.isHidden()) {
+                                // series1.show();
+                            }
+                            series4.show()
+                        }
+                        //series1.show()
+
+                        series1.hide()
+                        series2.hide()
+                    }
+
+                    if (/*listCBT.includes(item.target.uid) ||*/ boundsCBT.includes(right)) {
+                        console.log("CBT")
+                        if (series4.get("visible")) {
+                            console.log("Visible")
+                            //series1.hide();
+                            series3.hide();
+                        }
+                        else {
+                            console.log("Hidden", series4.isHidden())
+                            if (series4.isHidden()) {
+                                // series1.show();
+                            }
+                            series3.show()
+                        }
+                        //series1.show()
+
+                        series1.hide()
+                        series2.hide()
+                    }
+
+                });
+
+                legend.data.push(series);
+
+
+                allLegends = legend.allChildren()
+                console.log(" All LEGEND: ", allLegends)
+                allLegends[0].hide()
+                if (allLegends[2]) {
+                    allLegends[2].hide()
+                }
+
+                if (hidden) {
+                    series.hide();
+                }
+                else {
+                    series.appear();
+                }
+            }
+
+            //if (whichChart == "cbt") {
+                makeSeries("Male", "male", true, true);
+                makeSeries("CI", "female", true, true);
+                makeSeries("Male", "refugeemale", true, false);
+                makeSeries("CIG", "refugeefemale", true, false);
+                makeSeries("Total", "total", false, false);
+
+                var a = document.getElementById("labeltablelip");
+                if (a.style.display === "block") {
+                    a.style.display = "none";
+                }
+                var b = document.getElementById("labeltablebsf");
+                if (b.style.display === "block") {
+                    b.style.display = "none";
+                }
+                var c = document.getElementById("labeltablecbt");
+                if (c.style.display === "none") {
+                    c.style.display = "block";
+                }
+
+
+
+            //}
+            //else {
+            //    makeSeries("Male", "male", true, true);
+            //    makeSeries("Host Community", "female", true, true)
+            //    makeSeries("Refugee Male", "refugeemale", true, false)
+            //    makeSeries("Refugees", "refugeefemale", true, false)
+            //    makeSeries("Total", "total", false, false)
+            //}
+            //makeSeries("Europe", "europe", false);
+            //makeSeries("North America", "namerica", true);
+            //makeSeries("Asia", "asia", false);
+            //makeSeries("Latin America", "lamerica", true);
+            //makeSeries("Middle East", "meast", true);
+            //makeSeries("Africa", "africa", true);
+
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart14.appear(1000, 100);
+
+        }); // end am5.ready()
+
+
+    }
+
+
+</script>
+
+@*               CBT
+        CBT MAIN CHART CI/CIGs ENDS...........
+*@
+
+@*      GUAGE CHART TOTAL PROJECT PROGRESS
+             GUAGECHART START
+*@
 
 <!-- Chart code -->
 <script>
@@ -4385,6 +5523,14 @@
 
     }); // end am4core.ready()
 </script>
+
+@*          GUAGE CHART TOTAL PROJECT PROGRESS
+                    GUAGE CHART ENDs.............
+*@
+
+@*              OTHER INTERVENTION CHART
+                        STARTS...............
+*@
 
 <!-- Chart code -->
 <script>
@@ -4558,6 +5704,9 @@
     }); // end am5.ready()
 </script>
 
+@*              OTHER INTERVENTION CHART
+                        ENDS...............
+*@
 
 <!-- HTML -->
 <div id="main">
@@ -4571,20 +5720,20 @@
         <div class="ib" id="chartdivPerBSF" style="cursor: pointer;"></div>
         @*<div class="vr" style="height: 220px; width:4px; background-color:purple"></div>*@
         <div class="ib" id="chartdivPerCBT" style="cursor: pointer;" ></div>
-        @*<div class="vr" style="height: 220px; width:4px; background-color:purple"></div>*@
-        <div class="ib" id="chartdivPerEBP" style="cursor: pointer;" ></div>
+        
         @*<div class="vr" style="height: 220px; width:4px; background-color:purple"></div>*@
         <div class="ib" id="chartdivPerEBP2" style="cursor: pointer;" ></div>
 
+        @*<div class="vr" style="height: 220px; width:4px; background-color:purple"></div>*@
+        <div class="ib" id="chartdivPerEBP" style="cursor: pointer;" ></div>
         <div class="container" style="border-left:2px solid black; border-right: 2px solid black; border-bottom: 2px solid black;">
 
             <div class="row">
                 <div class="col-lg-4">
-                  
-                    <p id="title" style="font-size:30px; font-weight:500; color:#6794DC">Total Beneficieries</p>
-                   
                     <!-- HTML !-->
-                    <button class="button-10" role="button" onclick="rerender(jobj, 1)">Total Beneficieries</button>
+                    <button class="button-10" role="button" onclick="rerender(jobj, 1)" style="margin-top: 15px;">Total Beneficiaries</button>
+                  
+                    <p id="title" style="font-size:25px; font-weight:500; color:#6794DC">Total Beneficiaries</p>                   
 
                 </div>
                 <div class="col-lg-8">
@@ -4593,7 +5742,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="10">
-                                        <p style="font-size:20px; font-weight:500; color:#6794DC">Color Labels</p>
+                                        <p style="font-size:20px; font-weight:500; color:#6794DC">Labels</p>
                                     </th>
                                 </tr>
                             </thead>
@@ -4775,6 +5924,40 @@
                         </tbody>
                     </table>
 
+                    <table id="cbttable" class="table table-bordered table-striped" style="width:100%; display:none">
+                        <thead>
+                            <tr>
+                                <th colspan="3" style="text-align: center;">Training Events</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    District
+                                </th>
+                                <th>
+                                    Male
+                                </th>
+                                <th>
+                                    Female
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var obj in TBData)
+                            {
+                                <tr>
+                                    <td width="50%">
+                                        @obj.category
+                                    </td>
+                                    <td width="50%">
+                                        @obj.male
+                                    </td>
+                                    <td width="50%">
+                                        @obj.female
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
                
                 <div class="col-lg-8" id="chartdiv" style="display:block"></div>
@@ -4790,6 +5973,20 @@
                 <div class="col-lg-6" style="border-right: 2px solid black">
                     <div id="chartdivbsf2" style="display:none; height:500px"></div>
                 </div>                
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6" style="border-right: 2px solid black">
+                    <div id="chartdivtvt1" style="display:none; height:500px"></div>
+                </div>
+
+                <div class="col-lg-6" style="border-right: 2px solid black">
+                    <div id="chartdivtvt2" style="display:none; height:500px"></div>
+                </div>
+            </div>
+
+            <div class="row" id="cbtChartDiv2" style="display:none; border-right: 2px solid black">
+                <div id="chartdivcbt2" style="height:500px"></div>
             </div>
 
         </div>
